@@ -386,7 +386,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 /* ── hero headline overlay ───────────────────────────────────── */
 .hero-headline{
   position:absolute;
-  top:50%;left:50%;
+  top:28%;left:50%;
   transform:translate(-50%,-50%);
   z-index:10;
   pointer-events:none;
@@ -394,8 +394,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
   width:min(1100px,92vw);
   display:flex;flex-wrap:wrap;
   justify-content:center;align-items:baseline;
-  /* row-gap bigger so 2 lines breathe, column-gap = word spacing */
-  gap:.55em .42em;
+  /* row-gap = line spacing, column-gap = word spacing in px */
+  row-gap:.45em;
+  column-gap:clamp(18px,2.2vw,36px);
   filter:drop-shadow(0 2px 40px rgba(10,8,6,.6));
 }
 .hh-word{
@@ -1735,7 +1736,7 @@ const OILS = [
     science:[{k:'Линолевая к-та',v:'~55% — барьер, акне, воспаление'},{k:'Силимарин',v:'Гепатопротектор, антиоксидант'},{k:'Токоферолы',v:'Витамин Е, защита клеток'},{k:'Олеиновая к-та',v:'~22% — противовоспалительная'}],
     how:['1 чайная ложка в день','При нагрузке на печень — постоянно','Для кожи — наружно точечно','Совмещать с основным маслом'],
     quote:'Возвращает коже ровно то, чего ей не хватает.',
-    alts:[{name:'Амарантовое',tag:'Возраст',note:'При возрастных изменениях: кожа принимает сквален амаранта как своё вещество.',price:2400},{name:'Подсолнечное',tag:'Барьер',note:'Самый высокий уровень линолевой кислоты — для базового восстановления барьера.',price:650}]
+    alts:[{name:'Амарантовое',tag:'Возраст',note:'При возрастных изменениях: кожа принимает сквален амаранта как своё вещество.',price:2400},{name:'Льняное',tag:'Регуляция',note:'При жирной коже — льняное балансирует через омега-3 изнутри.',price:850}]
   },
   {
     id:'orekh',num:'07',name:'Грецкий орех',latin:'Juglans regia',
@@ -1748,19 +1749,9 @@ const OILS = [
     quote:'Каждый пятый вышел на здоровый уровень холестерина.',
     alts:[{name:'Льняное',tag:'Больше омега-3',note:'Если омега-3 важнее всего — льняное содержит до 57%, почти в 6 раз больше.',price:850},{name:'Чёрный тмин',tag:'Давление',note:'Если важнее давление — тмин даёт накопительный эффект за 6–8 недель.',price:1900}]
   },
+
   {
-    id:'funduk',num:'08',name:'Фундук',latin:'Corylus avellana',
-    task:'Самое мягкое',price:1500,img:'assets/oil-funduk.png',
-    why:'Олеиновой кислоты больше, чем в оливковом',
-    body:`В масле фундука олеиновой кислоты 77–83% — это больше, чем в оливковом масле. Именно она регулирует усвоение глюкозы и улучшает чувствительность к инсулину.`,
-    body2:`Самое мягкое и нейтральное из всей линейки — подходит тем, кто начинает с масел или не переносит более интенсивные вкусы.`,
-    science:[{k:'Олеиновая к-та',v:'77–83% — сахар, сердце, клетки'},{k:'Линолевая к-та',v:'~10% — барьер кожи'},{k:'Витамин Е',v:'Один из богатейших источников'},{k:'Фитостерины',v:'Снижают всасывание холестерина'}],
-    how:['1–2 чайных ложки в день','Мягко, можно постоянно','Добавлять в еду или отдельно','Хорошо совмещается с другими маслами'],
-    quote:'Самое мягкое из всей линейки — начало для тех, кто ещё не знает масел.',
-    alts:[{name:'Грецкий орех',tag:'Сердце',note:'Строгое исследование именно по сердцу и холестерину.',price:1300},{name:'Чёрный тмин',tag:'Сахар',note:'Если диагноз уже поставлен — тмин даёт более изученный эффект.',price:1900}]
-  },
-  {
-    id:'gorchitsa',num:'09',name:'Горчичное',latin:'Brassica juncea',
+    id:'gorchitsa',num:'08',name:'Горчичное',latin:'Brassica juncea',
     task:'Пищеварение и тепло',price:790,img:null,
     why:'Запускает пищеварение',
     body:`Запускает выработку пищеварительных соков и отделение желчи — лёгкость вместо тяжести после еды. Самое быстрое действие в линейке.`,
@@ -1770,17 +1761,7 @@ const OILS = [
     quote:'Самое быстрое действие в линейке: от нескольких дней до двух недель.',
     alts:[{name:'Льняное',tag:'Регулярность',note:'Если главное — нерегулярный стул. Мягко налаживает работу кишечника.',price:850},{name:'Чёрный тмин',tag:'Вздутие',note:'При вздутии и дискомфорте в желудке.',price:1900}]
   },
-  {
-    id:'podsolnechnoe',num:'10',name:'Подсолнечное',latin:'Helianthus annuus',
-    task:'Сухая кожа, витамин Е',price:650,img:null,
-    why:'Самый высокий уровень линолевой кислоты',
-    body:`Кожа строит защитную плёнку из линолевой кислоты — и в подсолнечном её больше всего. В исследовании оно восстановило барьер кожи лучше оливкового масла.`,
-    body2:`Доступное и эффективное для кожи. Барьер восстанавливается около 4 недель при регулярном применении.`,
-    science:[{k:'Линолевая к-та',v:'~65% — кожный барьер, акне'},{k:'Витамин Е',v:'Рекордное количество'},{k:'Олеиновая к-та',v:'~25% — сердце'},{k:'Фитостерины',v:'Противовоспалительные'}],
-    how:['1 чайная ложка в день','Внутрь и наружно','Барьер кожи — 4 недели','Хранить в прохладном тёмном месте'],
-    quote:'Восстановило барьер кожи лучше оливкового масла.',
-    alts:[{name:'Расторопша',tag:'Акне',note:'При высыпаниях — расторопша даёт более концентрированную линолевую кислоту (~55%).',price:1100},{name:'Амарантовое',tag:'Возраст',note:'При возрастных изменениях кожи — сквален работает глубже витамина Е.',price:2400}]
-  },
+
 ];
 
 /* ══════════════════════════════════════════════════════════════
@@ -2009,13 +1990,7 @@ const LANDING_IMGS = {
     'assets/hero-images/landing-images/Walnut_oil_bottle_product_hero_2K_20261014230752.jpg',
     'assets/hero-images/landing-images/Walnut_oil_bottle_product_hero_2K_20261014230810.jpg',
   ],
-  funduk: [
-    'assets/hero-images/landing-images/Hazelnut_oil_bottle_product_hero_2K_20261014230526.jpg',
-    'assets/hero-images/landing-images/Hazelnut_oil_bottle_product_hero_2K_20261014230547.jpg',
-    'assets/hero-images/landing-images/Hazelnut_oil_bottle_product_hero_2K_20261014230605.jpg',
-    'assets/hero-images/landing-images/Hazelnut_oil_bottle_product_hero_2K_20261014230629.jpg',
-    'assets/hero-images/landing-images/Hazelnut_oil_bottle_product_hero_2K_20261014230647.jpg',
-  ],
+
   gorchitsa: [
     'assets/hero-images/landing-images/Mustard_oil_bottle_product_photo\u2026_2K_20261014230347.jpg',
     'assets/hero-images/landing-images/Mustard_oil_bottle_product_photo\u2026_2K_20261014230406.jpg',
@@ -2023,9 +1998,7 @@ const LANDING_IMGS = {
     'assets/hero-images/landing-images/Mustard_oil_bottle_product_photo\u2026_2K_20261014230442.jpg',
     'assets/hero-images/landing-images/Mustard_oil_bottle_product_photo\u2026_2K_20261014230503.jpg',
   ],
-  podsolnechnoe: [
-    'assets/hero-images/landing-images/Sunflower_oil_bottle_studio_shot_2K_20261014224143.jpg',
-  ],
+
 };
 
 function renderOilContent(oil) {
