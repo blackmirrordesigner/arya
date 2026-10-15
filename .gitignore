@@ -1,0 +1,28 @@
+.DS_Store
+.thumbnail
+uploads/
+scraps/
+gui-test-screenshots/
+*.jsx
+arya-products-data.js
+image-slot.js
+tweaks-panel.jsx
+chronicle.css
+pdp.css
+arya-hero.css
+ARYA\ *.html
+ARYA-original.html
+ARYA.html
+Linseed\ Oil*.html
+arya-final-home.*
+arya-flow.jsx
+arya-foundation.jsx
+arya-home.jsx
+arya-oils.jsx
+arya-v3*.jsx
+arya-v3*.html
+arya-wireframes.jsx
+arya-card.jsx
+PdpChronicle.jsx
+PdpHero.jsx
+PdpSections.jsx
