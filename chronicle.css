@@ -1,0 +1,157 @@
+/* ARYA · «Ритм восстановления» (40 дней / 4 фазы)
+   Стили перенесены из рабочего макета v38. Подключается после pdp.css.
+   Самодостаточно: локальные алиасы токенов, которых нет в colors_and_type.css. */
+
+.timeline-section {
+  --hairline: 1px solid var(--linen);
+  --ease-out: var(--ease, cubic-bezier(0.16, 1, 0.3, 1));
+  background: var(--ivory);
+  position: relative;
+  padding-block: clamp(96px, 14vw, 192px);
+}
+.timeline-section .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--gutter-d); position: relative; }
+
+.timeline-section .eyebrow {
+  font-family: var(--font-body); font-size: 11px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em; color: var(--stone);
+  display: inline-block;
+}
+.timeline-section .display-l {
+  font-family: var(--font-display); font-weight: 300;
+  font-size: clamp(40px, 5.5vw, 72px); line-height: 1.05; letter-spacing: -0.02em;
+  color: var(--ink); margin: 0;
+}
+.timeline-section .display-l .em { font-style: italic; font-weight: 300; }
+.timeline-section .body-l { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.65; color: var(--stone); }
+
+.timeline-head {
+  margin-bottom: clamp(64px, 9vw, 120px);
+  text-align: center;
+  max-width: 760px; margin-left: auto; margin-right: auto;
+}
+.timeline-head .eyebrow { margin-bottom: 32px; }
+.timeline-head h2 { margin-bottom: 24px; }
+.timeline-head p { color: var(--stone); max-width: 580px; margin: 0 auto; }
+
+/* ── Фазы-пилюли ── */
+.timeline-phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+  margin-bottom: clamp(64px, 8vw, 96px);
+}
+.phase-pill {
+  padding: 28px 24px;
+  border-right: var(--hairline);
+  text-align: left;
+  position: relative;
+  transition: background .3s ease;
+  cursor: pointer;
+  background: transparent;
+}
+.phase-pill:last-child { border-right: 0; }
+.phase-pill:hover { background: var(--oat); }
+.phase-pill.active { background: var(--ink); color: var(--ivory); }
+.phase-pill .p-days {
+  font-family: var(--font-display); font-size: 13px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  margin-bottom: 12px; display: block; color: var(--bronze);
+}
+.phase-pill.active .p-days { color: var(--linen); }
+.phase-pill .p-name {
+  font-family: var(--font-display); font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 400; letter-spacing: -0.01em; line-height: 1.15; display: block;
+}
+
+/* ── Тело: липкий орб + стадии ── */
+.timeline-body {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 7vw, 96px);
+  align-items: flex-start;
+}
+.timeline-visual {
+  position: sticky;
+  top: 120px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  aspect-ratio: 1 / 1;
+  background: var(--oat);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.orb-wrap { position: relative; width: 70%; aspect-ratio: 1 / 1; }
+.orb-bg, .orb-fg { position: absolute; inset: 0; border-radius: 50%; }
+.orb-bg { background: radial-gradient(circle at 30% 30%, var(--linen), var(--parchment)); }
+.orb-fg {
+  /* живое масло — тёмная капля, растущая по фазам */
+  background: radial-gradient(circle at 35% 30%, #6b4a22 0%, #3a2a16 45%, var(--marasca) 78%, #0e0a08 100%);
+  transform: scale(0.2);
+  transform-origin: center;
+  transition: transform 1.2s var(--ease-out);
+  box-shadow: inset -16px -16px 32px rgba(0,0,0,.4), 0 30px 60px -20px rgba(24,19,16,.4);
+}
+.orb-fg.s1 { transform: scale(0.32); }
+.orb-fg.s2 { transform: scale(0.55); }
+.orb-fg.s3 { transform: scale(0.78); }
+.orb-fg.s4 { transform: scale(0.96); }
+.orb-day {
+  position: absolute;
+  bottom: 32px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-display); font-size: clamp(64px, 7vw, 96px);
+  font-weight: 300; color: var(--ink); letter-spacing: -0.02em; line-height: 1;
+  z-index: 1;
+}
+.orb-day-label {
+  position: absolute;
+  top: 32px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone);
+  z-index: 1;
+}
+/* как только капля выросла — день читается на светлом ободке */
+.orb-fg.s3 ~ .orb-day, .orb-fg.s4 ~ .orb-day { color: var(--oat); }
+
+.timeline-stages { display: flex; flex-direction: column; gap: clamp(64px, 9vw, 128px); }
+.stage { scroll-margin-top: 140px; }
+.stage .s-num {
+  font-family: var(--font-display); font-size: 13px;
+  letter-spacing: 0.16em; color: var(--bronze); text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.stage h3 {
+  font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 300; font-style: italic; color: var(--ink);
+  margin: 0 0 24px; letter-spacing: -0.015em; line-height: 1.15;
+}
+.stage .lead {
+  font-size: 17px; line-height: 1.65; color: var(--graphite);
+  margin-bottom: 32px; max-width: 540px;
+}
+.stage .changes { border-top: var(--hairline); }
+.stage .change {
+  display: grid; grid-template-columns: 1fr 3fr; gap: 32px;
+  padding: 20px 0; border-bottom: var(--hairline);
+}
+.stage .change .label {
+  font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--stone); padding-top: 4px;
+}
+.stage .change .text { color: var(--graphite); font-size: 15px; line-height: 1.6; }
+
+/* reveal */
+.timeline-section .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); }
+.timeline-section .reveal.is-in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .timeline-section .reveal { opacity: 1; transform: none; transition: none; }
+  .orb-fg { transition: none; }
+}
+
+@media (max-width: 900px) {
+  .timeline-phases { grid-template-columns: repeat(2, 1fr); }
+  .phase-pill { border-right: 0; border-bottom: var(--hairline); padding: 20px; }
+  .phase-pill:nth-child(odd) { border-right: var(--hairline); }
+  .timeline-body { grid-template-columns: 1fr; gap: 48px; }
+  .timeline-visual { position: relative; top: 0; max-width: 280px; margin: 0 auto; }
+  .stage .change { grid-template-columns: 1fr; gap: 8px; }
+}

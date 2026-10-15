@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARYA — Восстановление тела за 40 дней</title>
+<meta name="description" content="ARYA — система холодного отжима. Масла, которые возвращают энергию и здоровье." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* =====================================================
+   ARYA — Design System
+   v37 · Phase 3
+   ===================================================== */
+
+:root {
+  /* Surfaces */
+  --ivory:      #F9F8F6;
+  --oat:        #F4F0EB;
+  --parchment:  #E7DFD3;
+  --linen:      #E2DACE;
+
+  /* Ink */
+  --ink:        #1A1714;
+  --graphite:   #2D2925;
+  --stone:      #5A544C;
+  --ash:        #8B847B;
+
+  /* Brand anchors */
+  --marasca:    #181310;
+  --bronze:     #7A6446;
+
+  /* Category accents — used sparingly */
+  --acc-balance:  #6F7253;
+  --acc-digest:   #A57555;
+  --acc-neuro:    #5C6478;
+  --acc-skin:     #C9A084;
+  --acc-hormone:  #9C7E73;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body:    'Manrope', system-ui, sans-serif;
+
+  /* Hairline */
+  --hairline: 1px solid var(--linen);
+
+  /* Shadows */
+  --shadow-soft:   0 1px 2px rgba(26,23,20,.04), 0 8px 24px rgba(26,23,20,.04);
+  --shadow-card:   0 12px 32px -8px rgba(26,23,20,.06);
+  --shadow-bottle: 0 40px 80px -20px rgba(24,19,16,.32);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout */
+  --container: 1320px;
+  --gutter: 32px;
+}
+
+/* ============ Reset ============ */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--graphite);
+  background: var(--ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+}
+img, svg { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: 0; background: none; padding: 0; color: inherit; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; margin: 0; }
+input, textarea, select { font-family: inherit; }
+
+/* ============ Subtle Grain ============ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: .035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* ============ Typography ============ */
+.display-xl,
+.display-l,
+.display-m,
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.display-xl  { font-size: clamp(56px, 8vw, 120px); line-height: 1.02; letter-spacing: -0.025em; }
+.display-l   { font-size: clamp(40px, 5.5vw, 72px); line-height: 1.05; letter-spacing: -0.02em; }
+.display-m   { font-size: clamp(28px, 3.5vw, 48px); line-height: 1.1;  letter-spacing: -0.015em; }
+
+.heading-l   { font-family: var(--font-display); font-weight: 400; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.2; color: var(--ink); margin: 0; letter-spacing: -0.01em;}
+.heading-m   { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1.3; color: var(--ink); margin: 0; }
+
+.body-l { font-size: clamp(16px, 1.2vw, 18px); line-height: 1.65; color: var(--graphite); }
+.body   { font-size: 15px; line-height: 1.65; color: var(--graphite); }
+.body-s { font-size: 13px; line-height: 1.5; color: var(--stone); }
+
+.italic { font-style: italic; }
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--stone);
+  display: inline-block;
+}
+
+/* ============ Layout ============ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+}
+
+section {
+  position: relative;
+  padding: clamp(96px, 14vw, 192px) 0;
+}
+section.tight { padding: clamp(64px, 9vw, 128px) 0; }
+
+.hairline { border-top: var(--hairline); width: 100%; }
+
+/* ============ Buttons ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  transition: transform .25s var(--ease-out), background .25s ease, color .25s ease, border-color .25s ease;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--ivory);
+  border: 1px solid var(--ink);
+}
+.btn-primary:hover { background: var(--marasca); transform: translateY(-1px); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+.btn-ghost:hover { background: var(--ink); color: var(--ivory); }
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--ink);
+  transition: opacity .2s ease, gap .25s var(--ease-out);
+}
+.btn-link:hover { gap: 14px; }
+.btn-link .arr { transition: transform .25s var(--ease-out); }
+.btn-link:hover .arr { transform: translateX(4px); }
+
+/* ============ Navigation ============ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 0;
+  background: rgba(249, 248, 246, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s ease;
+}
+.nav.scrolled { border-bottom-color: var(--linen); }
+.nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.32em;
+  color: var(--ink);
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--graphite);
+}
+.nav-links a { transition: color .2s ease; }
+.nav-links a:hover { color: var(--ink); }
+
+.nav-tools { display: flex; align-items: center; gap: 24px; }
+
+.lang-switch {
+  display: flex;
+  gap: 4px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--ash);
+}
+.lang-switch button { padding: 4px 6px; transition: color .2s ease; }
+.lang-switch button.active { color: var(--ink); }
+.lang-switch button:hover { color: var(--ink); }
+.lang-switch .sep { color: var(--linen); }
+
+.cart-btn {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; letter-spacing: 0.08em;
+  color: var(--ink);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.cart-btn .count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  background: var(--ink); color: var(--ivory);
+  font-size: 10px; border-radius: 999px;
+}
+
+.menu-btn { display: none; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .menu-btn { display: flex; flex-direction: column; gap: 5px; padding: 8px; }
+  .menu-btn span { width: 22px; height: 1px; background: var(--ink); display: block; }
+  .lang-switch { display: none; }
+}
+
+/* ============ Hero ============ */
+.hero {
+  padding-top: clamp(140px, 16vh, 180px);
+  padding-bottom: clamp(96px, 12vw, 160px);
+  background: var(--ivory);
+  overflow: hidden;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  min-height: 70vh;
+}
+.hero-text > .eyebrow { margin-bottom: 32px; }
+.hero-text h1 { margin-bottom: 28px; font-weight: 300; }
+.hero-text h1 .em { font-style: italic; font-weight: 400; }
+.hero-text .sub {
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.55;
+  color: var(--stone);
+  max-width: 520px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+.hero-cta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 64px; }
+
+.hero-meta {
+  display: flex;
+  gap: clamp(24px, 3vw, 48px);
+  align-items: flex-start;
+  padding-top: 32px;
+  border-top: var(--hairline);
+  max-width: 520px;
+}
+.hero-meta-item { flex: 1; }
+.hero-meta-item .num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+.hero-meta-item .lbl {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--stone);
+}
+
+/* Hero bottle */
+.hero-visual {
+  position: relative;
+  height: clamp(480px, 60vh, 680px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-bottle-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8%;
+}
+.bottle-svg { height: 88%; filter: drop-shadow(var(--shadow-bottle)); }
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%; height: 24px;
+  background: radial-gradient(ellipse at center, rgba(24,19,16,.18), transparent 70%);
+  filter: blur(8px);
+  z-index: 0;
+}
+.hero-corner {
+  position: absolute;
+  top: 0; right: 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone);
+  text-align: right;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 64px; }
+  .hero-visual { height: 440px; order: -1; }
+  .hero-cta { gap: 12px; }
+  .hero-corner { display: none; }
+}
+
+/* ============ Quiz ============ */
+.quiz {
+  background: var(--oat);
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+}
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 7vw, 96px);
+  align-items: stretch;
+}
+.quiz-intro .eyebrow { margin-bottom: 24px; }
+.quiz-intro h2 { margin-bottom: 24px; font-weight: 300; }
+.quiz-intro h2 .em { font-style: italic; }
+.quiz-intro p { color: var(--stone); max-width: 460px; margin-bottom: 40px; }
+.quiz-intro .meta {
+  display: flex; gap: 32px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--stone);
+}
+.quiz-intro .meta div { display: flex; align-items: center; gap: 8px; }
+.quiz-intro .meta .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--bronze);
+}
+
+.quiz-panel {
+  background: var(--ivory);
+  padding: clamp(32px, 4vw, 56px);
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+}
+.quiz-progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 40px;
+}
+.quiz-progress .dash {
+  flex: 1;
+  height: 1px;
+  background: var(--linen);
+  position: relative;
+}
+.quiz-progress .dash.active::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--ink);
+}
+.quiz-step { display: none; flex: 1; flex-direction: column; }
+.quiz-step.active { display: flex; }
+.quiz-step .step-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--bronze);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.quiz-step .q {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 32px;
+  letter-spacing: -0.01em;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.quiz-option {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px;
+  border: 1px solid var(--linen);
+  background: var(--ivory);
+  text-align: left;
+  font-size: 15px;
+  color: var(--graphite);
+  border-radius: 2px;
+  transition: border-color .2s ease, background .2s ease, padding .25s var(--ease-out);
+  cursor: pointer;
+}
+.quiz-option:hover { border-color: var(--ink); padding-left: 28px; }
+.quiz-option.selected { border-color: var(--ink); background: var(--ink); color: var(--ivory); }
+.quiz-option .arr { opacity: 0; transition: opacity .2s ease; font-size: 13px; }
+.quiz-option:hover .arr,
+.quiz-option.selected .arr { opacity: 1; }
+.quiz-controls {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 32px; padding-top: 24px; border-top: var(--hairline);
+}
+.quiz-back {
+  font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ash);
+  transition: color .2s ease;
+}
+.quiz-back:hover { color: var(--ink); }
+.quiz-counter { font-size: 12px; letter-spacing: 0.12em; color: var(--ash); text-transform: uppercase; }
+
+/* Quiz Result */
+.quiz-result { display: none; flex-direction: column; flex: 1; animation: fadeUp .8s var(--ease-out); }
+.quiz-result.active { display: flex; }
+.quiz-result .state-line {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  margin-bottom: 16px;
+}
+.quiz-result .state {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--stone);
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: var(--hairline);
+}
+.quiz-result .reco-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 14px;
+}
+.quiz-result .reco-name {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 16px;
+  line-height: 1;
+}
+.quiz-result .reco-desc {
+  color: var(--stone);
+  margin-bottom: 32px;
+  max-width: 480px;
+}
+.quiz-result .add-line {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 12px;
+}
+.quiz-result .add-oils {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-bottom: 40px;
+}
+.quiz-result .pill {
+  padding: 8px 16px;
+  border: 1px solid var(--linen);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--graphite);
+}
+.quiz-result-cta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: auto; }
+
+@media (max-width: 900px) {
+  .quiz-grid { grid-template-columns: 1fr; gap: 48px; }
+  .quiz-panel { padding: 28px; min-height: 480px; }
+}
+
+/* ============ Categories ============ */
+.cats-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: clamp(48px, 7vw, 96px);
+  gap: 32px;
+}
+.cats-head h2 { font-weight: 300; max-width: 720px; }
+.cats-head .eyebrow { display: block; margin-bottom: 24px; }
+
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: var(--hairline);
+}
+.cat-item {
+  padding: 40px 0;
+  border-right: var(--hairline);
+  text-align: left;
+  transition: padding .25s var(--ease-out);
+  cursor: pointer;
+  position: relative;
+  display: flex; flex-direction: column;
+}
+.cat-item:last-child { border-right: 0; }
+.cat-item:hover { padding-left: 16px; padding-right: 16px; }
+.cat-item:not(:last-child) { padding-right: 24px; }
+.cat-item:not(:first-child) { padding-left: 24px; }
+
+.cat-item .cat-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--bronze);
+  margin-bottom: 16px;
+  font-feature-settings: "lnum";
+}
+.cat-item .cat-marker {
+  width: 8px; height: 8px;
+  background: var(--acc-balance);
+  margin-bottom: 24px;
+}
+.cat-item.balance .cat-marker { background: var(--acc-balance); }
+.cat-item.neuro   .cat-marker { background: var(--acc-neuro); }
+.cat-item.digest  .cat-marker { background: var(--acc-digest); }
+.cat-item.hormone .cat-marker { background: var(--acc-hormone); }
+.cat-item.skin    .cat-marker { background: var(--acc-skin); }
+
+.cat-item .cat-name {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.6vw, 36px);
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.cat-item .cat-state {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--stone);
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+.cat-item .cat-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--stone);
+  margin-bottom: 32px;
+  flex: 1;
+}
+.cat-item .cat-link {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+@media (max-width: 1100px) {
+  .cats-grid { grid-template-columns: repeat(2, 1fr); }
+  .cat-item { padding: 32px 24px; border-right: 0; border-bottom: var(--hairline); }
+  .cat-item:not(:first-child) { padding-left: 24px; }
+  .cat-item:nth-child(odd) { border-right: var(--hairline); }
+  .cat-item:hover { padding-left: 32px; }
+}
+@media (max-width: 600px) {
+  .cats-grid { grid-template-columns: 1fr; }
+  .cat-item { border-right: 0 !important; }
+}
+
+/* ============ Editorial Quote ============ */
+.quote-section {
+  background: var(--parchment);
+  text-align: center;
+  padding: clamp(96px, 14vw, 192px) 0;
+}
+.quote-section .quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.25;
+  color: var(--ink);
+  max-width: 920px;
+  margin: 0 auto;
+  letter-spacing: -0.01em;
+}
+.quote-section .quote-credit {
+  margin-top: 40px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+/* ============ 40-day Timeline ============ */
+.timeline-section {
+  background: var(--ivory);
+  position: relative;
+}
+.timeline-head {
+  margin-bottom: clamp(64px, 9vw, 120px);
+  text-align: center;
+  max-width: 760px; margin-left: auto; margin-right: auto;
+}
+.timeline-head .eyebrow { margin-bottom: 32px; }
+.timeline-head h2 { font-weight: 300; margin-bottom: 24px; }
+.timeline-head h2 .em { font-style: italic; }
+.timeline-head p { color: var(--stone); max-width: 580px; margin: 0 auto; }
+
+.timeline-phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+  margin-bottom: clamp(64px, 8vw, 96px);
+}
+.phase-pill {
+  padding: 28px 24px;
+  border-right: var(--hairline);
+  text-align: left;
+  position: relative;
+  transition: background .3s ease;
+  cursor: pointer;
+}
+.phase-pill:last-child { border-right: 0; }
+.phase-pill:hover { background: var(--oat); }
+.phase-pill.active { background: var(--ink); color: var(--ivory); }
+.phase-pill .p-days {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+  color: var(--bronze);
+}
+.phase-pill.active .p-days { color: var(--linen); }
+.phase-pill .p-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.timeline-body {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 7vw, 96px);
+  align-items: flex-start;
+}
+.timeline-visual {
+  position: sticky;
+  top: 120px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  aspect-ratio: 1 / 1;
+  background: var(--oat);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.orb-wrap { position: relative; width: 70%; aspect-ratio: 1 / 1; }
+.orb-bg, .orb-fg {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+}
+.orb-bg {
+  background: radial-gradient(circle at 30% 30%, var(--linen), var(--parchment));
+}
+.orb-fg {
+  background: radial-gradient(circle at 35% 30%, #4a3826 0%, var(--marasca) 60%, #0e0a08 100%);
+  transform: scale(0.2);
+  transform-origin: center;
+  transition: transform 1.2s var(--ease-out);
+  box-shadow: inset -16px -16px 32px rgba(0,0,0,.4), 0 30px 60px -20px rgba(24,19,16,.4);
+}
+.orb-fg.s1 { transform: scale(0.32); }
+.orb-fg.s2 { transform: scale(0.55); }
+.orb-fg.s3 { transform: scale(0.78); }
+.orb-fg.s4 { transform: scale(0.96); }
+.orb-day {
+  position: absolute;
+  bottom: 32px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(64px, 7vw, 96px);
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.orb-day-label {
+  position: absolute;
+  top: 32px; left: 50%; transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stone);
+}
+
+.timeline-stages { display: flex; flex-direction: column; gap: clamp(64px, 9vw, 128px); }
+.stage {
+  scroll-margin-top: 140px;
+}
+.stage .s-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--bronze);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.stage h3 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+  margin: 0 0 24px;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.stage .lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--graphite);
+  margin-bottom: 32px;
+  max-width: 540px;
+}
+.stage .changes {
+  border-top: var(--hairline);
+}
+.stage .change {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 32px;
+  padding: 20px 0;
+  border-bottom: var(--hairline);
+}
+.stage .change .label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--stone);
+  padding-top: 4px;
+}
+.stage .change .text { color: var(--graphite); font-size: 15px; line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .timeline-phases { grid-template-columns: repeat(2, 1fr); }
+  .phase-pill { border-right: 0; border-bottom: var(--hairline); padding: 20px; }
+  .phase-pill:nth-child(odd) { border-right: var(--hairline); }
+  .timeline-body { grid-template-columns: 1fr; gap: 48px; }
+  .timeline-visual { position: relative; top: 0; max-width: 280px; margin: 0 auto; }
+  .stage .change { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* ============ Education Block (Fats) ============ */
+.education {
+  background: var(--marasca);
+  color: var(--ivory);
+}
+.education .eyebrow { color: var(--linen); }
+.education .ed-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 8vw, 120px);
+  align-items: flex-start;
+}
+.education h2 { color: var(--ivory); font-weight: 300; }
+.education h2 .em { font-style: italic; }
+.education .ed-lead {
+  color: rgba(249,248,246,.72);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.55;
+  font-weight: 300;
+  margin-top: 32px;
+  font-family: var(--font-display);
+}
+
+.ed-points { display: flex; flex-direction: column; gap: 0; border-top: 1px solid rgba(249,248,246,.12); }
+.ed-point {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(249,248,246,.12);
+  align-items: flex-start;
+}
+.ed-point .ep-num {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--bronze);
+  letter-spacing: -0.01em;
+}
+.ed-point .ep-h {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 400;
+  color: var(--ivory);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+.ed-point .ep-t {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(249,248,246,.65);
+  max-width: 560px;
+}
+
+@media (max-width: 900px) {
+  .education .ed-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* ============ Products ============ */
+.products-section { background: var(--ivory); }
+.products-head {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
+  margin-bottom: clamp(64px, 9vw, 120px);
+}
+.products-head h2 { font-weight: 300; max-width: 600px; }
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: var(--hairline);
+  border-left: var(--hairline);
+}
+.product-card {
+  border-right: var(--hairline);
+  border-bottom: var(--hairline);
+  padding: clamp(28px, 3vw, 48px);
+  display: flex; flex-direction: column;
+  transition: background .3s ease;
+  position: relative;
+}
+.product-card:hover { background: var(--oat); }
+.product-card .pc-cat {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--stone);
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 32px;
+}
+.product-card .pc-marker {
+  width: 6px; height: 6px;
+}
+.product-card.balance .pc-marker  { background: var(--acc-balance); }
+.product-card.neuro   .pc-marker  { background: var(--acc-neuro); }
+.product-card.digest  .pc-marker  { background: var(--acc-digest); }
+.product-card.hormone .pc-marker  { background: var(--acc-hormone); }
+.product-card.skin    .pc-marker  { background: var(--acc-skin); }
+
+.product-card .pc-bottle {
+  height: clamp(220px, 26vw, 320px);
+  display: flex; align-items: flex-end; justify-content: center;
+  margin-bottom: 32px;
+  position: relative;
+}
+.product-card .pc-bottle svg {
+  height: 100%;
+  filter: drop-shadow(0 30px 50px rgba(24,19,16,.22));
+  transition: transform .5s var(--ease-out);
+}
+.product-card:hover .pc-bottle svg { transform: translateY(-6px); }
+.product-card .pc-bottle::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 60%; height: 12px;
+  background: radial-gradient(ellipse, rgba(24,19,16,.14), transparent 70%);
+  filter: blur(4px);
+}
+.product-card .pc-name {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 2.4vw, 36px);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+}
+.product-card .pc-tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 17px;
+  color: var(--stone);
+  margin-bottom: 24px;
+}
+.product-card .pc-benefit {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--graphite);
+  margin-bottom: 32px;
+  flex: 1;
+}
+.product-card .pc-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 24px;
+  border-top: var(--hairline);
+}
+.product-card .pc-price {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+}
+.product-card .pc-price small {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-right: 6px;
+}
+.product-card .pc-add {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 12px 20px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  transition: background .2s ease, color .2s ease;
+}
+.product-card .pc-add:hover { background: var(--ink); color: var(--ivory); }
+
+@media (max-width: 1100px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 700px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .products-head { flex-direction: column; align-items: flex-start; }
+}
+
+/* ============ Mono Oils ============ */
+.mono-section {
+  background: var(--ivory);
+  border-top: var(--hairline);
+}
+.mono-head {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 7vw, 96px);
+  margin-bottom: clamp(64px, 9vw, 120px);
+  align-items: flex-end;
+}
+.mono-head h2 { font-weight: 300; }
+.mono-head h2 .em { font-style: italic; }
+.mono-head .desc { color: var(--stone); max-width: 540px; font-size: 16px; line-height: 1.65; }
+.mono-head .desc strong { color: var(--ink); font-weight: 500; }
+
+.mono-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: var(--hairline);
+  border-left: var(--hairline);
+}
+.mono-card {
+  border-right: var(--hairline);
+  border-bottom: var(--hairline);
+  padding: clamp(28px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  background: var(--ivory);
+  transition: background .3s ease;
+  position: relative;
+}
+.mono-card:hover { background: var(--oat); }
+.mono-card .mc-num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  color: var(--bronze);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.mono-card .mc-bottle {
+  height: 180px;
+  display: flex; align-items: flex-end; justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+.mono-card .mc-bottle svg { height: 100%; filter: drop-shadow(0 18px 28px rgba(24,19,16,.18)); }
+.mono-card .mc-bottle::after {
+  content: '';
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 50%; height: 8px;
+  background: radial-gradient(ellipse, rgba(24,19,16,.12), transparent 70%);
+  filter: blur(3px);
+}
+.mono-card .mc-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 1.9vw, 28px);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.mono-card .mc-latin {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 13.5px;
+  color: var(--ash);
+  margin-bottom: 20px;
+}
+.mono-card .mc-spec {
+  font-size: 12px;
+  color: var(--stone);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex: 1;
+}
+.mono-card .mc-spec b {
+  color: var(--ink);
+  font-weight: 500;
+}
+.mono-card .mc-pairs {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 24px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone);
+  padding-top: 16px;
+  border-top: var(--hairline);
+}
+.mono-card .mc-pairs .dot {
+  width: 6px; height: 6px;
+  display: inline-block;
+}
+.mono-card .mc-pairs .dot.balance { background: var(--acc-balance); }
+.mono-card .mc-pairs .dot.neuro   { background: var(--acc-neuro); }
+.mono-card .mc-pairs .dot.digest  { background: var(--acc-digest); }
+.mono-card .mc-pairs .dot.hormone { background: var(--acc-hormone); }
+.mono-card .mc-pairs .dot.skin    { background: var(--acc-skin); }
+.mono-card .mc-foot {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.mono-card .mc-price {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--ink);
+}
+.mono-card .mc-price small {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash);
+  margin-right: 4px;
+}
+.mono-card .mc-add {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 9px 14px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  transition: background .2s ease, color .2s ease;
+}
+.mono-card .mc-add:hover { background: var(--ink); color: var(--ivory); }
+
+@media (max-width: 1100px) {
+  .mono-grid { grid-template-columns: repeat(2, 1fr); }
+  .mono-head { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 600px) {
+  .mono-grid { grid-template-columns: 1fr; }
+}
+
+/* Quiz result mono-oil cards */
+.quiz-result .mono-suggest {
+  margin-bottom: 32px;
+}
+.quiz-result .mono-suggest-list {
+  display: flex; flex-direction: column; gap: 0;
+  border-top: var(--hairline);
+}
+.quiz-result .mono-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: var(--hairline);
+}
+.quiz-result .mono-row .mr-name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.quiz-result .mono-row .mr-why {
+  font-size: 12.5px;
+  color: var(--stone);
+}
+.quiz-result .mono-row .mr-add {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 8px 14px;
+  border: 1px solid var(--linen);
+  border-radius: 2px;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+  white-space: nowrap;
+}
+.quiz-result .mono-row .mr-add:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ivory);
+}
+
+/* ============ Ritual ============ */
+.ritual {
+  background: var(--parchment);
+  position: relative;
+}
+.ritual-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 8vw, 120px);
+  align-items: flex-start;
+}
+.ritual h2 { font-weight: 300; }
+.ritual h2 .em { font-style: italic; }
+.ritual-intro p {
+  color: var(--stone);
+  font-size: 17px;
+  margin-top: 32px;
+  max-width: 440px;
+}
+.ritual-steps { display: flex; flex-direction: column; gap: 0; }
+.ritual-step {
+  display: grid;
+  grid-template-columns: 80px 1fr 60px;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: var(--hairline);
+  align-items: flex-start;
+}
+.ritual-step:first-child { border-top: var(--hairline); }
+.ritual-step .rs-time {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze);
+  padding-top: 6px;
+}
+.ritual-step .rs-h {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+.ritual-step .rs-t { color: var(--stone); font-size: 14.5px; line-height: 1.6; max-width: 520px; }
+.ritual-step .rs-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--linen);
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .ritual-grid { grid-template-columns: 1fr; gap: 48px; }
+  .ritual-step { grid-template-columns: 60px 1fr; }
+  .ritual-step .rs-num { display: none; }
+}
+
+/* ============ Trust ============ */
+.trust { background: var(--ivory); }
+.trust-head {
+  text-align: center;
+  margin-bottom: clamp(64px, 9vw, 120px);
+  max-width: 720px;
+  margin-left: auto; margin-right: auto;
+}
+.trust-head .eyebrow { margin-bottom: 24px; }
+.trust-head h2 { font-weight: 300; }
+.trust-head h2 .em { font-style: italic; }
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: var(--hairline);
+}
+.trust-item {
+  padding: 48px 32px;
+  border-right: var(--hairline);
+}
+.trust-item:last-child { border-right: 0; }
+.trust-item .ti-num {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 4vw, 64px);
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.trust-item .ti-h {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.trust-item .ti-t {
+  font-size: 14px;
+  color: var(--stone);
+  line-height: 1.55;
+}
+@media (max-width: 900px) {
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-item:nth-child(2) { border-right: 0; }
+  .trust-item:nth-child(-n+2) { border-bottom: var(--hairline); }
+  .trust-item { padding: 32px 24px; }
+}
+@media (max-width: 500px) {
+  .trust-grid { grid-template-columns: 1fr; }
+  .trust-item { border-right: 0 !important; border-bottom: var(--hairline) !important; }
+}
+
+/* ============ Final CTA ============ */
+.final-cta {
+  background: var(--marasca);
+  color: var(--ivory);
+  text-align: center;
+  padding: clamp(120px, 16vw, 220px) 0;
+  position: relative;
+  overflow: hidden;
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(122,100,70,.16), transparent 60%);
+  pointer-events: none;
+}
+.final-cta .container { position: relative; z-index: 2; }
+.final-cta .eyebrow { color: var(--bronze); margin-bottom: 32px; }
+.final-cta h2 {
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  max-width: 1100px;
+  margin-left: auto; margin-right: auto;
+}
+.final-cta h2 .em { font-style: italic; }
+.final-cta p {
+  color: rgba(249,248,246,.7);
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 1.55;
+  font-weight: 300;
+  max-width: 580px;
+  margin: 0 auto 56px;
+  font-family: var(--font-display);
+}
+.final-cta .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.final-cta .btn-primary {
+  background: var(--ivory); color: var(--ink); border-color: var(--ivory);
+}
+.final-cta .btn-primary:hover { background: var(--linen); border-color: var(--linen); }
+.final-cta .btn-ghost { color: var(--ivory); border-color: rgba(249,248,246,.5); }
+.final-cta .btn-ghost:hover { background: var(--ivory); color: var(--ink); border-color: var(--ivory); }
+
+/* ============ FAQ ============ */
+.faq-section { background: var(--oat); }
+.faq-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(48px, 7vw, 96px);
+  align-items: flex-start;
+}
+.faq-head h2 { font-weight: 300; }
+.faq-head h2 .em { font-style: italic; }
+.faq-head p { margin-top: 32px; color: var(--stone); max-width: 380px; }
+
+.faq-list {}
+.faq-item {
+  border-top: var(--hairline);
+}
+.faq-item:last-child { border-bottom: var(--hairline); }
+.faq-q {
+  width: 100%;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 32px;
+  padding: 28px 0;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  transition: padding .25s var(--ease-out);
+}
+.faq-q:hover { padding-left: 8px; }
+.faq-q .icn {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  position: relative;
+  margin-top: 8px;
+  transition: transform .3s var(--ease-out);
+}
+.faq-q .icn::before, .faq-q .icn::after {
+  content: ''; position: absolute;
+  background: var(--ink);
+  transition: transform .3s var(--ease-out);
+}
+.faq-q .icn::before { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+.faq-q .icn::after  { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+.faq-item.open .faq-q .icn::after { transform: translateX(-50%) scaleY(0); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .5s var(--ease-out);
+}
+.faq-a-inner { padding: 0 0 32px; max-width: 720px; color: var(--stone); font-size: 15.5px; line-height: 1.65; }
+
+@media (max-width: 900px) {
+  .faq-grid { grid-template-columns: 1fr; gap: 32px; }
+  .faq-q { font-size: 19px; }
+}
+
+/* ============ Footer ============ */
+footer {
+  background: var(--ivory);
+  border-top: var(--hairline);
+  padding: 80px 0 40px;
+  color: var(--stone);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+}
+.f-brand { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.32em; color: var(--ink); margin-bottom: 16px; }
+.f-tag { font-family: var(--font-display); font-style: italic; font-weight: 300; font-size: 17px; color: var(--stone); max-width: 320px; }
+.f-col h4 {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+  margin: 0 0 20px;
+  font-family: var(--font-body);
+}
+.f-col ul { display: flex; flex-direction: column; gap: 10px; }
+.f-col a { font-size: 14px; color: var(--stone); transition: color .2s ease; }
+.f-col a:hover { color: var(--ink); }
+
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: var(--hairline);
+  font-size: 12px;
+  color: var(--ash);
+  letter-spacing: 0.04em;
+}
+.footer-bottom a { color: var(--ash); transition: color .2s ease; }
+.footer-bottom a:hover { color: var(--ink); }
+
+@media (max-width: 800px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 500px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ============ Reveal Animation ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ Cart Drawer ============ */
+.cart-overlay {
+  position: fixed; inset: 0;
+  background: rgba(24,19,16,.4);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 200;
+}
+.cart-overlay.open { opacity: 1; pointer-events: auto; }
+.cart-drawer {
+  position: fixed; right: 0; top: 0; bottom: 0;
+  width: min(440px, 100%);
+  background: var(--ivory);
+  z-index: 201;
+  transform: translateX(100%);
+  transition: transform .4s var(--ease-out);
+  display: flex; flex-direction: column;
+  border-left: var(--hairline);
+}
+.cart-drawer.open { transform: translateX(0); }
+.cart-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24px 32px;
+  border-bottom: var(--hairline);
+}
+.cart-head h3 { font-family: var(--font-display); font-size: 24px; font-weight: 400; margin: 0; }
+.cart-close { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--stone); }
+.cart-body { flex: 1; overflow-y: auto; padding: 32px; }
+.cart-empty { text-align: center; padding: 80px 0; color: var(--stone); }
+.cart-foot { padding: 24px 32px; border-top: var(--hairline); }
+.cart-foot .total { display: flex; justify-content: space-between; margin-bottom: 16px; font-family: var(--font-display); font-size: 22px; }
+.cart-item-row {
+  display: grid; grid-template-columns: 60px 1fr auto;
+  gap: 16px; padding: 16px 0;
+  border-bottom: var(--hairline);
+  align-items: center;
+}
+.cart-item-row:last-child { border-bottom: 0; }
+.cart-item-row .ci-name { font-family: var(--font-display); font-size: 17px; }
+.cart-item-row .ci-meta { font-size: 12px; color: var(--ash); margin-top: 2px; }
+.cart-item-row .ci-bottle { width: 60px; height: 60px; background: var(--oat); display:flex; align-items:center; justify-content:center; }
+.cart-item-row .ci-bottle svg { height: 80%; }
+.cart-item-row .ci-price { font-family: var(--font-display); font-size: 17px; }
+.cart-qty { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+.cart-qty button { width: 22px; height: 22px; border: 1px solid var(--linen); font-size: 13px; }
+.cart-qty span { font-size: 13px; min-width: 18px; text-align: center; }
+
+/* ============ Mobile menu ============ */
+.mobile-menu {
+  position: fixed; inset: 0;
+  background: var(--ivory);
+  z-index: 99;
+  transform: translateY(-100%);
+  transition: transform .4s var(--ease-out);
+  padding: 100px 32px 40px;
+  display: flex; flex-direction: column;
+  gap: 24px;
+}
+.mobile-menu.open { transform: translateY(0); }
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--ink);
+  border-bottom: var(--hairline);
+  padding-bottom: 16px;
+}
+.mobile-lang { display: flex; gap: 16px; margin-top: auto; font-size: 12px; letter-spacing: 0.12em; }
+.mobile-lang button.active { color: var(--ink); }
+.mobile-lang button { color: var(--ash); }
+</style>
+</head>
+<body>
+
+<!-- ============ Navigation ============ -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <a href="#" class="brand">ARYA</a>
+    <div class="nav-links">
+      <a href="#categories" data-i18n="nav.cats">Категории</a>
+      <a href="#quiz" data-i18n="nav.quiz">Подбор</a>
+      <a href="#timeline" data-i18n="nav.timeline">40 дней</a>
+      <a href="#products" data-i18n="nav.products">Купажи</a>
+      <a href="#mono" data-i18n="nav.mono">Моно</a>
+      <a href="#ritual" data-i18n="nav.ritual">Ритуал</a>
+      <a href="#faq" data-i18n="nav.faq">Вопросы</a>
+    </div>
+    <div class="nav-tools">
+      <div class="lang-switch">
+        <button data-lang="ru" class="active">RU</button>
+        <span class="sep">·</span>
+        <button data-lang="ro">RO</button>
+        <span class="sep">·</span>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="cart-btn" id="cartOpen">
+        <span data-i18n="nav.cart">Корзина</span>
+        <span class="count" id="cartCount">0</span>
+      </button>
+      <button class="menu-btn" id="menuBtn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#categories" data-i18n="nav.cats">Категории</a>
+  <a href="#quiz" data-i18n="nav.quiz">Подбор</a>
+  <a href="#timeline" data-i18n="nav.timeline">40 дней</a>
+  <a href="#products" data-i18n="nav.products">Купажи</a>
+  <a href="#mono" data-i18n="nav.mono">Моно</a>
+  <a href="#ritual" data-i18n="nav.ritual">Ритуал</a>
+  <a href="#faq" data-i18n="nav.faq">Вопросы</a>
+  <div class="mobile-lang">
+    <button data-lang="ru" class="active">RU</button>
+    <button data-lang="ro">RO</button>
+    <button data-lang="en">EN</button>
+  </div>
+</div>
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text reveal">
+        <span class="eyebrow" data-i18n="hero.eyebrow">ARYA · Холодный отжим · Молдова</span>
+        <h1 class="display-xl">
+          <span data-i18n="hero.h1a">Восстановление тела</span><br/>
+          <span class="em" data-i18n="hero.h1b">за 40 дней</span>
+        </h1>
+        <p class="sub" data-i18n="hero.sub">Масла, которые возвращают энергию и здоровье. Не добавка. Основа, на которой строится тело.</p>
+        <div class="hero-cta">
+          <a href="#products" class="btn btn-primary" data-i18n="hero.cta1">Выбрать масло</a>
+          <a href="#quiz" class="btn btn-ghost" data-i18n="hero.cta2">Пройти подбор</a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="num">5</span>
+            <span class="lbl" data-i18n="hero.m1">Систем восстановления</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="num">40</span>
+            <span class="lbl" data-i18n="hero.m2">Дней ежедневного ритма</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="num">38°</span>
+            <span class="lbl" data-i18n="hero.m3">Максимум при отжиме</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="hero-corner">
+          <div data-i18n="hero.corner1">N° 01 — Balance</div>
+          <div data-i18n="hero.corner2">100 ml · Marasca</div>
+        </div>
+        <div class="hero-bottle-wrap">
+          <!-- SVG dark Marasca bottle -->
+          <svg class="bottle-svg" viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g-glass" x1="0" x2="1">
+                <stop offset="0" stop-color="#0d0a08"/>
+                <stop offset="0.45" stop-color="#1f1816"/>
+                <stop offset="0.55" stop-color="#2a221d"/>
+                <stop offset="1" stop-color="#0a0706"/>
+              </linearGradient>
+              <linearGradient id="g-cap" x1="0" x2="1">
+                <stop offset="0" stop-color="#5a4a35"/>
+                <stop offset="0.5" stop-color="#7a6446"/>
+                <stop offset="1" stop-color="#3d3324"/>
+              </linearGradient>
+              <linearGradient id="g-shine" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity="0.18"/>
+                <stop offset="0.5" stop-color="#fff" stop-opacity="0.04"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <!-- Cap -->
+            <rect x="78" y="0" width="44" height="44" rx="2" fill="url(#g-cap)"/>
+            <rect x="76" y="40" width="48" height="6" fill="#2c241a"/>
+            <!-- Neck -->
+            <rect x="86" y="46" width="28" height="34" fill="url(#g-glass)"/>
+            <!-- Shoulder transition -->
+            <path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="url(#g-glass)"/>
+            <!-- Glass shine -->
+            <path d="M 60 110 Q 56 115 56 130 L 56 420 Q 56 440 70 446 L 70 446 L 76 446 L 76 130 Q 76 115 80 110 Z" fill="url(#g-shine)"/>
+            <!-- Label -->
+            <rect x="64" y="220" width="72" height="140" fill="#F4F0EB" opacity="0.92"/>
+            <text x="100" y="248" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3" text-anchor="middle" fill="#8B847B">N° 01</text>
+            <text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="22" font-weight="400" text-anchor="middle" fill="#1A1714">ARYA</text>
+            <text x="100" y="312" font-family="Cormorant Garamond, serif" font-style="italic" font-size="14" font-weight="300" text-anchor="middle" fill="#5A544C">Balance</text>
+            <line x1="76" y1="328" x2="124" y2="328" stroke="#E2DACE" stroke-width="1"/>
+            <text x="100" y="346" font-family="Manrope, sans-serif" font-size="7" letter-spacing="1.5" text-anchor="middle" fill="#8B847B">COLD PRESSED · 100 ML</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Quiz ============ -->
+<section class="quiz" id="quiz">
+  <div class="container">
+    <div class="quiz-grid">
+      <div class="quiz-intro reveal">
+        <span class="eyebrow" data-i18n="quiz.eyebrow">N° 02 · Персональный подбор</span>
+        <h2 class="display-l"><span data-i18n="quiz.h1">Подобрать масло </span><span class="em" data-i18n="quiz.h2">под своё состояние</span></h2>
+        <p class="body-l" data-i18n="quiz.p">Пять коротких вопросов. Шестьдесят секунд. Точное совпадение между состоянием тела и формулой масла.</p>
+        <div class="meta">
+          <div><span class="dot"></span><span data-i18n="quiz.m1">5 вопросов</span></div>
+          <div><span class="dot"></span><span data-i18n="quiz.m2">60 секунд</span></div>
+          <div><span class="dot"></span><span data-i18n="quiz.m3">Без email</span></div>
+        </div>
+      </div>
+
+      <div class="quiz-panel reveal">
+        <div class="quiz-progress" id="quizProgress">
+          <div class="dash active"></div>
+          <div class="dash"></div>
+          <div class="dash"></div>
+          <div class="dash"></div>
+          <div class="dash"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="quiz-step active" data-step="1">
+          <span class="step-num">N° 01 · 05</span>
+          <p class="q" data-i18n="q1.text">Что вы чувствуете чаще всего в последнее время?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-target="balance"><span data-i18n="q1.o1">Нет энергии, общая истощённость</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="digest"><span data-i18n="q1.o2">Тяжесть после еды, вздутие</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="neuro"><span data-i18n="q1.o3">Стресс, напряжение, тревожность</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="skin"><span data-i18n="q1.o4">Сухость, тусклая кожа</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="hormone"><span data-i18n="q1.o5">Колебания, циклические сбои</span><span class="arr">→</span></button>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="quiz-step" data-step="2">
+          <span class="step-num">N° 02 · 05</span>
+          <p class="q" data-i18n="q2.text">Что для вас сейчас важнее восстановить?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-target="balance"><span data-i18n="q2.o1">Базовый ресурс и силы</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="neuro"><span data-i18n="q2.o2">Ясность и концентрацию</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="digest"><span data-i18n="q2.o3">Пищеварение и лёгкость</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="hormone"><span data-i18n="q2.o4">Гормональный баланс</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="skin"><span data-i18n="q2.o5">Кожу и внешний вид</span><span class="arr">→</span></button>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="quiz-step" data-step="3">
+          <span class="step-num">N° 03 · 05</span>
+          <p class="q" data-i18n="q3.text">Как вы оцените свой уровень стресса?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-target="balance"><span data-i18n="q3.o1">Тихий, всё ровно</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="balance"><span data-i18n="q3.o2">Периодический</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="neuro"><span data-i18n="q3.o3">Постоянный фон</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="neuro"><span data-i18n="q3.o4">На пределе</span><span class="arr">→</span></button>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="quiz-step" data-step="4">
+          <span class="step-num">N° 04 · 05</span>
+          <p class="q" data-i18n="q4.text">Как вы спите?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-target="balance"><span data-i18n="q4.o1">Стабильно, высыпаюсь</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="neuro"><span data-i18n="q4.o2">Поверхностно, прерывисто</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="hormone"><span data-i18n="q4.o3">Тяжело засыпаю</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="digest"><span data-i18n="q4.o4">Просыпаюсь усталой(ым)</span><span class="arr">→</span></button>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="quiz-step" data-step="5">
+          <span class="step-num">N° 05 · 05</span>
+          <p class="q" data-i18n="q5.text">Что важнее всего для вас в продукте?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-target="balance"><span data-i18n="q5.o1">Простой ежедневный ритм</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="neuro"><span data-i18n="q5.o2">Глубинная работа с телом</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="skin"><span data-i18n="q5.o3">Видимый эффект</span><span class="arr">→</span></button>
+            <button class="quiz-option" data-target="digest"><span data-i18n="q5.o4">Чистота и натуральность</span><span class="arr">→</span></button>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="quiz-result" id="quizResult">
+          <div class="state-line" data-i18n="qr.state">Ваше состояние</div>
+          <div class="state" id="resultState"></div>
+          <div class="reco-label" data-i18n="qr.reco">Купаж — точка входа</div>
+          <div class="reco-name" id="resultName"></div>
+          <div class="reco-desc" id="resultDesc"></div>
+
+          <div class="mono-suggest">
+            <div class="add-line" data-i18n="qr.add">Для усиления курса можно добавить</div>
+            <div class="mono-suggest-list" id="resultMono"></div>
+          </div>
+
+          <div class="quiz-result-cta">
+            <a href="#products" class="btn btn-primary" data-i18n="qr.cta1">Выбрать этот вариант</a>
+            <a href="#mono" class="btn btn-ghost" data-i18n="qr.cta2">Все моно-масла</a>
+          </div>
+        </div>
+
+        <div class="quiz-controls" id="quizControls">
+          <button class="quiz-back" id="quizBack" data-i18n="quiz.back">← Назад</button>
+          <span class="quiz-counter" id="quizCounter">01 / 05</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Categories ============ -->
+<section id="categories">
+  <div class="container">
+    <div class="cats-head reveal">
+      <div>
+        <span class="eyebrow" data-i18n="cats.eyebrow">N° 03 · Системы</span>
+        <h2 class="display-l"><span data-i18n="cats.h1">Пять состояний.</span> <span class="italic" data-i18n="cats.h2">Пять формул.</span></h2>
+      </div>
+      <a href="#products" class="btn-link" data-i18n="cats.link">Смотреть все <span class="arr">→</span></a>
+    </div>
+
+    <div class="cats-grid">
+      <div class="cat-item balance">
+        <span class="cat-num">N° 01</span>
+        <span class="cat-marker"></span>
+        <h3 class="cat-name">Balance</h3>
+        <p class="cat-state" data-i18n="cat.balance.state">Истощение, нет ресурса</p>
+        <p class="cat-desc" data-i18n="cat.balance.desc">Базовый купаж для восстановления энергии и тонуса. Кунжут, лён, расторопша, амарант, чёрный тмин.</p>
+        <a href="#products" class="cat-link" data-i18n="cats.read">Узнать больше →</a>
+      </div>
+      <div class="cat-item neuro">
+        <span class="cat-num">N° 02</span>
+        <span class="cat-marker"></span>
+        <h3 class="cat-name">Neuro</h3>
+        <p class="cat-state" data-i18n="cat.neuro.state">Тревога, рассеянность</p>
+        <p class="cat-desc" data-i18n="cat.neuro.desc">Поддержка нервной системы и ясности. Грецкий орех, лён, тыква, кедровое.</p>
+        <a href="#products" class="cat-link" data-i18n="cats.read">Узнать больше →</a>
+      </div>
+      <div class="cat-item digest">
+        <span class="cat-num">N° 03</span>
+        <span class="cat-marker"></span>
+        <h3 class="cat-name">Digest</h3>
+        <p class="cat-state" data-i18n="cat.digest.state">Тяжесть, вздутие</p>
+        <p class="cat-desc" data-i18n="cat.digest.desc">Лёгкое пищеварение и поддержка печени. Расторопша, чёрный тмин, тыква, льняное.</p>
+        <a href="#products" class="cat-link" data-i18n="cats.read">Узнать больше →</a>
+      </div>
+      <div class="cat-item hormone">
+        <span class="cat-num">N° 04</span>
+        <span class="cat-marker"></span>
+        <h3 class="cat-name">Hormone</h3>
+        <p class="cat-state" data-i18n="cat.hormone.state">Цикличные колебания</p>
+        <p class="cat-desc" data-i18n="cat.hormone.desc">Поддержка гормональной системы. Лён, чёрный тмин, кунжут, примула вечерняя.</p>
+        <a href="#products" class="cat-link" data-i18n="cats.read">Узнать больше →</a>
+      </div>
+      <div class="cat-item skin">
+        <span class="cat-num">N° 05</span>
+        <span class="cat-marker"></span>
+        <h3 class="cat-name">Skin</h3>
+        <p class="cat-state" data-i18n="cat.skin.state">Сухость, тусклость</p>
+        <p class="cat-desc" data-i18n="cat.skin.desc">Питание кожи изнутри. Аргана, шиповник, лён, кунжут, амарант.</p>
+        <a href="#products" class="cat-link" data-i18n="cats.read">Узнать больше →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Editorial Quote ============ -->
+<section class="quote-section">
+  <div class="container">
+    <p class="quote">
+      <span data-i18n="quote.l1">Тело строится из жиров.</span><br/>
+      <span data-i18n="quote.l2">Когда жиры правильные —</span><br/>
+      <span data-i18n="quote.l3">тело восстанавливает себя само.</span>
+    </p>
+    <div class="quote-credit" data-i18n="quote.credit">— Принцип ARYA</div>
+  </div>
+</section>
+
+<!-- ============ 40-Day Timeline ============ -->
+<section class="timeline-section" id="timeline">
+  <div class="container">
+    <div class="timeline-head reveal">
+      <span class="eyebrow" data-i18n="tl.eyebrow">N° 04 · Ритм восстановления</span>
+      <h2 class="display-l"><span data-i18n="tl.h1">Сорок дней.</span> <span class="em" data-i18n="tl.h2">Четыре фазы.</span></h2>
+      <p class="body-l" data-i18n="tl.p">Тело меняется не за день. Оно меняется за сорок. Каждая фаза имеет свой характер и свой отклик.</p>
+    </div>
+
+    <div class="timeline-phases" id="timelinePhases">
+      <div class="phase-pill active" data-phase="1">
+        <span class="p-days" data-i18n="tl.p1.days">Дни 1 — 10</span>
+        <span class="p-name" data-i18n="tl.p1.name">Первая волна</span>
+      </div>
+      <div class="phase-pill" data-phase="2">
+        <span class="p-days" data-i18n="tl.p2.days">Дни 11 — 20</span>
+        <span class="p-name" data-i18n="tl.p2.name">Углубление</span>
+      </div>
+      <div class="phase-pill" data-phase="3">
+        <span class="p-days" data-i18n="tl.p3.days">Дни 21 — 30</span>
+        <span class="p-name" data-i18n="tl.p3.name">Восстановление</span>
+      </div>
+      <div class="phase-pill" data-phase="4">
+        <span class="p-days" data-i18n="tl.p4.days">Дни 31 — 40</span>
+        <span class="p-name" data-i18n="tl.p4.name">Новый ритм</span>
+      </div>
+    </div>
+
+    <div class="timeline-body">
+      <div class="timeline-visual">
+        <div class="orb-wrap">
+          <span class="orb-day-label" data-i18n="tl.day">День</span>
+          <div class="orb-bg"></div>
+          <div class="orb-fg s1" id="orb"></div>
+          <span class="orb-day" id="orbDay">10</span>
+        </div>
+      </div>
+
+      <div class="timeline-stages">
+        <div class="stage" data-phase="1">
+          <div class="s-num" data-i18n="tl.s1.num">Фаза 01 · Дни 1–10</div>
+          <h3 data-i18n="tl.s1.h">Первая волна</h3>
+          <p class="lead" data-i18n="tl.s1.lead">Тело узнаёт новый рацион жиров. Клеточные мембраны начинают перестройку. Это тихая работа — пока без видимых эффектов.</p>
+          <div class="changes">
+            <div class="change">
+              <div class="label" data-i18n="tl.s1.c1l">Энергия</div>
+              <div class="text" data-i18n="tl.s1.c1t">Уровень утреннего ресурса начинает выравниваться. Меньше провалов после еды.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s1.c2l">Пищеварение</div>
+              <div class="text" data-i18n="tl.s1.c2t">Тело адаптируется к ежедневной ложке масла натощак. Первые признаки лёгкости.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s1.c3l">Ритм</div>
+              <div class="text" data-i18n="tl.s1.c3t">Формируется привычка. Утренняя ложка становится якорем дня.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage" data-phase="2">
+          <div class="s-num" data-i18n="tl.s2.num">Фаза 02 · Дни 11–20</div>
+          <h3 data-i18n="tl.s2.h">Углубление</h3>
+          <p class="lead" data-i18n="tl.s2.lead">Жиры доходят до мембран клеток. Меняется качество сна, появляется внутренняя устойчивость. Тело начинает работать иначе.</p>
+          <div class="changes">
+            <div class="change">
+              <div class="label" data-i18n="tl.s2.c1l">Сон</div>
+              <div class="text" data-i18n="tl.s2.c1t">Углубляется. Чаще удаётся проспать ночь без пробуждений.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s2.c2l">Кожа</div>
+              <div class="text" data-i18n="tl.s2.c2t">Текстура мягче. Сухие зоны на руках, локтях постепенно восстанавливаются.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s2.c3l">Голова</div>
+              <div class="text" data-i18n="tl.s2.c3t">Меньше тумана. Концентрация дольше держится в течение дня.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage" data-phase="3">
+          <div class="s-num" data-i18n="tl.s3.num">Фаза 03 · Дни 21–30</div>
+          <h3 data-i18n="tl.s3.h">Восстановление</h3>
+          <p class="lead" data-i18n="tl.s3.lead">Системные изменения. Гормональный фон стабилизируется, нервная система приходит к ровному балансу. Это уже не адаптация — это новое состояние.</p>
+          <div class="changes">
+            <div class="change">
+              <div class="label" data-i18n="tl.s3.c1l">Нервная система</div>
+              <div class="text" data-i18n="tl.s3.c1t">Стрессовые пики переживаются мягче. Восстановление быстрее.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s3.c2l">Гормоны</div>
+              <div class="text" data-i18n="tl.s3.c2t">Цикл выравнивается. ПМС-симптомы менее выражены у большинства.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s3.c3l">Внимание к телу</div>
+              <div class="text" data-i18n="tl.s3.c3t">Появляется ощущение «я слышу своё тело». Это и есть восстановление чувствительности.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage" data-phase="4">
+          <div class="s-num" data-i18n="tl.s4.num">Фаза 04 · Дни 31–40</div>
+          <h3 data-i18n="tl.s4.h">Новый ритм</h3>
+          <p class="lead" data-i18n="tl.s4.lead">Тело перестроилось. Это становится не курсом, а нормой. Энергия ровная, не пиковая. Внутри — спокойная сила.</p>
+          <div class="changes">
+            <div class="change">
+              <div class="label" data-i18n="tl.s4.c1l">Состояние</div>
+              <div class="text" data-i18n="tl.s4.c1t">Ровная энергия в течение всего дня. Без скачков и обвалов.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s4.c2l">Внешний вид</div>
+              <div class="text" data-i18n="tl.s4.c2t">Кожа, волосы, ногти отражают изменения изнутри. Это видно.</div>
+            </div>
+            <div class="change">
+              <div class="label" data-i18n="tl.s4.c3l">Привычка</div>
+              <div class="text" data-i18n="tl.s4.c3t">Ложка масла утром — больше не задача. Это часть дня, как чашка чая.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Education (Fats Concept) ============ -->
+<section class="education">
+  <div class="container">
+    <div class="ed-grid">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="ed.eyebrow">N° 05 · Принцип</span>
+        <h2 class="display-l" style="margin-top:24px;"><span data-i18n="ed.h1">Жиры — это </span><span class="em" data-i18n="ed.h2">не калории.</span></h2>
+        <p class="ed-lead" data-i18n="ed.lead">Это материал, из которого собрано ваше тело. Каждая клетка, каждый гормон, каждый сигнал нервной системы. Когда жиры правильные — тело знает, что делать.</p>
+      </div>
+
+      <div class="ed-points reveal">
+        <div class="ed-point">
+          <span class="ep-num">01</span>
+          <div>
+            <h4 class="ep-h" data-i18n="ed.p1.h">Мембраны клеток</h4>
+            <p class="ep-t" data-i18n="ed.p1.t">Каждая клетка тела окружена двойным слоем жиров. От его качества зависит, как клетка обменивается с миром — кислород, питание, сигналы.</p>
+          </div>
+        </div>
+        <div class="ed-point">
+          <span class="ep-num">02</span>
+          <div>
+            <h4 class="ep-h" data-i18n="ed.p2.h">Гормоны</h4>
+            <p class="ep-t" data-i18n="ed.p2.t">Половые гормоны, кортизол, витамин D — всё это собрано из жиров. Без правильной базы гормональная система работает на резерве.</p>
+          </div>
+        </div>
+        <div class="ed-point">
+          <span class="ep-num">03</span>
+          <div>
+            <h4 class="ep-h" data-i18n="ed.p3.h">Мозг и нервная система</h4>
+            <p class="ep-t" data-i18n="ed.p3.t">Мозг на 60% состоит из жира. Миелиновая оболочка нервов — это жир. Без жиров — нет ясности, нет реакции, нет сна.</p>
+          </div>
+        </div>
+        <div class="ed-point">
+          <span class="ep-num">04</span>
+          <div>
+            <h4 class="ep-h" data-i18n="ed.p4.h">Кожа</h4>
+            <p class="ep-t" data-i18n="ed.p4.t">Барьерная функция кожи держится на липидах. Сухость, тусклость, шелушение — всегда сигнал о дефиците правильных жиров.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Products ============ -->
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="products-head reveal">
+      <div>
+        <span class="eyebrow" data-i18n="pr.eyebrow">N° 06 · Каталог</span>
+        <h2 class="display-l" style="margin-top:24px;"><span data-i18n="pr.h1">Пять формул.</span> <span class="italic" data-i18n="pr.h2">Один ритм.</span></h2>
+      </div>
+      <a href="#quiz" class="btn-link" data-i18n="pr.link">Не уверены? Подбор <span class="arr">→</span></a>
+    </div>
+
+    <div class="products-grid">
+      <!-- Balance -->
+      <div class="product-card balance">
+        <div class="pc-cat"><span class="pc-marker"></span>BALANCE · N° 01</div>
+        <div class="pc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><rect x="76" y="40" width="48" height="6" fill="#2c241a"/><rect x="86" y="46" width="28" height="34" fill="#181310"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="220" width="72" height="140" fill="#F4F0EB"/><text x="100" y="248" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3" text-anchor="middle" fill="#8B847B">N° 01</text><text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="22" text-anchor="middle" fill="#1A1714">ARYA</text><text x="100" y="312" font-family="Cormorant Garamond, serif" font-style="italic" font-size="14" text-anchor="middle" fill="#5A544C">Balance</text><line x1="76" y1="328" x2="124" y2="328" stroke="#E2DACE"/><text x="100" y="346" font-family="Manrope" font-size="7" letter-spacing="1.5" text-anchor="middle" fill="#8B847B">COLD PRESSED · 100 ML</text></svg>
+        </div>
+        <h3 class="pc-name">Balance</h3>
+        <p class="pc-tag" data-i18n="pr.balance.tag">Базовый ресурс</p>
+        <p class="pc-benefit" data-i18n="pr.balance.b">Кунжут 30%, лён 25%, расторопша 20%, амарант 15%, чёрный тмин 10%. Соотношение ω-6:ω-3 ≈ 2.6:1.</p>
+        <div class="pc-foot">
+          <div class="pc-price"><small>от</small>280 lei</div>
+          <button class="pc-add" data-add="balance" data-name="ARYA Balance" data-price="280" data-i18n="pr.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- Neuro -->
+      <div class="product-card neuro">
+        <div class="pc-cat"><span class="pc-marker"></span>NEURO · N° 02</div>
+        <div class="pc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><rect x="76" y="40" width="48" height="6" fill="#2c241a"/><rect x="86" y="46" width="28" height="34" fill="#181310"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="220" width="72" height="140" fill="#F4F0EB"/><text x="100" y="248" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3" text-anchor="middle" fill="#8B847B">N° 02</text><text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="22" text-anchor="middle" fill="#1A1714">ARYA</text><text x="100" y="312" font-family="Cormorant Garamond, serif" font-style="italic" font-size="14" text-anchor="middle" fill="#5A544C">Neuro</text><line x1="76" y1="328" x2="124" y2="328" stroke="#E2DACE"/><text x="100" y="346" font-family="Manrope" font-size="7" letter-spacing="1.5" text-anchor="middle" fill="#8B847B">COLD PRESSED · 100 ML</text></svg>
+        </div>
+        <h3 class="pc-name">Neuro</h3>
+        <p class="pc-tag" data-i18n="pr.neuro.tag">Ясность и спокойствие</p>
+        <p class="pc-benefit" data-i18n="pr.neuro.b">Грецкий орех, лён, тыквенное, кедровое. Высокое содержание ω-3 для нервной системы.</p>
+        <div class="pc-foot">
+          <div class="pc-price"><small>от</small>320 lei</div>
+          <button class="pc-add" data-add="neuro" data-name="ARYA Neuro" data-price="320" data-i18n="pr.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- Digest -->
+      <div class="product-card digest">
+        <div class="pc-cat"><span class="pc-marker"></span>DIGEST · N° 03</div>
+        <div class="pc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><rect x="76" y="40" width="48" height="6" fill="#2c241a"/><rect x="86" y="46" width="28" height="34" fill="#181310"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="220" width="72" height="140" fill="#F4F0EB"/><text x="100" y="248" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3" text-anchor="middle" fill="#8B847B">N° 03</text><text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="22" text-anchor="middle" fill="#1A1714">ARYA</text><text x="100" y="312" font-family="Cormorant Garamond, serif" font-style="italic" font-size="14" text-anchor="middle" fill="#5A544C">Digest</text><line x1="76" y1="328" x2="124" y2="328" stroke="#E2DACE"/><text x="100" y="346" font-family="Manrope" font-size="7" letter-spacing="1.5" text-anchor="middle" fill="#8B847B">COLD PRESSED · 100 ML</text></svg>
+        </div>
+        <h3 class="pc-name">Digest</h3>
+        <p class="pc-tag" data-i18n="pr.digest.tag">Лёгкость и чистота</p>
+        <p class="pc-benefit" data-i18n="pr.digest.b">Расторопша, чёрный тмин, тыквенное, льняное. Поддержка печени и пищеварения.</p>
+        <div class="pc-foot">
+          <div class="pc-price"><small>от</small>290 lei</div>
+          <button class="pc-add" data-add="digest" data-name="ARYA Digest" data-price="290" data-i18n="pr.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- Hormone -->
+      <div class="product-card hormone">
+        <div class="pc-cat"><span class="pc-marker"></span>HORMONE · N° 04</div>
+        <div class="pc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><rect x="76" y="40" width="48" height="6" fill="#2c241a"/><rect x="86" y="46" width="28" height="34" fill="#181310"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="220" width="72" height="140" fill="#F4F0EB"/><text x="100" y="248" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3" text-anchor="middle" fill="#8B847B">N° 04</text><text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="22" text-anchor="middle" fill="#1A1714">ARYA</text><text x="100" y="312" font-family="Cormorant Garamond, serif" font-style="italic" font-size="14" text-anchor="middle" fill="#5A544C">Hormone</text><line x1="76" y1="328" x2="124" y2="328" stroke="#E2DACE"/><text x="100" y="346" font-family="Manrope" font-size="7" letter-spacing="1.5" text-anchor="middle" fill="#8B847B">COLD PRESSED · 100 ML</text></svg>
+        </div>
+        <h3 class="pc-name">Hormone</h3>
+        <p class="pc-tag" data-i18n="pr.hormone.tag">Внутреннее равновесие</p>
+        <p class="pc-benefit" data-i18n="pr.hormone.b">Лён, чёрный тмин, кунжут, примула вечерняя. Базовая поддержка эндокринной системы.</p>
+        <div class="pc-foot">
+          <div class="pc-price"><small>от</small>340 lei</div>
+          <button class="pc-add" data-add="hormone" data-name="ARYA Hormone" data-price="340" data-i18n="pr.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- Skin -->
+      <div class="product-card skin">
+        <div class="pc-cat"><span class="pc-marker"></span>SKIN · N° 05</div>
+        <div class="pc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><rect x="76" y="40" width="48" height="6" fill="#2c241a"/><rect x="86" y="46" width="28" height="34" fill="#181310"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="220" width="72" height="140" fill="#F4F0EB"/><text x="100" y="248" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="3" text-anchor="middle" fill="#8B847B">N° 05</text><text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="22" text-anchor="middle" fill="#1A1714">ARYA</text><text x="100" y="312" font-family="Cormorant Garamond, serif" font-style="italic" font-size="14" text-anchor="middle" fill="#5A544C">Skin</text><line x1="76" y1="328" x2="124" y2="328" stroke="#E2DACE"/><text x="100" y="346" font-family="Manrope" font-size="7" letter-spacing="1.5" text-anchor="middle" fill="#8B847B">COLD PRESSED · 100 ML</text></svg>
+        </div>
+        <h3 class="pc-name">Skin</h3>
+        <p class="pc-tag" data-i18n="pr.skin.tag">Питание изнутри</p>
+        <p class="pc-benefit" data-i18n="pr.skin.b">Аргана, шиповник, лён, кунжут, амарант. Восстановление барьерной функции кожи.</p>
+        <div class="pc-foot">
+          <div class="pc-price"><small>от</small>360 lei</div>
+          <button class="pc-add" data-add="skin" data-name="ARYA Skin" data-price="360" data-i18n="pr.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- Set / 40 days -->
+      <div class="product-card" style="background: var(--parchment);">
+        <div class="pc-cat" style="color: var(--bronze);">N° 00 · 40 ДНЕЙ</div>
+        <div class="pc-bottle" style="height:auto; padding:40px 0;">
+          <div style="font-family: var(--font-display); font-size: 80px; font-weight: 300; color: var(--ink); line-height: 1;">40</div>
+        </div>
+        <h3 class="pc-name" data-i18n="pr.set.h">Полный курс</h3>
+        <p class="pc-tag" data-i18n="pr.set.tag">Все пять масел · сорок дней</p>
+        <p class="pc-benefit" data-i18n="pr.set.b">Полная коробка для прохождения сорокадневного ритма. С персональной картой смены масел.</p>
+        <div class="pc-foot">
+          <div class="pc-price"><small>от</small>1480 lei</div>
+          <button class="pc-add" data-add="set" data-name="ARYA · Полный курс" data-price="1480" data-i18n="pr.add">В корзину</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Mono Oils ============ -->
+<section class="mono-section" id="mono">
+  <div class="container">
+    <div class="mono-head reveal">
+      <div>
+        <span class="eyebrow" data-i18n="mn.eyebrow">N° 07 · Чистая основа</span>
+        <h2 class="display-l" style="margin-top:24px;"><span data-i18n="mn.h1">Моно-масла —</span><br/><span class="em" data-i18n="mn.h2">кирпичики системы.</span></h2>
+      </div>
+      <p class="desc" data-i18n="mn.desc">За каждым купажом стоят чистые масла. Они существуют сами по себе — как фундаментальный слой ежедневного питания, и как точечное усиление к курсу. <strong>Купажи задают направление. Моно — углубляют его.</strong></p>
+    </div>
+
+    <div class="mono-grid">
+      <!-- 1. Lён -->
+      <div class="mono-card">
+        <span class="mc-num">N° 01 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="280" font-family="Cormorant Garamond, serif" font-size="14" text-anchor="middle" fill="#1A1714">Льняное</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">FLAX · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.flax.n">Льняное</h3>
+        <div class="mc-latin">Linum usitatissimum</div>
+        <p class="mc-spec" data-i18n="mn.flax.s"><b>ω-3 ALA до 55%.</b> Высочайшее содержание альфа-линоленовой кислоты среди семян. Базовая поддержка мозга, гормонов, кожи.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot balance"></span><span class="dot hormone"></span><span class="dot neuro"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>180 lei</div>
+          <button class="mc-add" data-add="mono-flax" data-name="Льняное · моно" data-price="180" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 2. Чёрный тмин -->
+      <div class="mono-card">
+        <span class="mc-num">N° 02 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="278" font-family="Cormorant Garamond, serif" font-size="13" text-anchor="middle" fill="#1A1714">Чёрный тмин</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">NIGELLA · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.cumin.n">Чёрный тмин</h3>
+        <div class="mc-latin">Nigella sativa</div>
+        <p class="mc-spec" data-i18n="mn.cumin.s"><b>Тимохинон, ω-6.</b> Поддержка иммунной и пищеварительной систем. Острая нота, концентрированная сила.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot digest"></span><span class="dot hormone"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>240 lei</div>
+          <button class="mc-add" data-add="mono-cumin" data-name="Чёрный тмин · моно" data-price="240" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 3. Грецкий орех -->
+      <div class="mono-card">
+        <span class="mc-num">N° 03 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="278" font-family="Cormorant Garamond, serif" font-size="13" text-anchor="middle" fill="#1A1714">Грецкий орех</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">WALNUT · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.walnut.n">Грецкий орех</h3>
+        <div class="mc-latin">Juglans regia</div>
+        <p class="mc-spec" data-i18n="mn.walnut.s"><b>ω-3 и ω-6 в балансе.</b> Поддержка нервной системы, ясности, концентрации. Питание мозга.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot neuro"></span><span class="dot balance"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>260 lei</div>
+          <button class="mc-add" data-add="mono-walnut" data-name="Грецкий орех · моно" data-price="260" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 4. Кунжутное -->
+      <div class="mono-card">
+        <span class="mc-num">N° 04 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="280" font-family="Cormorant Garamond, serif" font-size="14" text-anchor="middle" fill="#1A1714">Кунжутное</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">SESAME · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.sesame.n">Кунжутное</h3>
+        <div class="mc-latin">Sesamum indicum</div>
+        <p class="mc-spec" data-i18n="mn.sesame.s"><b>Сезамол, лигнаны, кальций.</b> Стабильное масло. Поддержка костной ткани, гормональной системы, кожи.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot balance"></span><span class="dot hormone"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>200 lei</div>
+          <button class="mc-add" data-add="mono-sesame" data-name="Кунжутное · моно" data-price="200" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 5. Тыквенное -->
+      <div class="mono-card">
+        <span class="mc-num">N° 05 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="280" font-family="Cormorant Garamond, serif" font-size="14" text-anchor="middle" fill="#1A1714">Тыквенное</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">PUMPKIN · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.pumpkin.n">Тыквенное</h3>
+        <div class="mc-latin">Cucurbita pepo</div>
+        <p class="mc-spec" data-i18n="mn.pumpkin.s"><b>Цинк, магний, ω-6.</b> Глубокий зелёный оттенок. Поддержка иммунитета, простаты, нервной системы.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot neuro"></span><span class="dot digest"></span><span class="dot hormone"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>220 lei</div>
+          <button class="mc-add" data-add="mono-pumpkin" data-name="Тыквенное · моно" data-price="220" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 6. Амарантовое -->
+      <div class="mono-card">
+        <span class="mc-num">N° 06 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="280" font-family="Cormorant Garamond, serif" font-size="13" text-anchor="middle" fill="#1A1714">Амарантовое</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">AMARANTH · 50 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.amaranth.n">Амарантовое</h3>
+        <div class="mc-latin">Amaranthus caudatus</div>
+        <p class="mc-spec" data-i18n="mn.amaranth.s"><b>Сквален до 8%.</b> Редкий профиль. Регенерация кожи, антиоксидантная защита. Концентрированное масло — 50 мл.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot skin"></span><span class="dot balance"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>380 lei</div>
+          <button class="mc-add" data-add="mono-amaranth" data-name="Амарантовое · моно" data-price="380" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 7. Виноградная косточка -->
+      <div class="mono-card">
+        <span class="mc-num">N° 07 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="276" font-family="Cormorant Garamond, serif" font-size="11" text-anchor="middle" fill="#1A1714">Виноградная</text><text x="100" y="290" font-family="Cormorant Garamond, serif" font-size="11" font-style="italic" text-anchor="middle" fill="#5A544C">косточка</text><line x1="80" y1="302" x2="120" y2="302" stroke="#E2DACE"/><text x="100" y="320" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">GRAPE · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.grape.n">Виноградная косточка</h3>
+        <div class="mc-latin">Vitis vinifera</div>
+        <p class="mc-spec" data-i18n="mn.grape.s"><b>ОПК, vit E, ω-6.</b> Лёгкое масло. Антиоксидантная поддержка кожи, мягкое питание.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot skin"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>190 lei</div>
+          <button class="mc-add" data-add="mono-grape" data-name="Виноградная косточка · моно" data-price="190" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 8. Лесной орех -->
+      <div class="mono-card">
+        <span class="mc-num">N° 08 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="280" font-family="Cormorant Garamond, serif" font-size="13" text-anchor="middle" fill="#1A1714">Лесной орех</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">HAZELNUT · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.hazel.n">Лесной орех</h3>
+        <div class="mc-latin">Corylus avellana</div>
+        <p class="mc-spec" data-i18n="mn.hazel.s"><b>ω-9, vit E.</b> Мягкий вкус. Уход за кожей, поддержка сердечно-сосудистой системы.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot skin"></span><span class="dot balance"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>240 lei</div>
+          <button class="mc-add" data-add="mono-hazel" data-name="Лесной орех · моно" data-price="240" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+
+      <!-- 9. Горчичное -->
+      <div class="mono-card">
+        <span class="mc-num">N° 09 · Mono</span>
+        <div class="mc-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/><rect x="64" y="240" width="72" height="100" fill="#F4F0EB"/><text x="100" y="280" font-family="Cormorant Garamond, serif" font-size="14" text-anchor="middle" fill="#1A1714">Горчичное</text><line x1="80" y1="295" x2="120" y2="295" stroke="#E2DACE"/><text x="100" y="318" font-family="Manrope" font-size="6.5" letter-spacing="1.2" text-anchor="middle" fill="#8B847B">MUSTARD · 100 ML</text></svg>
+        </div>
+        <h3 class="mc-name" data-i18n="mn.mustard.n">Горчичное</h3>
+        <div class="mc-latin">Brassica nigra</div>
+        <p class="mc-spec" data-i18n="mn.mustard.s"><b>ω-3, ω-9, эфиры горчицы.</b> Согревающий профиль. Сезонная поддержка иммунитета — особенно зимой.</p>
+        <div class="mc-pairs"><span data-i18n="mn.pair">Сочетается:</span><span class="dot digest"></span></div>
+        <div class="mc-foot">
+          <div class="mc-price"><small>от</small>160 lei</div>
+          <button class="mc-add" data-add="mono-mustard" data-name="Горчичное · моно" data-price="160" data-i18n="mn.add">В корзину</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Ritual ============ -->
+<section class="ritual" id="ritual">
+  <div class="container">
+    <div class="ritual-grid">
+      <div class="ritual-intro reveal">
+        <span class="eyebrow" data-i18n="rit.eyebrow">N° 08 · Ритуал</span>
+        <h2 class="display-l" style="margin-top:24px;"><span data-i18n="rit.h1">Тихая</span><br/><span class="em" data-i18n="rit.h2">ежедневная привычка.</span></h2>
+        <p data-i18n="rit.p">Не курс. Не протокол. Простой жест, который встроен в утро. Сорок дней — и тело перестраивается само.</p>
+      </div>
+
+      <div class="ritual-steps reveal">
+        <div class="ritual-step">
+          <span class="rs-time" data-i18n="rit.s1.time">07:00</span>
+          <div>
+            <h4 class="rs-h" data-i18n="rit.s1.h">Натощак, до воды</h4>
+            <p class="rs-t" data-i18n="rit.s1.t">Одна столовая ложка масла на пустой желудок. Тело воспринимает первым то, что получает первым.</p>
+          </div>
+          <span class="rs-num">01</span>
+        </div>
+        <div class="ritual-step">
+          <span class="rs-time" data-i18n="rit.s2.time">+15 мин</span>
+          <div>
+            <h4 class="rs-h" data-i18n="rit.s2.h">Стакан тёплой воды</h4>
+            <p class="rs-t" data-i18n="rit.s2.t">Затем — пятнадцать минут паузы. После — тёплая вода или травяной чай. Никакой еды первые тридцать минут.</p>
+          </div>
+          <span class="rs-num">02</span>
+        </div>
+        <div class="ritual-step">
+          <span class="rs-time" data-i18n="rit.s3.time">Ужин</span>
+          <div>
+            <h4 class="rs-h" data-i18n="rit.s3.h">Ложка в салат</h4>
+            <p class="rs-t" data-i18n="rit.s3.t">Вечером — ложка масла в салат, овощи, кашу. Никогда не нагревать. Только живое.</p>
+          </div>
+          <span class="rs-num">03</span>
+        </div>
+        <div class="ritual-step">
+          <span class="rs-time" data-i18n="rit.s4.time">40 дней</span>
+          <div>
+            <h4 class="rs-h" data-i18n="rit.s4.h">Без перерывов</h4>
+            <p class="rs-t" data-i18n="rit.s4.t">Сорок дней без пропусков. Это не диета и не лечение. Это перестройка состава тела на уровне клетки.</p>
+          </div>
+          <span class="rs-num">04</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Trust ============ -->
+<section class="trust">
+  <div class="container">
+    <div class="trust-head reveal">
+      <span class="eyebrow" data-i18n="tr.eyebrow">N° 09 · Производство</span>
+      <h2 class="display-l"><span data-i18n="tr.h1">Прозрачность</span> <span class="em" data-i18n="tr.h2">как принцип.</span></h2>
+    </div>
+
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="ti-num">38°</div>
+        <div class="ti-h" data-i18n="tr.t1.h">Максимум при отжиме</div>
+        <div class="ti-t" data-i18n="tr.t1.t">Холодный отжим без нагрева. Семена не теряют структуру жирных кислот.</div>
+      </div>
+      <div class="trust-item">
+        <div class="ti-num">7</div>
+        <div class="ti-h" data-i18n="tr.t2.h">Дней до бутылки</div>
+        <div class="ti-t" data-i18n="tr.t2.t">От отжима до запечатывания — не более семи дней. Свежесть — это срок.</div>
+      </div>
+      <div class="trust-item">
+        <div class="ti-num">100ml</div>
+        <div class="ti-h" data-i18n="tr.t3.h">Marasca · Guala</div>
+        <div class="ti-t" data-i18n="tr.t3.t">Тёмное стекло защищает от света. Дозатор Guala защищает от воздуха.</div>
+      </div>
+      <div class="trust-item">
+        <div class="ti-num">0</div>
+        <div class="ti-h" data-i18n="tr.t4.h">Консервантов</div>
+        <div class="ti-t" data-i18n="tr.t4.t">Только семена. Малыми партиями. Срок годности — четыре месяца после отжима.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Final CTA ============ -->
+<section class="final-cta">
+  <div class="container">
+    <span class="eyebrow" data-i18n="fc.eyebrow">N° 10 · Начало</span>
+    <h2><span data-i18n="fc.h1">Начать сорок дней</span><br/><span class="em" data-i18n="fc.h2">и почувствовать разницу.</span></h2>
+    <p data-i18n="fc.p">Это не курс и не протокол. Это начало другого отношения к телу. Спокойного, внимательного, точного.</p>
+    <div class="cta-row">
+      <a href="#products" class="btn btn-primary" data-i18n="fc.cta1">Выбрать масло</a>
+      <a href="#quiz" class="btn btn-ghost" data-i18n="fc.cta2">Пройти подбор</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="faq-grid">
+      <div class="faq-head reveal">
+        <span class="eyebrow" data-i18n="faq.eyebrow">N° 11 · Вопросы</span>
+        <h2 class="display-l" style="margin-top:24px;"><span data-i18n="faq.h1">Что </span><span class="em" data-i18n="faq.h2">часто спрашивают.</span></h2>
+        <p data-i18n="faq.p">Спокойные ответы без обещаний. Если остался вопрос — напишите нам в Telegram.</p>
+      </div>
+
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q1">Можно ли начинать сразу с пяти масел?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a1">Лучше начинать с одного — Balance или с того, что соответствует основному состоянию. Тело адаптируется постепенно. Через десять дней можно добавлять второе масло.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q2">Когда появятся первые ощущения?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a2">Первые отклики — обычно к 7–10 дню: лёгкость, ровный сон, утренняя ясность. Системные изменения — после 21 дня. Полная картина — на 40 день.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q3">Можно ли нагревать масло?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a3">Нет. Холодный отжим — это про сохранение структуры жирных кислот. Нагрев их разрушает. В готовое блюдо — да, в сковороду — нет.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q4">Как хранить?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a4">В холодильнике, плотно закрытым. Marasca-стекло защищает от света, дозатор Guala — от воздуха. Срок — четыре месяца с момента отжима.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q5">Подходит ли при беременности?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a5">Большинство масел совместимы. Но при беременности и грудном вскармливании всегда проконсультируйтесь со своим врачом — мы не заменяем медицинскую консультацию.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q6">Можно ли пройти курс снова?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a6">Да, и для большинства это становится постоянной привычкой. После первых 40 дней многие переходят на ежедневный ритм без перерыва.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span data-i18n="faq.q7">Как происходит доставка?</span><span class="icn"></span></button>
+          <div class="faq-a"><div class="faq-a-inner" data-i18n="faq.a7">По Кишинёву — в течение дня. По Молдове — 1–2 дня. Оплата через Telegram-бот или картой при оформлении. Подробности — в чате после заказа.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="f-brand">ARYA</div>
+        <p class="f-tag" data-i18n="ft.tag">Восстановление через ежедневный ритм. Холодный отжим. Молдова.</p>
+      </div>
+      <div class="f-col">
+        <h4 data-i18n="ft.col1.h">Каталог</h4>
+        <ul>
+          <li><a href="#products">Balance</a></li>
+          <li><a href="#products">Neuro</a></li>
+          <li><a href="#products">Digest</a></li>
+          <li><a href="#products">Hormone</a></li>
+          <li><a href="#products">Skin</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4 data-i18n="ft.col2.h">Бренд</h4>
+        <ul>
+          <li><a href="#" data-i18n="ft.col2.l1">О нас</a></li>
+          <li><a href="#" data-i18n="ft.col2.l2">Производство</a></li>
+          <li><a href="#" data-i18n="ft.col2.l3">Журнал</a></li>
+          <li><a href="#" data-i18n="ft.col2.l4">Доставка</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4 data-i18n="ft.col3.h">Связь</h4>
+        <ul>
+          <li><a href="#">Telegram</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="mailto:hello@arya.md">hello@arya.md</a></li>
+          <li><a href="tel:+37300000000">+373 ···</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 ARYA · Made in Moldova</div>
+      <div>
+        <a href="#" data-i18n="ft.legal1">Политика</a> &middot;
+        <a href="#" data-i18n="ft.legal2">Оферта</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ Cart Drawer ============ -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3 data-i18n="cart.h">Корзина</h3>
+    <button class="cart-close" id="cartClose" data-i18n="cart.close">Закрыть</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty" data-i18n="cart.empty">Корзина пуста</div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="total"><span data-i18n="cart.total">Итого</span><span id="cartTotal">0 lei</span></div>
+    <a href="#" class="btn btn-primary" style="width:100%;" data-i18n="cart.checkout">Оформить через Telegram</a>
+  </div>
+</div>
+
+<!-- ============ Scripts ============ -->
+<script>
+/* ============ i18n ============ */
+const dict = {
+  ru: {}, // base — uses inline RU text
+  ro: {
+    'nav.cats': 'Categorii', 'nav.quiz': 'Selecție', 'nav.timeline': '40 de zile',
+    'nav.products': 'Catalog', 'nav.ritual': 'Ritual', 'nav.faq': 'Întrebări', 'nav.cart': 'Coș',
+    'hero.eyebrow': 'ARYA · Presare la rece · Moldova',
+    'hero.h1a': 'Restaurarea corpului',
+    'hero.h1b': 'în 40 de zile',
+    'hero.sub': 'Uleiuri care readuc energia și sănătatea. Nu un supliment. Baza pe care se construiește corpul.',
+    'hero.cta1': 'Alege uleiul', 'hero.cta2': 'Trece selecția',
+    'hero.m1': 'Sisteme de restaurare', 'hero.m2': 'Zile de ritm zilnic', 'hero.m3': 'Maxim la presare',
+    'hero.corner1': 'N° 01 — Balance', 'hero.corner2': '100 ml · Marasca',
+    'quote.l1': 'Corpul este construit din grăsimi.',
+    'quote.l2': 'Când grăsimile sunt potrivite —',
+    'quote.l3': 'corpul se restabilește singur.',
+    'quote.credit': '— Principiul ARYA',
+    'fc.h1': 'Începe patruzeci de zile', 'fc.h2': 'și simte diferența.',
+    'fc.cta1': 'Alege uleiul', 'fc.cta2': 'Trece selecția',
+    'cart.h': 'Coș', 'cart.close': 'Închide', 'cart.empty': 'Coșul este gol',
+    'cart.total': 'Total', 'cart.checkout': 'Plasează prin Telegram',
+    'pr.add': 'În coș'
+  },
+  en: {
+    'nav.cats': 'Categories', 'nav.quiz': 'Find your oil', 'nav.timeline': '40 days',
+    'nav.products': 'Catalog', 'nav.ritual': 'Ritual', 'nav.faq': 'Questions', 'nav.cart': 'Cart',
+    'hero.eyebrow': 'ARYA · Cold-pressed · Moldova',
+    'hero.h1a': 'Body restoration',
+    'hero.h1b': 'in forty days',
+    'hero.sub': 'Oils that return energy and health. Not a supplement. The foundation the body is built upon.',
+    'hero.cta1': 'Choose an oil', 'hero.cta2': 'Take the quiz',
+    'hero.m1': 'Restoration systems', 'hero.m2': 'Days of daily rhythm', 'hero.m3': 'Max pressing temp',
+    'hero.corner1': 'N° 01 — Balance', 'hero.corner2': '100 ml · Marasca',
+    'quote.l1': 'The body is built from fats.',
+    'quote.l2': 'When fats are right —',
+    'quote.l3': 'the body restores itself.',
+    'quote.credit': '— The ARYA principle',
+    'fc.h1': 'Begin forty days', 'fc.h2': 'and feel the difference.',
+    'fc.cta1': 'Choose an oil', 'fc.cta2': 'Take the quiz',
+    'cart.h': 'Cart', 'cart.close': 'Close', 'cart.empty': 'Cart is empty',
+    'cart.total': 'Total', 'cart.checkout': 'Checkout via Telegram',
+    'pr.add': 'Add'
+  }
+};
+const baseRU = {};
+document.querySelectorAll('[data-i18n]').forEach(el => {
+  baseRU[el.dataset.i18n] = el.textContent;
+});
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (lang === 'ru') el.textContent = baseRU[k] || el.textContent;
+    else if (dict[lang] && dict[lang][k]) el.textContent = dict[lang][k];
+    else el.textContent = baseRU[k] || el.textContent;
+  });
+  document.querySelectorAll('[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+}
+document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+/* ============ Nav scroll ============ */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+/* ============ Mobile menu ============ */
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+/* ============ Reveal on scroll ============ */
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ============ Quiz logic ============ */
+let quizStep = 1;
+const totalSteps = 5;
+const scores = { balance: 0, neuro: 0, digest: 0, hormone: 0, skin: 0 };
+const stateMap = {
+  balance: {
+    state: 'Истощение и нехватка базового ресурса',
+    name: 'ARYA Balance',
+    desc: 'Базовый купаж: кунжут, лён, расторопша, амарант, чёрный тмин. Восстанавливает энергию и общий тонус. Это первый шаг.',
+    mono: [
+      { id: 'mono-flax', name: 'Льняное', price: 180, why: 'Углубляет ω-3 базу, поддерживает мозг и гормоны' },
+      { id: 'mono-amaranth', name: 'Амарантовое', price: 380, why: 'Сквален — для регенерации и антиоксидантной защиты' }
+    ]
+  },
+  neuro: {
+    state: 'Перенапряжение нервной системы',
+    name: 'ARYA Neuro',
+    desc: 'Купаж с акцентом на ω-3: грецкий орех, лён, кедровое. Поддерживает ясность и спокойствие.',
+    mono: [
+      { id: 'mono-walnut', name: 'Грецкий орех', price: 260, why: 'Концентрированная ω-3 поддержка нервной системы' },
+      { id: 'mono-pumpkin', name: 'Тыквенное', price: 220, why: 'Магний и цинк — стабилизация на клеточном уровне' }
+    ]
+  },
+  digest: {
+    state: 'Перегрузка пищеварительной системы',
+    name: 'ARYA Digest',
+    desc: 'Расторопша, чёрный тмин, тыквенное, льняное. Лёгкость и поддержка печени.',
+    mono: [
+      { id: 'mono-cumin', name: 'Чёрный тмин', price: 240, why: 'Тимохинон — поддержка ЖКТ и иммунитета' },
+      { id: 'mono-pumpkin', name: 'Тыквенное', price: 220, why: 'Мягкая поддержка печени и желчных протоков' }
+    ]
+  },
+  hormone: {
+    state: 'Гормональные колебания',
+    name: 'ARYA Hormone',
+    desc: 'Лён, чёрный тмин, кунжут, примула. Базовая поддержка эндокринной системы.',
+    mono: [
+      { id: 'mono-flax', name: 'Льняное', price: 180, why: 'Лигнаны — мягкая фитоэстрогенная поддержка' },
+      { id: 'mono-sesame', name: 'Кунжутное', price: 200, why: 'Кальций и сезамол — стабильная база цикла' }
+    ]
+  },
+  skin: {
+    state: 'Дефицит липидов кожи',
+    name: 'ARYA Skin',
+    desc: 'Аргана, шиповник, лён, кунжут, амарант. Питание кожи изнутри.',
+    mono: [
+      { id: 'mono-amaranth', name: 'Амарантовое', price: 380, why: 'Сквален — близок к собственным липидам кожи' },
+      { id: 'mono-grape', name: 'Виноградная косточка', price: 190, why: 'Витамин Е и ОПК — антиоксидантный щит' }
+    ]
+  }
+};
+
+function updateProgress() {
+  document.querySelectorAll('#quizProgress .dash').forEach((d, i) => d.classList.toggle('active', i < quizStep));
+  document.getElementById('quizCounter').textContent = String(quizStep).padStart(2,'0') + ' / 0' + totalSteps;
+}
+
+document.querySelectorAll('.quiz-step .quiz-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.target;
+    scores[target] = (scores[target] || 0) + 1;
+    btn.classList.add('selected');
+    setTimeout(() => {
+      if (quizStep < totalSteps) {
+        document.querySelector('.quiz-step.active').classList.remove('active');
+        quizStep++;
+        document.querySelector(`.quiz-step[data-step="${quizStep}"]`).classList.add('active');
+        updateProgress();
+      } else {
+        showResult();
+      }
+    }, 300);
+  });
+});
+
+document.getElementById('quizBack').addEventListener('click', () => {
+  if (quizStep > 1) {
+    document.querySelector('.quiz-step.active').classList.remove('active');
+    quizStep--;
+    const step = document.querySelector(`.quiz-step[data-step="${quizStep}"]`);
+    step.classList.add('active');
+    step.querySelectorAll('.selected').forEach(s => s.classList.remove('selected'));
+    updateProgress();
+    document.getElementById('quizResult').classList.remove('active');
+    document.getElementById('quizControls').style.display = 'flex';
+  }
+});
+
+function showResult() {
+  const winner = Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+  const r = stateMap[winner];
+  document.getElementById('resultState').textContent = r.state;
+  document.getElementById('resultName').textContent = r.name;
+  document.getElementById('resultDesc').textContent = r.desc;
+  const monoEl = document.getElementById('resultMono');
+  monoEl.innerHTML = '';
+  r.mono.forEach(m => {
+    const row = document.createElement('div');
+    row.className = 'mono-row';
+    row.innerHTML = `
+      <div>
+        <div class="mr-name">${m.name}</div>
+        <div class="mr-why">${m.why}</div>
+      </div>
+      <button class="mr-add" data-add="${m.id}" data-name="${m.name} · моно" data-price="${m.price}">+ ${m.price} lei</button>
+    `;
+    monoEl.appendChild(row);
+  });
+  // Re-bind add handlers for newly inserted buttons
+  monoEl.querySelectorAll('[data-add]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const id = btn.dataset.add;
+      const name = btn.dataset.name;
+      const price = +btn.dataset.price;
+      const found = cart.find(i => i.id === id);
+      if (found) found.qty++;
+      else cart.push({ id, name, price, qty: 1 });
+      saveCart();
+      openCart();
+    });
+  });
+  document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('quizResult').classList.add('active');
+  document.getElementById('quizControls').style.display = 'none';
+  document.querySelectorAll('#quizProgress .dash').forEach(d => d.classList.add('active'));
+}
+
+/* ============ Timeline phases ============ */
+const phasePills = document.querySelectorAll('.phase-pill');
+const stages = document.querySelectorAll('.stage');
+const orb = document.getElementById('orb');
+const orbDay = document.getElementById('orbDay');
+const phaseDays = ['10','20','30','40'];
+
+function setPhase(n) {
+  phasePills.forEach(p => p.classList.toggle('active', +p.dataset.phase === n));
+  orb.className = 'orb-fg s' + n;
+  orbDay.textContent = phaseDays[n-1];
+}
+phasePills.forEach(p => {
+  p.addEventListener('click', () => {
+    const n = +p.dataset.phase;
+    setPhase(n);
+    document.querySelector(`.stage[data-phase="${n}"]`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+const stageObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && e.intersectionRatio > 0.4) {
+      const n = +e.target.dataset.phase;
+      setPhase(n);
+    }
+  });
+}, { threshold: [0.4, 0.6] });
+stages.forEach(s => stageObs.observe(s));
+
+/* ============ FAQ ============ */
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const a = item.querySelector('.faq-a');
+    const open = item.classList.toggle('open');
+    a.style.maxHeight = open ? a.scrollHeight + 'px' : '0';
+  });
+});
+
+/* ============ Cart ============ */
+const cart = JSON.parse(localStorage.getItem('arya-cart') || '[]');
+const cartOverlay = document.getElementById('cartOverlay');
+const cartDrawer = document.getElementById('cartDrawer');
+const cartCount = document.getElementById('cartCount');
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  if (cart.length === 0) {
+    body.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
+    foot.style.display = 'none';
+  } else {
+    body.innerHTML = cart.map((it, i) => `
+      <div class="cart-item-row">
+        <div class="ci-bottle">
+          <svg viewBox="0 0 200 480" xmlns="http://www.w3.org/2000/svg"><rect x="78" y="0" width="44" height="44" rx="2" fill="#7A6446"/><path d="M 86 80 Q 60 84 48 110 L 48 440 Q 48 466 74 472 L 126 472 Q 152 466 152 440 L 152 110 Q 140 84 114 80 Z" fill="#181310"/></svg>
+        </div>
+        <div>
+          <div class="ci-name">${it.name}</div>
+          <div class="ci-meta">100 ml · Cold pressed</div>
+          <div class="cart-qty">
+            <button data-qm="${i}">−</button><span>${it.qty}</span><button data-qp="${i}">+</button>
+            <button style="margin-left:auto; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ash);" data-rm="${i}">Удалить</button>
+          </div>
+        </div>
+        <div class="ci-price">${it.price * it.qty} lei</div>
+      </div>
+    `).join('');
+    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    document.getElementById('cartTotal').textContent = total + ' lei';
+    foot.style.display = 'block';
+
+    body.querySelectorAll('[data-qm]').forEach(b => b.addEventListener('click', () => { const i = +b.dataset.qm; if (cart[i].qty > 1) cart[i].qty--; saveCart(); }));
+    body.querySelectorAll('[data-qp]').forEach(b => b.addEventListener('click', () => { cart[+b.dataset.qp].qty++; saveCart(); }));
+    body.querySelectorAll('[data-rm]').forEach(b => b.addEventListener('click', () => { cart.splice(+b.dataset.rm, 1); saveCart(); }));
+  }
+  cartCount.textContent = cart.reduce((s, i) => s + i.qty, 0);
+}
+function saveCart() {
+  localStorage.setItem('arya-cart', JSON.stringify(cart));
+  renderCart();
+}
+function openCart(){ cartOverlay.classList.add('open'); cartDrawer.classList.add('open'); }
+function closeCart(){ cartOverlay.classList.remove('open'); cartDrawer.classList.remove('open'); }
+document.getElementById('cartOpen').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+cartOverlay.addEventListener('click', closeCart);
+
+document.querySelectorAll('[data-add]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const id = btn.dataset.add;
+    const name = btn.dataset.name;
+    const price = +btn.dataset.price;
+    const found = cart.find(i => i.id === id);
+    if (found) found.qty++;
+    else cart.push({ id, name, price, qty: 1 });
+    saveCart();
+    openCart();
+  });
+});
+
+renderCart();
+</script>
+</body>
+</html>

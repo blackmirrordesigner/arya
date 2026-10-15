@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  @page { margin: 0.5in; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARYA — Homepage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* ── APPROVED ARYA LANGUAGE — unchanged from Phase 2 ── */
+    --paper:#F5F2EC;
+    --paper-raise:#FAF8F2;
+    --travertine:#E7E0D2;
+    --stone:#C9C2B2;
+    --ink:#1C1B17;
+    --ink-soft:#5C594F;
+    --line:rgba(28,27,23,.13);
+    --structural:#6E7468;
+    --material:#B98428;
+
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --serif:"Spectral",Georgia,serif;
+    --sans:"Schibsted Grotesk",system-ui,sans-serif;
+
+    --ease:cubic-bezier(.2,.6,.2,1);
+    --slow:1100ms;
+    --maxw:1500px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5;overflow-x:hidden;}
+  body.no-motion *{animation:none !important;transition:none !important;}
+  img{display:block;max-width:100%;}
+
+  .mono{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(28px,6vw,110px);}
+
+  /* ── daylight reveal (opacity + small drift, 1100ms, no bounce) ── */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity var(--slow) var(--ease),transform var(--slow) var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  .reveal.d1{transition-delay:.12s;}
+  .reveal.d2{transition-delay:.24s;}
+  .reveal.d3{transition-delay:.36s;}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1 !important;transform:none !important;transition:none;}}
+
+  /* ── photography plate (placeholder — real photography dropped later) ── */
+  .plate{position:relative;display:block;width:100%;
+    background:repeating-linear-gradient(135deg,transparent 0 12px,rgba(28,27,23,.028) 12px 13px),linear-gradient(180deg,var(--pl-a,#ECE6D9),var(--pl-b,#DfD7C6));
+    border:1px solid var(--line);overflow:hidden;}
+  .plate::after{content:attr(data-mode);position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-soft);opacity:.55;text-transform:uppercase;}
+  .plate .cap{position:absolute;left:14px;right:14px;bottom:12px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--ink);background:rgba(245,242,236,.78);padding:6px 9px;border:1px solid var(--line);text-transform:uppercase;backdrop-filter:blur(2px);}
+  .plate.material{--pl-a:#F2E8CF;--pl-b:#E7D4A4;}
+  .plate.material .cap{color:#5b4716;}
+
+  /* ── header ── */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+    padding:18px clamp(20px,6vw,72px);transition:background var(--slow) var(--ease),border-color var(--slow) var(--ease),opacity .8s var(--ease);
+    border-bottom:1px solid transparent;}
+  .nav.lit{background:rgba(245,242,236,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line);}
+  .nav .mk{font-weight:600;letter-spacing:.44em;font-size:14px;}
+  .nav .links{display:flex;gap:clamp(16px,2.4vw,38px);align-items:center;}
+  .nav .links a{text-decoration:none;color:var(--ink-soft);font-size:13px;letter-spacing:.02em;transition:color .4s var(--ease);}
+  .nav .links a:hover{color:var(--ink);}
+  .nav .cart{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink);text-transform:uppercase;}
+  @media(max-width:680px){.nav .links a:not(.cart){display:none;}}
+
+  /* ── episode (section) shell ── */
+  .ep{position:relative;}
+  .ep-note{display:none;}
+  body.notes .ep-note{display:block;}
+
+  /* notes overlay card */
+  .ep-note{position:absolute;top:24px;right:clamp(16px,3vw,40px);width:268px;z-index:30;
+    background:var(--paper-raise);border:1px solid var(--ink);padding:18px 18px 16px;
+    box-shadow:0 18px 50px -28px rgba(28,27,23,.4);}
+  .ep-note .nh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:11px;}
+  .ep-note .nh .ix{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--structural);}
+  .ep-note .nh .md{font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border:1px solid var(--line);color:var(--ink-soft);}
+  .ep-note .nh .md.material{color:#6b5316;border-color:#cdab5e;background:#f6ecd2;}
+  .ep-note h5{font-size:14px;font-weight:500;margin-bottom:10px;letter-spacing:-.01em;}
+  .ep-note dl{display:grid;grid-template-columns:auto 1fr;gap:5px 10px;}
+  .ep-note dt{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--structural);padding-top:2px;}
+  .ep-note dd{font-size:11.5px;line-height:1.42;color:var(--ink-soft);margin-bottom:3px;}
+  .ep-note dd b{color:var(--ink);font-weight:500;}
+  @media(max-width:1080px){.ep-note{position:static;width:auto;margin:0 clamp(28px,6vw,110px) -10px;}}
+
+  /* ── 1 · HERO ── */
+  .hero{min-height:100svh;display:flex;align-items:center;padding-top:80px;padding-bottom:48px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,80px);align-items:center;width:100%;}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:36px;}}
+  .hero-grid{grid-template-columns:.72fr 1.28fr;}
+  .hero h1{font-size:clamp(30px,3.6vw,54px);line-height:1.06;font-weight:400;letter-spacing:-.022em;text-wrap:balance;max-width:16ch;}
+  .hero h1 em{font-style:normal;color:var(--ink-soft);}
+  .hero .sub{margin-top:clamp(18px,2vw,24px);font-size:clamp(14px,1.2vw,16px);color:var(--ink-soft);max-width:30ch;line-height:1.6;}
+  .hero .act{margin-top:clamp(28px,3.4vw,40px);display:inline-flex;}
+  .hero-plate{aspect-ratio:auto;height:min(82svh,880px);}
+  @media(max-width:860px){.hero-plate{height:min(64svh,560px);}}
+  .scrollcue{margin-top:48px;display:inline-flex;align-items:center;gap:10px;}
+  .scrollcue .ln{width:46px;height:1px;background:var(--ink);transform-origin:left;animation:cue 2.6s var(--ease) infinite;}
+  @keyframes cue{0%,100%{transform:scaleX(.4);opacity:.4;}50%{transform:scaleX(1);opacity:1;}}
+
+  /* ── generic section paddings ── */
+  .pad{padding:clamp(80px,15vh,200px) 0;}
+  .pad-sm{padding:clamp(56px,9vh,120px) 0;}
+
+  /* ── 2 · STATEMENT (editorial reading, copy speaks) ── */
+  .statement{text-align:center;}
+  .statement p{font-family:var(--serif);font-weight:300;font-size:clamp(26px,4.2vw,58px);line-height:1.22;letter-spacing:-.01em;max-width:20ch;margin:0 auto;text-wrap:balance;}
+  .statement .mono{display:block;margin-bottom:30px;}
+  .statement .sub-read{margin:34px auto 0;max-width:42ch;font-family:var(--sans);font-size:clamp(15px,1.5vw,18px);font-weight:400;color:var(--ink-soft);line-height:1.62;text-wrap:pretty;}
+
+  /* ── 3 · THE OBJECT (daylight, placed, asymmetric) ── */
+  .object-grid{display:grid;grid-template-columns:.42fr .58fr;gap:clamp(28px,5vw,90px);align-items:center;}
+  @media(max-width:860px){.object-grid{grid-template-columns:1fr;gap:34px;}}
+  .object-grid h2{font-size:clamp(28px,3.8vw,52px);font-weight:400;letter-spacing:-.02em;line-height:1.04;}
+  .object-grid .body{margin-top:22px;font-size:16px;color:var(--ink-soft);line-height:1.65;max-width:40ch;}
+  .specrow{margin-top:34px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);max-width:460px;}
+  .specrow > div{background:var(--paper);padding:16px 18px;}
+  .specrow .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
+  .specrow .v{font-size:15px;margin-top:6px;}
+  .object-plate{aspect-ratio:3/4;}
+
+  /* ── principle facts (quiet rule-topped rows) ── */
+  .facts{list-style:none;border-top:1px solid var(--line);max-width:480px;}
+  .facts li{display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:15px 2px;border-bottom:1px solid var(--line);}
+  .facts .fk{font-size:16px;letter-spacing:-.01em;color:var(--ink);}
+  .facts .fv{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);text-align:right;flex:0 0 auto;}
+
+  /* ── PRINCIPLE SCENES — editorial-first, image-led, progressive reveal ── */
+  .principle{padding:clamp(70px,12vh,150px) 0;}
+
+  /* 02 · quiet statement — one line, vast margin, deep reveal far below */
+  .quiet{min-height:90svh;display:flex;flex-direction:column;justify-content:center;text-align:center;}
+  .quiet .mono{display:block;margin-bottom:clamp(28px,4vw,42px);}
+  .quiet .big{font-family:var(--serif);font-weight:300;font-size:clamp(46px,8.4vw,124px);line-height:.96;letter-spacing:-.02em;}
+  .quiet .sub-line{margin-top:clamp(20px,2.6vw,32px);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(19px,2.5vw,32px);color:var(--ink-soft);}
+  .quiet .deep{margin:clamp(96px,18vh,220px) auto 0;max-width:30ch;font-size:clamp(15px,1.35vw,17px);color:var(--ink-soft);line-height:1.74;text-wrap:pretty;}
+
+  /* 03 · full-bleed macro scene — image is the hero, one line, then reveal */
+  .scene-plate{width:100%;height:min(84svh,920px);aspect-ratio:auto;}
+  @media(max-width:860px){.scene-plate{height:min(62svh,540px);}}
+  .scene-line{margin-top:clamp(30px,4.4vw,58px);font-family:var(--sans);font-weight:400;font-size:clamp(36px,5.6vw,82px);letter-spacing:-.026em;line-height:.98;max-width:14ch;}
+  .scene-deep{margin-top:clamp(84px,15vh,180px);display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,96px);align-items:start;}
+  @media(max-width:760px){.scene-deep{grid-template-columns:1fr;gap:36px;}}
+  .scene-deep .ex{font-family:var(--serif);font-weight:300;font-size:clamp(20px,2.2vw,30px);line-height:1.48;color:var(--ink);max-width:30ch;letter-spacing:-.01em;}
+  .scene-deep .ex em{font-style:normal;color:var(--structural);}
+
+  /* 04 · seed scene — mirrored split, serif line, then reveal + curiosity */
+  .seed-grid{display:grid;grid-template-columns:.96fr 1.04fr;gap:clamp(28px,5vw,84px);align-items:center;}
+  @media(max-width:860px){.seed-grid{grid-template-columns:1fr;gap:34px;}}
+  .seed-grid .seed-plate{aspect-ratio:4/5;order:2;}
+  .seed-grid .seed-copy{order:1;}
+  @media(max-width:860px){.seed-grid .seed-plate{order:1;}.seed-grid .seed-copy{order:2;}}
+  .seed-line{font-family:var(--serif);font-weight:300;font-size:clamp(38px,5.2vw,78px);line-height:1.0;letter-spacing:-.02em;}
+  .seed-sub{margin-top:clamp(18px,2.2vw,28px);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(19px,2.1vw,28px);color:var(--ink-soft);max-width:22ch;line-height:1.3;}
+  .seed-deep{margin-top:clamp(86px,15vh,170px);max-width:60ch;}
+  .seed-deep .ex{font-size:clamp(15px,1.5vw,18px);color:var(--ink-soft);line-height:1.72;text-wrap:pretty;}
+  .seed-deep .curio{margin-top:clamp(28px,3vw,40px);font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(22px,2.6vw,38px);line-height:1.16;color:var(--ink);letter-spacing:-.01em;max-width:24ch;}
+
+  /* ── 4 · MATERIAL MOMENT (macro, full-bleed, copy disappears) ── */
+  .material-mo{position:relative;}
+  .material-plate{aspect-ratio:21/9;width:100%;}
+  @media(max-width:760px){.material-plate{aspect-ratio:4/5;}}
+  .material-cap{margin-top:22px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:baseline;}
+  .material-cap .line{font-family:var(--serif);font-weight:300;font-size:clamp(18px,2vw,26px);max-width:30ch;line-height:1.35;}
+  .material-cap .spec{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--material);text-transform:uppercase;text-align:right;line-height:1.8;}
+
+  /* ── 5 · THE PRESS (process / trust) ── */
+  .press-head{max-width:30ch;}
+  .press-head h2{font-size:clamp(26px,3.6vw,46px);font-weight:400;letter-spacing:-.02em;line-height:1.06;}
+  .press-head p{margin-top:18px;font-size:16px;color:var(--ink-soft);line-height:1.65;max-width:42ch;}
+  .steps{margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,48px);}
+  @media(max-width:760px){.steps{grid-template-columns:1fr;gap:30px;}}
+  .step{border-top:1px solid var(--ink);padding-top:18px;}
+  .step .no{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--structural);}
+  .step h4{font-size:19px;font-weight:500;margin-top:14px;letter-spacing:-.01em;}
+  .step p{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-top:10px;}
+
+  /* ── 6 · THE OILS (range, interactive) ── */
+  .oils{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,80px);align-items:center;}
+  @media(max-width:860px){.oils{grid-template-columns:1fr;gap:32px;}}
+  .oils-detail .idx{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--structural);}
+  .oils-detail h2{font-size:clamp(30px,4.6vw,62px);font-weight:400;letter-spacing:-.02em;line-height:1;margin-top:14px;transition:opacity .5s var(--ease);}
+  .oils-detail .note{margin-top:18px;font-family:var(--serif);font-weight:300;font-size:18px;line-height:1.5;color:var(--ink);max-width:34ch;transition:opacity .5s var(--ease);}
+  .oils-detail .ospec{margin-top:24px;display:flex;gap:26px;flex-wrap:wrap;transition:opacity .5s var(--ease);}
+  .oils-detail .ospec .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .oils-detail .ospec .v{font-size:15px;margin-top:5px;}
+  .oils-detail.swapping h2,.oils-detail.swapping .note,.oils-detail.swapping .ospec{opacity:0;}
+  .oils-list{display:flex;flex-direction:column;border-top:1px solid var(--line);}
+  .oil-item{display:flex;align-items:center;gap:20px;padding:20px 6px;border-bottom:1px solid var(--line);background:none;border-left:0;border-right:0;border-top:0;cursor:pointer;text-align:left;width:100%;transition:padding-left .5s var(--ease);font-family:inherit;}
+  .oil-item:hover{padding-left:14px;}
+  .oil-item .sw{width:30px;height:54px;border:1px solid var(--ink);flex:0 0 auto;}
+  .oil-item .nm{font-size:19px;font-weight:400;letter-spacing:-.01em;flex:1;}
+  .oil-item .ar{font-family:var(--mono);font-size:11px;color:var(--ink-soft);opacity:0;transition:opacity .4s var(--ease);}
+  .oil-item[aria-selected="true"]{padding-left:14px;}
+  .oil-item[aria-selected="true"] .nm{color:var(--ink);}
+  .oil-item[aria-selected="true"] .ar{opacity:1;color:var(--structural);}
+  .oil-item:not([aria-selected="true"]) .nm{color:var(--ink-soft);}
+
+  /* ── 7 · ORIGIN (provenance / editorial reading) ── */
+  .origin{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,90px);align-items:center;}
+  @media(max-width:860px){.origin{grid-template-columns:1fr;gap:34px;}}
+  .origin .read{max-width:46ch;}
+  .origin .read .mono{margin-bottom:22px;}
+  .origin .read p{font-family:var(--serif);font-weight:300;font-size:clamp(19px,2.1vw,27px);line-height:1.5;color:var(--ink);}
+  .origin .read p + p{margin-top:1em;font-family:var(--sans);font-size:15.5px;color:var(--ink-soft);line-height:1.66;}
+  .origin-plate{aspect-ratio:4/5;}
+
+  /* ── 8 · INVITATION (close, silence) ── */
+  .invite{text-align:center;padding:clamp(110px,20vh,260px) 0;}
+  .invite .mono{display:block;margin-bottom:30px;}
+  .invite h2{font-size:clamp(34px,6vw,92px);font-weight:400;line-height:.98;letter-spacing:-.025em;max-width:16ch;margin:0 auto;text-wrap:balance;}
+  .invite .act{margin-top:46px;display:inline-flex;}
+  .btn{font-family:var(--sans);font-size:14px;letter-spacing:.02em;border:1px solid var(--ink);background:none;color:var(--ink);padding:15px 30px;cursor:pointer;transition:background .5s var(--ease),color .5s var(--ease);text-decoration:none;display:inline-flex;align-items:center;gap:10px;}
+  .btn:hover{background:var(--ink);color:var(--paper);}
+
+  /* ── footer ── */
+  .foot{border-top:1px solid var(--line);padding:clamp(46px,6vw,72px) 0 40px;}
+  .foot-grid{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-start;}
+  .foot .mk{font-weight:600;letter-spacing:.42em;font-size:14px;}
+  .foot .cols{display:flex;gap:clamp(30px,6vw,90px);flex-wrap:wrap;}
+  .foot .col h6{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;font-weight:500;}
+  .foot .col a{display:block;text-decoration:none;color:var(--ink);font-size:14px;margin-bottom:9px;transition:color .4s;}
+  .foot .col a:hover{color:var(--structural);}
+  .foot .legal{margin-top:50px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase;}
+
+  /* ── director's notes toggle ── */
+  .notes-toggle{position:fixed;left:18px;bottom:18px;z-index:50;display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+    background:var(--paper-raise);border:1px solid var(--ink);padding:11px 15px;cursor:pointer;transition:background .4s var(--ease),color .4s var(--ease);}
+  .notes-toggle:hover{background:var(--ink);color:var(--paper);}
+  .notes-toggle .dot{width:7px;height:7px;border-radius:50%;background:var(--stone);transition:background .4s;}
+  body.notes .notes-toggle .dot{background:var(--structural);}
+
+  /* ════ ACT IV — Recognition · Quiz · Result · Cart ════ */
+  .section-head{max-width:48ch;}
+  .section-head .mono{display:block;margin-bottom:22px;}
+  .section-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(30px,4.6vw,62px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance;}
+  .section-head .sh-sub{margin-top:20px;font-size:clamp(15px,1.5vw,18px);color:var(--ink-soft);line-height:1.62;max-width:44ch;}
+
+  /* A · Recognition */
+  .recog-grid{margin-top:clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  @media(max-width:1080px){.recog-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.recog-grid{grid-template-columns:1fr;}}
+  .recog-card{background:var(--paper);padding:clamp(22px,2vw,30px);display:flex;flex-direction:column;gap:11px;text-decoration:none;color:inherit;transition:background .5s var(--ease);min-height:178px;}
+  .recog-card:hover{background:var(--paper-raise);}
+  .recog-card .rn{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--structural);}
+  .recog-card .st{font-size:clamp(18px,1.45vw,21px);font-weight:400;letter-spacing:-.01em;line-height:1.18;margin-top:auto;text-wrap:pretty;}
+  .recog-card .cc{font-size:14px;color:var(--ink-soft);line-height:1.5;text-wrap:pretty;}
+  .recog-foot{margin-top:clamp(34px,4vw,54px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:30px;}
+  .recog-foot p{font-family:var(--serif);font-weight:300;font-size:clamp(18px,2vw,25px);color:var(--ink);max-width:36ch;line-height:1.34;}
+
+  /* B · Quiz */
+  .quiz-grid{margin-top:clamp(40px,5vw,64px);display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  @media(max-width:680px){.quiz-grid{grid-template-columns:1fr;}}
+  .qbtn{display:flex;flex-direction:column;gap:7px;text-align:left;padding:20px 22px;background:var(--paper);border:1px solid var(--line);cursor:pointer;font-family:inherit;transition:border-color .4s var(--ease),background .4s var(--ease);}
+  .qbtn:hover{border-color:var(--ink);}
+  .qbtn .qn{font-size:18px;font-weight:500;letter-spacing:-.01em;}
+  .qbtn .qh{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);}
+  .qbtn[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);}
+  .qbtn[aria-pressed="true"] .qn{color:var(--paper);}
+  .qbtn[aria-pressed="true"] .qh{color:var(--stone);}
+
+  /* C · Result */
+  .result{margin-top:clamp(36px,4vw,52px);border:1px solid var(--ink);background:var(--paper-raise);animation:resIn .6s var(--ease);}
+  @keyframes resIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .res-block{padding:clamp(26px,3vw,44px);border-bottom:1px solid var(--line);}
+  .res-block:last-child{border-bottom:0;}
+  .res-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--structural);}
+  .res-state{font-family:var(--sans);font-weight:400;font-size:clamp(26px,3.4vw,44px);line-height:1.06;letter-spacing:-.025em;margin-top:16px;}
+  .res-toggle{margin-top:20px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:none;border:0;border-bottom:1px solid var(--ink);padding:0 0 4px;cursor:pointer;transition:opacity .3s;}
+  .res-toggle:hover{opacity:.6;}
+  .res-detail{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);}
+  @media(max-width:680px){.res-detail{grid-template-columns:1fr;gap:22px;}}
+  .res-detail h5{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:11px;}
+  .res-detail p{font-size:15px;line-height:1.62;color:var(--ink);}
+
+  .step-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--structural);}
+  .step-tag.tool{color:var(--material);}
+  .step-head{margin-top:15px;display:flex;justify-content:space-between;gap:20px;align-items:baseline;flex-wrap:wrap;}
+  .step-name{font-size:clamp(24px,3vw,38px);font-weight:400;letter-spacing:-.02em;line-height:1;}
+  .step-sub{margin-top:13px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
+  .step-note{margin-top:20px;font-family:var(--sans);font-weight:400;font-size:clamp(16px,1.6vw,20px);line-height:1.5;color:var(--ink);max-width:46ch;}
+  .step-points{margin-top:18px;display:grid;gap:9px;max-width:48ch;}
+  .step-points div{font-size:15px;color:var(--ink-soft);line-height:1.55;}
+  .step-points b{color:var(--ink);font-weight:500;}
+  .step-foot{margin-top:26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .price{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--ink);}
+  .step-expand{margin-top:20px;}
+  .step-expand .res-toggle{margin-top:0;}
+  .fbul{margin-top:16px;list-style:none;display:grid;gap:11px;max-width:48ch;}
+  .fbul li{display:flex;gap:12px;font-size:14px;color:var(--ink-soft);line-height:1.5;}
+  .fbul li::before{content:"";width:6px;height:6px;background:var(--structural);margin-top:6px;flex:0 0 auto;}
+
+  .together{background:var(--paper);}
+  .together .tl{font-size:clamp(15px,1.6vw,18px);color:var(--ink);line-height:1.62;max-width:52ch;}
+  .together .toff{margin-top:24px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .together .sep-opt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+
+  .btn-sm{font-family:var(--sans);font-size:13px;letter-spacing:.01em;border:1px solid var(--ink);background:none;color:var(--ink);padding:11px 22px;cursor:pointer;transition:background .4s var(--ease),color .4s var(--ease),border-color .4s var(--ease);display:inline-flex;align-items:center;gap:8px;text-decoration:none;}
+  .btn-sm:hover{background:var(--ink);color:var(--paper);}
+  .btn-sm.solid{background:var(--ink);color:var(--paper);}
+  .btn-sm.solid:hover{background:var(--structural);border-color:var(--structural);}
+  .btn-sm.added{background:var(--structural);border-color:var(--structural);color:var(--paper);}
+
+  /* sticky cart */
+  .cart-bar{position:fixed;left:0;right:0;bottom:0;z-index:55;background:rgba(245,242,236,.9);backdrop-filter:blur(12px);border-top:1px solid var(--ink);transform:translateY(120%);transition:transform .6s var(--ease);}
+  .cart-bar.show{transform:none;}
+  .cart-inner{max-width:var(--maxw);margin:0 auto;padding:15px clamp(20px,6vw,72px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .cart-items{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .cart-items .ci{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink);}
+  .cart-items .ci .dot{width:6px;height:6px;background:var(--structural);flex:0 0 auto;}
+  .cart-items .ci button{background:none;border:0;cursor:pointer;color:var(--ink-soft);font-size:14px;line-height:1;padding:0 0 0 2px;transition:color .3s;}
+  .cart-items .ci button:hover{color:var(--ink);}
+  .cart-right{display:flex;align-items:center;gap:22px;}
+  .cart-total{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase;}
+  .cart-total b{color:var(--ink);font-weight:500;}
+
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--structural);z-index:60;width:0;}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div id="root"></div>
+<div id="tweaks-root"></div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="1200" fill="#F5F2EC"/>
+    <rect x="525" y="360" width="150" height="410" rx="12" fill="#E7E0D2" stroke="#1C1B17" stroke-width="3"/>
+    <rect x="562" y="306" width="76" height="60" fill="#C9C2B2" stroke="#1C1B17" stroke-width="3"/>
+    <ellipse cx="600" cy="565" rx="48" ry="120" fill="#B98428" opacity="0.5"/>
+    <text x="600" y="905" font-family="Georgia,serif" font-size="116" fill="#1C1B17" text-anchor="middle" letter-spacing="18">ARYA</text>
+  </svg>
+</template>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="arya-flow.jsx"></script>
+<script type="text/babel" src="arya-home.jsx"></script>
+<script>
+(async () => {
+  if (!document.title || !document.title.trim()) document.title = "ARYA Homepage";
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  // Project support.js may predate runtime default-seeding; push via bridge.
+  if (isDc && window.__dcSetProps && window.__dcRootName) {
+    try {
+      const dpEl = document.querySelector('script[data-dc-script]');
+      const meta = JSON.parse((dpEl && dpEl.getAttribute('data-props')) || '{}');
+      const bag = {};
+      for (const k in meta)
+        if (k[0] !== '$' && meta[k] && meta[k].default !== undefined)
+          bag[k] = meta[k].default;
+      if (Object.keys(bag).length) {
+        window.__dcSetProps(window.__dcRootName(), bag);
+        await new Promise((r) => setTimeout(r, 50));
+      }
+    } catch (e) {}
+  }
+  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
+  // IntersectionObserver fade-ins, and collapsed <details> don't render while
+  // off-screen, so a long page would print with them blank or closed. Open
+  // every <details>, force native-lazy images eager, and scroll the document
+  // through its full height to trip lazy-load + IO; then wait (bounded) for the
+  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+  try {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+    for (const img of document.querySelectorAll('img[loading="lazy"]'))
+      img.loading = 'eager';
+    const scroller = document.scrollingElement || document.documentElement;
+    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
+    const step = window.innerHeight || 800;
+    for (let y = 0; y <= full; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+    window.scrollTo(0, 0);
+    await Promise.race([
+      Promise.all(
+        [...document.images].map((img) =>
+          img.complete
+            ? null
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      ),
+      new Promise((r) => setTimeout(r, 4000)),
+    ]);
+  } catch (e) {}
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  // Re-append deck-stage's @page last so no author @page can add a margin and
+  // spill each full-bleed slide onto two sheets. Backstop for old copies.
+  if (ds) {
+    let pg = document.getElementById('deck-stage-print-page');
+    if (!pg) {
+      pg = document.createElement('style');
+      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
+        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
+    }
+    document.body.appendChild(pg);
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  // Size the PDF page to the rendered design unless the file opted into
+  // standard paper via @page{size:letter|A4|…}. Decks own their own @page.
+  // Wrappers (body, …) lose padding+margin so the frame sits at (0,0); the
+  // frame itself loses only margin — its padding is INSIDE the measured
+  // rect and must stay, or content shifts and leaves a gap at bottom/right.
+  var __m = null;
+  try { __m = (() => {
+  var STAMP = true;
+  var docEl = document.documentElement;
+  var doc = { width: docEl.scrollWidth, height: docEl.scrollHeight };
+
+  var ds = document.querySelector('deck-stage');
+  if (ds) {
+    var dw = Number(ds.getAttribute('width')) || 1920;
+    var dh = Number(ds.getAttribute('height')) || 1080;
+    var n = typeof ds.length === 'number' ? ds.length : ds.children.length;
+    var idx = typeof ds.index === 'number' ? ds.index : 0;
+    var frames = [];
+    for (var i = 0; i < n; i++) frames.push({ left: 0, top: 0, width: dw, height: dh });
+    return { kind: 'deck', source: 'declared', doc: doc, frames: frames,
+      authored: frames.map(function(){return{width:true,height:true}}),
+      deck: { width: dw, height: dh, slideCount: n, index: idx },
+      signals: { paperPage: false, pxPage: false } };
+  }
+
+  // Declared kind: a doc-page tag names the kind outright, so no signal
+  // heuristics run (like the deck branch above, signals report false —
+  // they describe inferred classifications only). The tag alone is not
+  // trusted: the element must have upgraded (shadowRoot present), so a
+  // leftover tag whose script was deleted falls through to the heuristics
+  // that handle plain markup.
+  var stageSx = window.scrollX || 0, stageSy = window.scrollY || 0;
+  var dp = document.querySelector('doc-page');
+  if (dp && dp.shadowRoot) {
+    // Crop to the sheet, not the host — the desk around it is screen-only
+    // chrome that must not land in PNG exports.
+    var sheet = dp.shadowRoot.querySelector('.sheet');
+    var sr = (sheet || dp).getBoundingClientRect();
+    return { kind: 'paper-doc', source: 'declared', doc: doc,
+      frames: [{ left: sr.left + stageSx, top: sr.top + stageSy,
+        width: sr.width, height: sr.height }],
+      authored: [{ width: false, height: false }],
+      signals: { paperPage: false, pxPage: false } };
+  }
+  var paperPage = false, pxPage = false;
+  var eachRule = function (fn) {
+    for (var s = 0; s < document.styleSheets.length; s++) {
+      var rs; try { rs = document.styleSheets[s].cssRules; } catch (e) { continue; }
+      for (var r = 0; r < rs.length; r++) {
+        fn(rs[r]);
+        if (rs[r].cssRules) for (var n = 0; n < rs[r].cssRules.length; n++) fn(rs[r].cssRules[n]);
+      }
+    }
+  };
+  eachRule(function (r) {
+    if (r.type !== 6) return;
+    var m = /\bsize\s*:\s*([^;}]+)/i.exec(r.cssText || '');
+    if (!m) return;
+    if (/\b(letter|a[3-5]|legal|ledger)\b/i.test(m[1])) paperPage = true;
+    if (/\d+(?:\.\d+)?px\b/i.test(m[1])) pxPage = true;
+  });
+  var signals = { paperPage: paperPage, pxPage: pxPage };
+
+  var pxVal = function (v) {
+    var m = /^(\d+(?:\.\d+)?)px$/.exec(v || ''); return m ? +m[1] : 0;
+  };
+  var authoredPx = function (el, prop) {
+    if (pxVal(el.style[prop])) return true;
+    var attr = el.getAttribute(prop);
+    if (attr && /^\d+$/.test(attr)) return true;
+    var hit = false;
+    eachRule(function (r) {
+      if (hit || r.type !== 1 || !r.style) return;
+      try { if (el.matches(r.selectorText) && pxVal(r.style[prop])) hit = true; } catch (e) {}
+    });
+    return hit;
+  };
+
+  var el = document.body, rootPxW = false;
+  for (;;) {
+    var kids = [];
+    for (var c = 0; c < el.children.length; c++) {
+      var t = el.children[c].tagName;
+      if (t !== 'SCRIPT' && t !== 'STYLE' && t !== 'TEMPLATE') kids.push(el.children[c]);
+    }
+    if (kids.length !== 1 || !(kids[0] instanceof HTMLElement)) break;
+    if (STAMP) el.setAttribute('data-om-frame-wrap', '');
+    el = kids[0];
+    rootPxW = authoredPx(el, 'width');
+    if (rootPxW) break;
+  }
+  if (!rootPxW) rootPxW = authoredPx(el, 'width');
+
+  // @page{size:letter} alone is a flowing doc; with a px-width root it's a
+  // fixed sheet pretending to be paper — fall through and size to render.
+  if (paperPage && !rootPxW) {
+    return { kind: 'paper-doc', source: 'inferred', doc: doc, signals: signals,
+      frames: [{ left: 0, top: 0, width: doc.width, height: doc.height }],
+      authored: [{ width: false, height: false }] };
+  }
+
+  var sx = window.scrollX || 0, sy = window.scrollY || 0;
+  var rectOf = function (e) {
+    var r = e.getBoundingClientRect();
+    var oy; try { oy = getComputedStyle(e).overflowY; } catch (err) {}
+    var h = oy === 'visible' ? Math.max(r.height, e.scrollHeight || 0) : r.height;
+    return { left: r.left + sx, top: r.top + sy, width: r.width, height: h };
+  };
+
+  // Multi-frame: ≥2 visible non-fixed children, each with authored px width
+  // AND height, all within ±2px of each other. Off unless the page opts in
+  // via data-om-multi-frame on the stop element — guards against card grids
+  // and pricing tables that match the geometry but aren't separate canvases.
+  if (el.hasAttribute('data-om-multi-frame')) {
+    var cands = [];
+    for (var k = 0; k < el.children.length; k++) {
+      var ch = el.children[k];
+      var cs; try { cs = getComputedStyle(ch); } catch (e) { continue; }
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.position === 'fixed') continue;
+      var rc = rectOf(ch);
+      if (rc.width < 2 || rc.height < 2) continue;
+      if (!authoredPx(ch, 'width') || !authoredPx(ch, 'height')) continue;
+      cands.push(rc);
+    }
+    if (cands.length >= 2) {
+      var w0 = cands[0].width, h0 = cands[0].height, ok = true;
+      for (var q = 1; q < cands.length; q++)
+        if (Math.abs(cands[q].width - w0) > 2 || Math.abs(cands[q].height - h0) > 2) ok = false;
+      if (ok) return { kind: 'multi-frame', source: 'inferred', doc: doc, signals: signals,
+        frames: cands, authored: cands.map(function(){return{width:true,height:true}}) };
+    }
+  }
+
+  if (STAMP) el.setAttribute('data-om-frame', '');
+  return { kind: 'single-canvas', source: 'inferred', doc: doc, signals: signals,
+    frames: [rectOf(el)],
+    authored: [{ width: rootPxW, height: authoredPx(el, 'height') }] };
+})(); } catch (e) {}
+  var frame = null;
+  if (__m && __m.kind === 'single-canvas') {
+    var f = __m.frames && __m.frames[0];
+    if (f && f.width >= 200 && f.height >= 200) {
+      frame = f;
+      var fst = document.createElement('style');
+      fst.textContent = '@media print{@page{size:' + Math.ceil(f.width) + 'px ' +
+        Math.ceil(f.height) + 'px;margin:0}' +
+        'html,body,[data-om-frame-wrap]{padding:0!important;margin:0!important;background:none!important}' +
+        '[data-om-frame]{margin:0!important}}';
+      document.body.appendChild(fst);
+    }
+  }
+  // Relax break-inside on oversized elements. An element taller than a
+  // printable page can't honor break-inside: avoid — browsers either overflow
+  // it or push it whole to the next page, leaving a blank gap, then break it
+  // anyway at an arbitrary point. After the final layout (content revealed,
+  // animations jumped), find elements taller than a page that still compute
+  // break-inside: avoid and reset them to auto, so the browser breaks them at
+  // their children's boundaries instead (children keep their own avoid). PAGE_PX
+  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
+  // height minus our 0.5in margins — so only clearly-oversized elements are
+  // touched and under-page elements still stay whole. Skipped for decks (slides
+  // are sized to the page) and for fixed-size canvases (frame set, or an author
+  // px-based @page) — runs as before for flowing docs on letter/A4.
+  try {
+    if (!ds && !frame && !(__m && __m.signals && __m.signals.pxPage)) {
+      const PAGE_PX = 1024;
+      // Our print defaults add a real @page margin only when the source has
+      // no @page of its own; computed style can't tell us (it reports screen
+      // media), so read the injected rule directly.
+      const defaults = document.querySelector('style[data-omelette-print-defaults]');
+      const pageInset = /@page\s*\{[^}]*margin/.test(defaults ? defaults.textContent || '' : '');
+      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
+      for (const el of document.body.querySelectorAll(SEL)) {
+        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
+          el.setAttribute('data-om-oversized', '');
+          // Fake-paged docs simulate sheets with over-tall break-after:page
+          // boxes; honoring the break spills half-blank pages and ends a
+          // colored box mid-sheet. Flow them, and (only when we own the page
+          // inset) drop the redundant padding/background via the rule below.
+          const cs = getComputedStyle(el);
+          if (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always') {
+            el.setAttribute('data-om-fakepage', '');
+          }
+        }
+      }
+      const ost = document.createElement('style');
+      ost.textContent = '@media print{' +
+        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
+        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
+        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
+        '}';
+      document.head.appendChild(ost);
+    }
+  } catch (e) {}
+  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
+  // swap the CSS that triggers them for Preview-safe forms.
+  try {
+    for (const el of document.body.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+
+      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
+        const outs = [], kept = [];
+        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
+          const t = s.trim();
+          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
+          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
+          else kept.push(t);
+        }
+        if (outs.length) {
+          el.style.setProperty('filter', outs.join(' '), 'important');
+          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
+        }
+      }
+
+      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
+      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
+    }
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>

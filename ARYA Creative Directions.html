@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="design_doc_mode" content="canvas">
+<title>ARYA — Creative Directions</title>
+<link rel="stylesheet" href="assets/colors_and_type.css">
+<script src="image-slot.js"></script>
+<style>
+  body::before { display: none !important; }
+  body { background: #ACA69B; }
+
+  /* ---------- board chrome ---------- */
+  .board-head {
+    position: absolute;
+    width: 1440px;
+    color: #2D2925;
+  }
+  .board-head .kicker {
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #4A453E; margin-bottom: 10px;
+  }
+  .board-head h2 {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: 30px; letter-spacing: 0.02em; color: #1A1714;
+  }
+  .board-head h2 em { font-style: italic; }
+  .board-head .desc {
+    font-family: var(--font-body); font-size: 14px; line-height: 1.6;
+    color: #4A453E; margin-top: 8px; max-width: 760px;
+  }
+
+  /* ---------- world block ---------- */
+  .world { position: absolute; width: 1440px; }
+
+  .panel {
+    position: relative;
+    background: var(--ivory);
+    box-shadow: 0 30px 90px -30px rgba(24,19,16,.4);
+    overflow: hidden;
+    color: var(--graphite);
+  }
+  .panel.grain::after {
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:60;
+    opacity:.03; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ===== DOC PANEL ===== */
+  .doc { padding: 72px 72px 64px; }
+  .doc .num {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: 132px; line-height: .8; color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .doc .nm-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+  .doc .name {
+    font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink);
+    text-align: right;
+  }
+  .doc .name .tag {
+    display:block; font-family: var(--font-mono); font-weight: 400;
+    font-size: 11px; letter-spacing: 0.14em; color: var(--ash);
+    margin-top: 8px; text-transform: none;
+  }
+  .doc .essence {
+    font-family: var(--font-display); font-style: italic; font-weight: 300;
+    font-size: 38px; line-height: 1.18; color: var(--ink);
+    margin: 40px 0 0; max-width: 920px; letter-spacing: -0.01em;
+  }
+  .doc hr { border:0; border-top:1px solid var(--linen); margin: 48px 0; }
+
+  /* moodboard */
+  .mood { display: grid; gap: 16px; }
+  .mood image-slot, .mood .tile {
+    display:block; width:100%; border-radius:0; position:relative;
+  }
+  .tile {
+    background: var(--oat); overflow: hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tile img { width:100%; height:100%; object-fit: contain; }
+  .tile .lbl {
+    position:absolute; left:16px; bottom:14px;
+    font-family: var(--font-mono); font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color: var(--ash); z-index:2;
+  }
+
+  /* spec rows */
+  .specs { display:grid; grid-template-columns: 132px 1fr; row-gap: 0; column-gap: 32px; }
+  .specs .k {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--bronze);
+    padding: 18px 0; border-top: 1px solid var(--linen);
+  }
+  .specs .v {
+    font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+    color: var(--graphite); padding: 18px 0; border-top: 1px solid var(--linen);
+  }
+  .specs .v em { font-family: var(--font-display); font-style: italic; color: var(--stone); }
+
+  /* palette */
+  .palette { display:flex; gap: 0; margin-top: 8px; border:1px solid var(--linen); }
+  .palette .sw { flex:1; height: 96px; position:relative; }
+  .palette .sw .meta {
+    position:absolute; left:10px; bottom:10px;
+    font-family: var(--font-mono); font-size:9.5px; letter-spacing:0.06em;
+    line-height:1.5;
+  }
+  .palette .sw .meta .nm { display:block; text-transform:uppercase; letter-spacing:0.12em; }
+
+  /* type specimen */
+  .typ { display:grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items:start; }
+  .typ .big { font-family: var(--font-display); font-weight:300; color: var(--ink); line-height:.95; letter-spacing:-0.01em; }
+  .typ .big em { font-style: italic; }
+  .typ .meta { font-family: var(--font-mono); font-size:11px; letter-spacing:0.12em; color: var(--ash); text-transform:uppercase; margin-top:18px; }
+  .typ .body-spec { font-family: var(--font-body); }
+  .typ .body-spec .ttl { font-size:18px; font-weight:500; color: var(--ink); letter-spacing:0.04em; margin-bottom:10px; }
+  .typ .body-spec p { font-size:14px; line-height:1.7; color: var(--stone); margin:0; }
+  .typ .body-spec .micro { margin-top:16px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color: var(--ash); font-family:var(--font-mono); }
+
+  .sec-label {
+    font-family: var(--font-mono); font-size:11px; letter-spacing:0.2em;
+    text-transform:uppercase; color: var(--ash); margin-bottom: 20px; display:block;
+  }
+
+  /* ===== MOCKUP FRAME ===== */
+  .mock {
+    margin-top: 64px;
+    width: 1440px; height: 980px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 30px 90px -30px rgba(24,19,16,.4);
+  }
+  .browser-bar {
+    height: 44px; display:flex; align-items:center; gap:8px;
+    padding: 0 18px; background: var(--oat); border-bottom: 1px solid var(--linen);
+  }
+  .browser-bar .dot { width:11px; height:11px; border-radius:50%; background:#D7CFC2; }
+  .browser-bar .url {
+    margin-left: 16px; font-family: var(--font-mono); font-size:11px;
+    color: var(--ash); letter-spacing:0.04em;
+  }
+  .page { position:absolute; top:44px; left:0; right:0; bottom:0; overflow:hidden; }
+
+  .pnav {
+    position:absolute; top:0; left:0; right:0; height:84px; z-index:10;
+    display:flex; align-items:center; padding: 0 56px;
+  }
+  .pnav .wm {
+    font-family: var(--font-display); font-weight:400; font-size:24px;
+    letter-spacing:0.3em; color: var(--ink); padding-left:0.3em;
+  }
+  .pnav .lk {
+    display:flex; gap:36px; font-family:var(--font-body); font-size:11px;
+    font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--stone);
+  }
+  .pnav .lk a { color:inherit; text-decoration:none; }
+
+  .txtlink {
+    display:inline-flex; align-items:center; gap:12px;
+    font-family:var(--font-body); font-size:12px; font-weight:500;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--ink);
+  }
+  .txtlink .ln { width:36px; height:1px; background:var(--ink); }
+
+  /* mockup 1 — daylight */
+  #w1 .page { background: var(--ivory); }
+  #w1 .copy { position:absolute; left:56px; top:300px; width:440px; }
+  #w1 .copy .eb { font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--bronze); display:block; margin-bottom:28px; }
+  #w1 .copy h1 { font-family:var(--font-display); font-weight:300; font-size:64px; line-height:1.03; letter-spacing:-0.01em; color:var(--ink); margin:0 0 28px; }
+  #w1 .copy h1 em { font-style:italic; }
+  #w1 .copy p { font-size:15px; line-height:1.7; color:var(--stone); max-width:330px; margin:0 0 44px; }
+  #w1 .stage { position:absolute; right:96px; top:70px; height:840px; width:520px; display:flex; align-items:center; justify-content:center; }
+  #w1 .stage::before { content:''; position:absolute; left:-6%; bottom:8%; width:96%; height:46px; border-radius:50%; background:radial-gradient(ellipse, rgba(24,19,16,.16), rgba(24,19,16,0) 70%); filter:blur(7px); transform: skewX(-22deg); }
+  #w1 .stage img { height:760px; filter: drop-shadow(40px 50px 50px rgba(24,19,16,.14)); }
+  #w1 .foot { position:absolute; left:56px; right:56px; bottom:40px; display:flex; justify-content:space-between; padding-top:22px; border-top:1px solid var(--linen); font-family:var(--font-mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ash); }
+
+  /* mockup 2 — macro */
+  #w2 .page { background: #F6EFE4; display:grid; grid-template-columns: 1fr 1fr; }
+  #w2 .matside { position:relative; overflow:hidden; }
+  #w2 .matside image-slot { display:block; width:100%; height:100%; }
+  #w2 .matside .cap { position:absolute; left:24px; bottom:22px; z-index:3; font-family:var(--font-mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color: rgba(255,255,255,.85); }
+  #w2 .txtside { position:relative; display:flex; flex-direction:column; justify-content:center; padding: 0 80px; }
+  #w2 .txtside .eb { font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--bronze); margin-bottom:30px; }
+  #w2 .txtside h1 { font-family:var(--font-display); font-weight:300; font-size:60px; line-height:1.06; letter-spacing:-0.01em; color:var(--ink); margin:0 0 26px; }
+  #w2 .txtside h1 em { font-style:italic; }
+  #w2 .txtside p { font-size:15px; line-height:1.7; color:var(--stone); max-width:300px; margin:0 0 44px; }
+  #w2 .txtside .bottle { position:absolute; right:64px; bottom:0; height:360px; filter: drop-shadow(0 30px 40px rgba(24,19,16,.18)); }
+
+  /* mockup 3 — specimen */
+  #w3 .page { background: var(--ivory); display:flex; flex-direction:column; align-items:center; }
+  #w3 .pnav { justify-content:space-between; }
+  #w3 .center { position:absolute; top:0; left:0; right:0; bottom:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  #w3 .center .eb { font-family:var(--font-mono); font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--bronze); margin-bottom:18px; }
+  #w3 .center h1 { font-family:var(--font-display); font-weight:300; font-size:40px; letter-spacing:0.01em; color:var(--ink); margin:0 0 6px; text-align:center; }
+  #w3 .center h1 em { font-style:italic; }
+  #w3 .center .latin { font-family:var(--font-display); font-style:italic; font-size:18px; color:var(--ash); margin-bottom:0; }
+  #w3 .stage { position:relative; margin-top:8px; display:flex; align-items:center; justify-content:center; }
+  #w3 .stage::before { content:''; position:absolute; left:50%; bottom:-6px; transform:translateX(-50%); width:300px; height:34px; border-radius:50%; background:radial-gradient(ellipse, rgba(24,19,16,.16), rgba(24,19,16,0) 70%); filter:blur(7px); }
+  #w3 .stage img { height:540px; filter: drop-shadow(0 40px 50px rgba(24,19,16,.16)); }
+  #w3 .reflection { height:540px; transform: scaleY(-1); opacity:.12; -webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,.5), transparent 42%); mask-image:linear-gradient(to bottom, rgba(0,0,0,.5), transparent 42%); margin-top:-2px; }
+  #w3 .side-l, #w3 .side-r { position:absolute; top:50%; transform:translateY(-50%); font-family:var(--font-mono); font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ash); writing-mode:vertical-rl; }
+  #w3 .side-l { left:40px; } #w3 .side-r { right:40px; transform:translateY(-50%) rotate(180deg); }
+  #w3 .ctas { position:absolute; bottom:48px; left:0; right:0; display:flex; justify-content:center; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================= WORLD 01 -->
+<div class="board-head" style="left:120px; top:80px;">
+  <div class="kicker">ARYA · Creative Direction · 01 of 03</div>
+  <h2>Daylight — <em>architectural calm</em></h2>
+  <div class="desc">A quiet sunlit room. The bottle stands in soft north light and casts one long, gentle shadow. Vast warm-white space, almost nothing else. The reference air is Frama, Audo Copenhagen, COS.</div>
+</div>
+
+<div class="world" id="w1" style="left:120px; top:240px;">
+  <div class="panel grain doc">
+    <div class="nm-row">
+      <div class="num">01</div>
+      <div class="name">Daylight<span class="tag">architectural calm · interior light</span></div>
+    </div>
+    <p class="essence">“A room full of morning light, and one beautiful object standing in it.”</p>
+    <hr>
+
+    <span class="sec-label">Moodboard</span>
+    <div class="mood" style="grid-template-columns: 1.3fr 1fr 1fr; height:300px;">
+      <div class="tile" style="background:var(--ivory);">
+        <img src="assets/photo-bottle-cut.png" alt="bottle in daylight" style="object-fit:contain; padding:24px;">
+        <span class="lbl">Product · as shot</span>
+      </div>
+      <image-slot id="w1-mood-room" shape="rect" placeholder="Sunlit interior · plaster wall, raking window light"></image-slot>
+      <div style="display:grid; grid-template-rows:1fr 1fr; gap:16px;">
+        <image-slot id="w1-mood-shadow" shape="rect" placeholder="Long soft shadow on warm floor"></image-slot>
+        <image-slot id="w1-mood-glass" shape="rect" placeholder="Glass edge catching daylight"></image-slot>
+      </div>
+    </div>
+
+    <hr>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
+      <div>
+        <span class="sec-label">Palette</span>
+        <div class="palette">
+          <div class="sw" style="background:#F9F8F6;"><span class="meta"><span class="nm">Ivory</span>F9F8F6</span></div>
+          <div class="sw" style="background:#F4F0EB;"><span class="meta"><span class="nm">Oat</span>F4F0EB</span></div>
+          <div class="sw" style="background:#E2DACE;"><span class="meta"><span class="nm">Linen</span>E2DACE</span></div>
+          <div class="sw" style="background:#B07A3C;"><span class="meta" style="color:#F9F8F6;"><span class="nm">Oil</span>B07A3C</span></div>
+          <div class="sw" style="background:#1A1714;"><span class="meta" style="color:#F4F0EB;"><span class="nm">Ink</span>1A1714</span></div>
+        </div>
+        <p style="font-family:var(--font-body); font-size:13px; line-height:1.6; color:var(--stone); margin:14px 0 0;">Warm white dominates 90% of every surface. Amber appears only as the oil itself. Ink only as a few words.</p>
+      </div>
+      <div>
+        <span class="sec-label">Typography</span>
+        <div class="typ" style="grid-template-columns:1fr;">
+          <div>
+            <div class="big" style="font-size:52px;">Aa <em>Aa</em></div>
+            <div class="meta">Cormorant Garamond · Light 300 / Italic — display, set large &amp; sparse</div>
+            <div class="body-spec" style="margin-top:18px;">
+              <p style="font-size:13px;">Manrope · Medium 500 — micro-labels, navigation, the single line of body. Generous tracking, set quiet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <span class="sec-label">Direction</span>
+    <div class="specs">
+      <div class="k">Photography</div><div class="v">The bottle alone in an interior. Negative space is the subject as much as the glass. Shot in <em>available daylight</em>, never lit like a studio.</div>
+      <div class="k">Light</div><div class="v">Soft north-facing window. One directional source, long gentle falloff, a shadow that stretches across warm floor.</div>
+      <div class="k">Material</div><div class="v">Glass catching daylight at its edge; amber oil glowing from within. Highlights are small and physical.</div>
+      <div class="k">Layout</div><div class="v">Asymmetric. Product weighted right, a few words left, enormous margins. Architectural, never centered.</div>
+      <div class="k">Motion</div><div class="v">Almost none. Light shifts a few degrees on scroll; the shadow lengthens. Nothing performs.</div>
+      <div class="k">Emotional goal</div><div class="v">Arrival. The calm of stepping into a sunlit, ordered room. Trust through stillness.</div>
+    </div>
+  </div>
+
+  <div class="mock grain">
+    <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">arya.com</span></div>
+    <div class="page">
+      <nav class="pnav" style="justify-content:space-between;">
+        <span class="wm">ARYA</span>
+        <span class="lk"><a href="#">Oils</a><a href="#">Method</a><a href="#">Journal</a><a href="#">Cart</a></span>
+      </nav>
+      <div class="copy">
+        <span class="eb">N° 01 · Black Cumin</span>
+        <h1>Cold-pressed,<br><em>nothing added.</em></h1>
+        <p>Single-origin <em>Nigella sativa</em>, pressed whole in small batches and bottled the same day.</p>
+        <a class="txtlink" href="#"><span class="ln"></span>Discover the oil</a>
+      </div>
+      <div class="stage"><img src="assets/photo-bottle-cut.png" alt="ARYA black cumin oil"></div>
+      <div class="foot"><span>Cold-pressed · Single origin</span><span>€38 · 100 ml</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================= WORLD 02 -->
+<div class="board-head" style="left:1760px; top:80px;">
+  <div class="kicker">ARYA · Creative Direction · 02 of 03</div>
+  <h2>Macro — <em>material immersion</em></h2>
+  <div class="desc">Close enough to feel the oil. Huge macro photography of the liquid itself carries the whole page — viscosity, amber translucency, surface tension. The bottle is the second beat. The air is Kinfolk, Cereal, Noma Projects.</div>
+</div>
+
+<div class="world" id="w2" style="left:1760px; top:240px;">
+  <div class="panel grain doc">
+    <div class="nm-row">
+      <div class="num">02</div>
+      <div class="name">Macro<span class="tag">material immersion · the oil itself</span></div>
+    </div>
+    <p class="essence">“Before you read a word, you can already feel how the oil pours.”</p>
+    <hr>
+
+    <span class="sec-label">Moodboard</span>
+    <div class="mood" style="grid-template-columns: 1fr 1fr 1fr; height:300px;">
+      <image-slot id="w2-mood-surface" shape="rect" placeholder="Macro · oil surface, golden meniscus"></image-slot>
+      <image-slot id="w2-mood-drop" shape="rect" placeholder="Macro · single drop, surface tension"></image-slot>
+      <div style="display:grid; grid-template-rows:1fr 1fr; gap:16px;">
+        <image-slot id="w2-mood-bubble" shape="rect" placeholder="Tiny bubbles, backlit amber"></image-slot>
+        <div class="tile" style="background:var(--ivory);"><img src="assets/photo-bottle-cut.png" style="object-fit:contain; padding:18px;" alt="bottle"><span class="lbl">Product · counterpoint</span></div>
+      </div>
+    </div>
+
+    <hr>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
+      <div>
+        <span class="sec-label">Palette</span>
+        <div class="palette">
+          <div class="sw" style="background:#F6EFE4;"><span class="meta"><span class="nm">Cream</span>F6EFE4</span></div>
+          <div class="sw" style="background:#E8C98C;"><span class="meta"><span class="nm">Honey</span>E8C98C</span></div>
+          <div class="sw" style="background:#C8893F;"><span class="meta" style="color:#F6EFE4;"><span class="nm">Amber</span>C8893F</span></div>
+          <div class="sw" style="background:#8A5A24;"><span class="meta" style="color:#F6EFE4;"><span class="nm">Deep</span>8A5A24</span></div>
+          <div class="sw" style="background:#2D2925;"><span class="meta" style="color:#F6EFE4;"><span class="nm">Graphite</span>2D2925</span></div>
+        </div>
+        <p style="font-family:var(--font-body); font-size:13px; line-height:1.6; color:var(--stone); margin:14px 0 0;">The oil's own colour leads. Warm cream surfaces let the amber photography glow at full saturation.</p>
+      </div>
+      <div>
+        <span class="sec-label">Typography</span>
+        <div>
+          <div class="big" style="font-size:52px;">Aa <em>Aa</em></div>
+          <div class="meta">Cormorant Garamond · Light/Italic — editorial captions, set small beside the imagery</div>
+          <div class="body-spec" style="margin-top:18px;">
+            <p style="font-size:13px;">Type stays out of the way. It captions the photograph; it never competes with it. Wide margins, low contrast in scale.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <span class="sec-label">Direction</span>
+    <div class="specs">
+      <div class="k">Photography</div><div class="v">Extreme macro of the liquid — meniscus, a falling drop, refraction, micro-bubbles. <em>Full-bleed</em>, edge to edge. Photography is the interface.</div>
+      <div class="k">Light</div><div class="v">Warm and backlit. Light passes <em>through</em> the oil so translucency and viscosity read. Golden, never harsh.</div>
+      <div class="k">Material</div><div class="v">The oil is the protagonist; glass plays support. Surface tension, slow flow, the weight of a single drop.</div>
+      <div class="k">Layout</div><div class="v">Editorial split. Large imagery blocks paired with quiet text columns. Generous, magazine-like rhythm.</div>
+      <div class="k">Motion</div><div class="v">A drop forms and falls, once. Amber light drifts across a surface. Reality, slowed — no scenes.</div>
+      <div class="k">Emotional goal</div><div class="v">Sensory desire. You can almost feel the viscosity before you understand the product.</div>
+    </div>
+  </div>
+
+  <div class="mock grain">
+    <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">arya.com</span></div>
+    <div class="page">
+      <div class="matside">
+        <image-slot id="w2-hero-macro" shape="rect" placeholder="Full-bleed macro — amber oil, backlit, viscous"></image-slot>
+        <span class="cap">Fig. 01 — Nigella sativa, first press</span>
+      </div>
+      <div class="txtside">
+        <nav class="pnav" style="left:auto; right:0; width:50%; justify-content:space-between; padding:0 56px;">
+          <span class="wm">ARYA</span>
+          <span class="lk"><a href="#">The Oil</a><a href="#">Cart</a></span>
+        </nav>
+        <div>
+          <div class="eb">N° 01 · Black Cumin</div>
+          <h1>The whole seed,<br><em>pressed once.</em></h1>
+          <p>What the press releases, we bottle. Nothing clarified away.</p>
+          <a class="txtlink" href="#"><span class="ln"></span>Discover the oil</a>
+        </div>
+        <img class="bottle" src="assets/photo-bottle-cut.png" alt="ARYA bottle">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================= WORLD 03 -->
+<div class="board-head" style="left:3400px; top:80px;">
+  <div class="kicker">ARYA · Creative Direction · 03 of 03</div>
+  <h2>Specimen — <em>object honesty</em></h2>
+  <div class="desc">One object, nothing to prove. The bottle is presented like a precisely-engineered product — monumental, centred, perfectly reflected, almost no words. The air is Leica, Bang &amp; Olufsen, Apple, Loewe.</div>
+</div>
+
+<div class="world" id="w3" style="left:3400px; top:240px;">
+  <div class="panel grain doc">
+    <div class="nm-row">
+      <div class="num">03</div>
+      <div class="name">Specimen<span class="tag">object honesty · precision</span></div>
+    </div>
+    <p class="essence">“Presented like an instrument. The confidence to show only the object.”</p>
+    <hr>
+
+    <span class="sec-label">Moodboard</span>
+    <div class="mood" style="grid-template-columns: 1fr 1.3fr 1fr; height:300px;">
+      <div style="display:grid; grid-template-rows:1fr 1fr; gap:16px;">
+        <image-slot id="w3-mood-cap" shape="rect" placeholder="Metal cap · knurled edge, macro"></image-slot>
+        <image-slot id="w3-mood-reflect" shape="rect" placeholder="Soft floor reflection under glass"></image-slot>
+      </div>
+      <div class="tile" style="background:var(--ivory);">
+        <img src="assets/photo-bottle-cut.png" alt="bottle specimen" style="object-fit:contain; padding:24px;">
+        <span class="lbl">Product · centred study</span>
+      </div>
+      <image-slot id="w3-mood-grid" shape="rect" placeholder="Even studio daylight, seamless ground"></image-slot>
+    </div>
+
+    <hr>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:56px;">
+      <div>
+        <span class="sec-label">Palette</span>
+        <div class="palette">
+          <div class="sw" style="background:#F9F8F6;"><span class="meta"><span class="nm">Ivory</span>F9F8F6</span></div>
+          <div class="sw" style="background:#EDEAE4;"><span class="meta"><span class="nm">Mist</span>EDEAE4</span></div>
+          <div class="sw" style="background:#C9C2B6;"><span class="meta"><span class="nm">Stone</span>C9C2B6</span></div>
+          <div class="sw" style="background:#7A6446;"><span class="meta" style="color:#F9F8F6;"><span class="nm">Bronze</span>7A6446</span></div>
+          <div class="sw" style="background:#1A1714;"><span class="meta" style="color:#F9F8F6;"><span class="nm">Ink</span>1A1714</span></div>
+        </div>
+        <p style="font-family:var(--font-body); font-size:13px; line-height:1.6; color:var(--stone); margin:14px 0 0;">Cool-neutral warm white. One bronze tick for the index marks. The amber lives only in the glass.</p>
+      </div>
+      <div>
+        <span class="sec-label">Typography</span>
+        <div>
+          <div class="big" style="font-size:52px;">Aa <span style="font-family:var(--font-mono); font-size:30px; letter-spacing:0;">Aa</span></div>
+          <div class="meta">Cormorant for one quiet name · Mono for measured index labels</div>
+          <div class="body-spec" style="margin-top:18px;">
+            <p style="font-size:13px;">Type is nearly silent — a single serif word, monospace coordinates, no paragraphs on the hero. Precision over persuasion.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <span class="sec-label">Direction</span>
+    <div class="specs">
+      <div class="k">Photography</div><div class="v">The bottle as a designed object. Centred, frontal, on a seamless ground with a single soft reflection. <em>Industrial-clean</em>, reverent.</div>
+      <div class="k">Light</div><div class="v">Even, soft, daylight-balanced studio. One gentle gradient of light across the glass; one quiet shadow beneath.</div>
+      <div class="k">Material</div><div class="v">Glass honesty — weight, transparency, the knurl of the cap. You read the object's quality at a glance.</div>
+      <div class="k">Layout</div><div class="v">Centred and monumental. Vertical index ticks at the margins. Almost nothing competes with the object.</div>
+      <div class="k">Motion</div><div class="v">The reflection breathes; a highlight travels slowly along an edge. The object never moves.</div>
+      <div class="k">Emotional goal</div><div class="v">Respect, then trust. The quiet confidence of a precision instrument worth keeping.</div>
+    </div>
+  </div>
+
+  <div class="mock grain">
+    <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">arya.com</span></div>
+    <div class="page">
+      <nav class="pnav">
+        <span class="wm">ARYA</span>
+        <span class="lk"><a href="#">Index</a><a href="#">Method</a><a href="#">Cart</a></span>
+      </nav>
+      <span class="side-l">N° 01 — Nigella sativa</span>
+      <span class="side-r">Cold-pressed · 100 ml</span>
+      <div class="center">
+        <span class="eb">Specimen 01 / Balance</span>
+        <h1>Black Cumin <em>Oil</em></h1>
+        <span class="latin">Nigella sativa</span>
+        <div class="stage">
+          <img src="assets/photo-bottle-cut.png" alt="ARYA black cumin oil">
+        </div>
+        <img class="reflection" src="assets/photo-bottle-cut.png" alt="" aria-hidden="true">
+        <div class="ctas"><a class="txtlink" href="#"><span class="ln"></span>Add to cart — €38</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

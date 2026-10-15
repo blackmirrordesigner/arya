@@ -1,0 +1,302 @@
+/* ARYA Hero — "The Keeping" · stage styles
+   Continuous light-field. Layered absolute positioning; React drives the
+   transforms/opacity per frame. CSS owns texture, type, and the dark room.
+*/
+@import url('assets/colors_and_type.css');
+
+.aryah-scroller { position: relative; width: 100%; }
+
+.aryah-stage {
+  position: fixed; inset: 0;
+  overflow: hidden;
+  background: #0b0907;
+  color: var(--oat);
+  cursor: crosshair;
+}
+
+/* ----- light field ----- */
+.aryah-room, .aryah-beam {
+  position: absolute; inset: -10%;
+  pointer-events: none;
+}
+.aryah-beam { z-index: 2; }
+
+/* ----- the field that holds seed + bottle ----- */
+.aryah-field {
+  position: absolute; inset: 0;
+  z-index: 5;
+  transform-origin: 50% 44%;
+  will-change: transform;
+}
+
+/* ===================== SEED (luminous specimen) ===================== */
+.aryah-seed-wrap {
+  position: absolute; left: 43%; top: 45%;
+  width: 42vmin; height: 42vmin;
+  will-change: transform, opacity;
+}
+.aryah-seed { position: absolute; inset: 0; }
+.aryah-seed-halo {
+  position: absolute; inset: -60%;
+  filter: blur(30px);
+  mix-blend-mode: screen;
+}
+.aryah-seed-body {
+  position: absolute; inset: 18%;
+  border-radius: 58% 58% 56% 56% / 66% 66% 50% 50%;
+  overflow: hidden;
+  will-change: transform, filter;
+  box-shadow: inset 0 0 40px rgba(255,225,180,0.18);
+}
+/* warm living core */
+.aryah-seed-core {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 70% at 38% 32%, #f3d49a 0%, #c79356 30%, #8a5e30 60%, #43290f 100%);
+}
+/* skin texture — micro ridges, biological not graphic */
+.aryah-seed-skin {
+  position: absolute; inset: 0;
+  mix-blend-mode: overlay; opacity: 0.5;
+  background:
+    repeating-radial-gradient(ellipse 80% 100% at 42% 30%, rgba(255,240,210,0.5) 0 1px, rgba(80,50,20,0.0) 2px 9px);
+}
+/* rim of light catching the living edge */
+.aryah-seed-rim {
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  box-shadow: inset -10px -14px 40px rgba(20,12,5,0.7), inset 8px 10px 30px rgba(255,230,190,0.45);
+}
+
+/* ----- loupe / study ----- */
+.aryah-loupe-layer { position: absolute; inset: -30%; pointer-events: none; }
+.aryah-loupe {
+  position: absolute; left: 50%; top: 50%;
+  width: 60%; height: 60%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(232,199,154,0.35);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.3), inset 0 0 60px rgba(255,225,180,0.12);
+  backdrop-filter: saturate(1.3) brightness(1.12) contrast(1.06);
+}
+.aryah-tag {
+  position: absolute; transform: translate(-50%,-50%);
+  display: flex; flex-direction: column; gap: 3px;
+  white-space: nowrap;
+}
+.aryah-tag::before {
+  content: ''; position: absolute; left: -12px; top: 50%;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--bronze); transform: translateY(-50%);
+  box-shadow: 0 0 10px rgba(232,199,154,0.9);
+}
+.aryah-tag-l { font: 500 9px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: #cdc2af; }
+.aryah-tag-v { font: 300 24px/1 var(--font-display); color: #fff; letter-spacing: 0.01em; text-shadow: 0 1px 12px rgba(0,0,0,0.6); }
+
+/* ===================== BOTTLE (evidence) ===================== */
+.aryah-bottle-wrap {
+  position: absolute; left: 57%; top: 47%;
+  width: 22vmin; height: 60vmin;
+  will-change: transform, opacity;
+}
+.aryah-bottle-light {
+  position: absolute; inset: -40% -60%;
+  filter: blur(28px); mix-blend-mode: screen; pointer-events: none;
+}
+.aryah-bottle-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+
+/* ===================== ARCHIVE GRID ===================== */
+.aryah-grid {
+  position: absolute; inset: 8%;
+  z-index: 3;
+  display: grid; gap: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+.aryah-cell {
+  position: relative;
+  border: 1px solid rgba(226,218,206,0.10);
+  display: flex; align-items: flex-end;
+}
+.aryah-cell-reg {
+  position: absolute; top: 8px; left: 8px;
+  width: 8px; height: 8px;
+  border-top: 1px solid rgba(226,218,206,0.25);
+  border-left: 1px solid rgba(226,218,206,0.25);
+}
+.aryah-cell-reg::after {
+  content: ''; position: absolute; right: -100%; bottom: -100%;
+  width: 8px; height: 8px;
+  border-bottom: 1px solid rgba(226,218,206,0.18);
+  border-right: 1px solid rgba(226,218,206,0.18);
+}
+.aryah-cell-label {
+  position: relative; z-index: 2;
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.aryah-cell-no { font: 500 10px/1 var(--font-body); letter-spacing: 0.16em; color: #8b847b; }
+.aryah-cell.is-live .aryah-cell-no { color: var(--bronze); }
+.aryah-cell-live { font: italic 300 12px/1 var(--font-display); color: #d9c4a0; }
+.aryah-cell-glow { position: absolute; inset: 0; mix-blend-mode: screen; filter: blur(18px); }
+
+/* ===================== ENTROPY ===================== */
+.aryah-entropy {
+  position: absolute; inset: 0; z-index: 6;
+  pointer-events: auto;
+}
+.aryah-lost-seed {
+  position: absolute; left: 16%; top: 60%;
+  width: 9vmin; height: 9vmin;
+  transform: translate(-50%,-50%);
+  display: flex; align-items: center; justify-content: center;
+}
+.aryah-lost-body {
+  position: absolute; inset: 0;
+  border-radius: 58% 58% 56% 56% / 66% 66% 50% 50%;
+  background: radial-gradient(60% 70% at 40% 34%, #6a563c, #2a2018 70%);
+}
+.aryah-lost-label {
+  position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+  font: 500 8px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase;
+  color: #6b6359; white-space: nowrap;
+}
+.aryah-force {
+  position: absolute; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  pointer-events: none; will-change: left, top, opacity;
+}
+.aryah-force-w { font: 300 clamp(15px,2vw,26px)/1 var(--font-display); font-style: italic; color: #9a8f7f; }
+.aryah-force-e { font: 500 8px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: #5f574d; }
+.aryah-entropy-hint {
+  position: absolute; left: 50%; bottom: 14%; transform: translateX(-50%);
+  font: 500 10px/1 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: #837a6d;
+}
+
+/* ===================== TEXT FIELD ===================== */
+.aryah-text { position: absolute; inset: 0; z-index: 7; pointer-events: none; }
+
+.aryah-placard {
+  position: absolute; left: 50%; bottom: 13%;
+  transform: translateX(-50%);
+  white-space: nowrap; text-align: center;
+}
+.aryah-placard-no { font: 500 11px/1 var(--font-body); letter-spacing: 0.3em; color: var(--bronze); }
+.aryah-placard-bin { font: italic 300 17px/1 var(--font-display); color: #cabfae; }
+.aryah-placard-loc { font: 500 9px/1 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; color: #7c7468; }
+.aryah-placard-d { color: #6b6357; margin: 0 13px; font-size: 11px; vertical-align: middle; }
+
+.aryah-thesis {
+  position: absolute; left: 50%; bottom: 25%;
+  transform: translateX(-50%);
+  width: min(640px, 82vw); text-align: center;
+  font: 300 clamp(19px, 2.3vw, 30px)/1.36 var(--font-display);
+  color: #e7ddcc;
+}
+.aryah-thesis em { font-style: italic; color: #f2e9d8; }
+
+.aryah-line {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  width: min(760px, 86vw); text-align: center;
+}
+.aryah-line-inner { will-change: opacity, transform, filter; }
+.aryah-line--specimen, .aryah-line--record, .aryah-line--archive, .aryah-line--entropy {
+  font: 300 clamp(26px, 4vw, 54px)/1.12 var(--font-display);
+  color: #ece3d2; letter-spacing: -0.01em; text-wrap: balance;
+}
+.aryah-line em { font-style: italic; color: #f4ecdb; }
+.aryah-line--specimen { top: 76%; }
+.aryah-line--entropy { top: 24%; }
+.aryah-line--record  { top: 74%; }
+.aryah-line--archive { top: 22%; }
+.aryah-kicker {
+  display: block; font: 500 11px/1 var(--font-body); letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--bronze); margin-bottom: 16px;
+}
+
+/* ===================== ACQUISITION ===================== */
+.aryah-acq {
+  position: absolute; right: 6vw; top: 50%; z-index: 8;
+  transform: translateY(-50%);
+  width: min(420px, 86vw);
+  padding: 36px 38px;
+  background: rgba(14,11,8,0.64);
+  border: 1px solid rgba(226,218,206,0.16);
+  backdrop-filter: blur(16px) saturate(1.1);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+  border-radius: 3px;
+  will-change: opacity, transform;
+}
+.aryah-acq-head { display: flex; flex-direction: column; gap: 6px; padding-bottom: 18px; border-bottom: 1px solid rgba(226,218,206,0.12); }
+.aryah-acq-no { font: 500 10px/1 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; color: var(--bronze); }
+.aryah-acq-cap { font: italic 300 14px/1.4 var(--font-display); color: #b7ac9a; }
+.aryah-acq-title { font: 300 40px/1 var(--font-display); color: #f1e8d7; margin: 20px 0 16px; }
+.aryah-acq-title em { font-style: italic; }
+.aryah-acq-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: 500 10px/1.4 var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: #9a9183; margin-bottom: 26px; }
+.aryah-acq-meta i { width: 3px; height: 3px; border-radius: 50%; background: #6b6357; }
+.aryah-acq-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.aryah-acq-price { font: 300 34px/1 var(--font-display); color: #f1e8d7; }
+.aryah-acq-price small { font: 500 11px/1 var(--font-body); letter-spacing: 0.1em; color: #9a9183; margin-left: 4px; }
+.aryah-acq-qty { display: flex; align-items: center; gap: 2px; border: 1px solid rgba(226,218,206,0.22); border-radius: 2px; background: rgba(11,9,7,0.4); }
+.aryah-acq-qty button { width: 36px; height: 42px; color: #e7ddcc; font-size: 18px; font-weight: 300; line-height: 1; }
+.aryah-acq-qty button:hover { background: rgba(226,218,206,0.12); color: #fff; }
+.aryah-acq-qty span { width: 28px; text-align: center; font: 500 14px/1 var(--font-body); color: #f1e8d7; }
+.aryah-acq-btn {
+  flex: 1; min-width: 150px; height: 52px; padding: 0 22px;
+  background: #ece3d2; color: #1a1714;
+  font: 500 12px/1 var(--font-body); letter-spacing: 0.08em;
+  border-radius: 2px; transition: background .3s var(--ease), transform .3s var(--ease);
+}
+.aryah-acq-btn:hover { background: #fff; transform: translateY(-1px); }
+.aryah-acq-btn.is-done { background: transparent; color: #b7ac9a; border: 1px solid rgba(226,218,206,0.2); }
+.aryah-acq-file {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 24px;
+  font: 500 11px/1 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: #b7ac9a;
+  border-bottom: 1px solid transparent; padding-bottom: 4px; transition: color .3s, border-color .3s;
+}
+.aryah-acq-file span { transition: transform .3s var(--ease); }
+.aryah-acq-file:hover { color: #f1e8d7; border-color: rgba(226,218,206,0.4); }
+.aryah-acq-file:hover span { transform: translateX(4px); }
+
+/* ===================== CHROME ===================== */
+.aryah-chrome {
+  position: absolute; top: 34px; left: 38px; z-index: 9;
+  display: flex; flex-direction: column; gap: 6px; pointer-events: none;
+}
+.aryah-wordmark { font: 500 22px/1 var(--font-display); letter-spacing: 0.34em; color: #ece3d2; padding-left: 4px; }
+.aryah-instit { font: 500 9px/1 var(--font-body); letter-spacing: 0.24em; text-transform: uppercase; color: #837a6d; }
+
+.aryah-cue {
+  position: absolute; left: 50%; bottom: 38px; z-index: 9;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  pointer-events: none;
+}
+.aryah-cue span { font: 500 9px/1 var(--font-body); letter-spacing: 0.28em; text-transform: uppercase; color: #9a9183; }
+.aryah-cue-line { width: 1px; height: 46px; background: rgba(226,218,206,0.2); overflow: hidden; position: relative; }
+.aryah-cue-line i { position: absolute; top: -50%; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, transparent, var(--bronze)); animation: aryah-fall 2.4s var(--ease) infinite; }
+@keyframes aryah-fall { 0% { top: -50%; } 60%,100% { top: 100%; } }
+
+/* progress rail */
+.aryah-rail {
+  position: absolute; right: 32px; top: 50%; z-index: 9;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 22px; align-items: flex-end;
+  pointer-events: none;
+}
+.aryah-rail-mark { display: flex; align-items: center; gap: 12px; }
+.aryah-rail-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--bronze); display: block; transition: transform .2s; }
+.aryah-rail-label { font: 500 9px/1 var(--font-body); letter-spacing: 0.2em; text-transform: uppercase; color: #b7ac9a; order: -1; }
+
+/* hide acquisition + rail on small screens gracefully */
+@media (max-width: 720px) {
+  .aryah-acq { right: 50%; transform: translate(50%, -50%); top: 58%; }
+  .aryah-rail { display: none; }
+  .aryah-line--specimen, .aryah-line--record, .aryah-line--archive, .aryah-line--entropy { font-size: clamp(26px, 8vw, 44px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aryah-cue-line i { animation: none; }
+}

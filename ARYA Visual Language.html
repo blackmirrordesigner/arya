@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARYA — The Visual Language</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* ── DAYLIGHT · the foundation (warm-white architectural neutrals) ── */
+    --paper:#F5F2EC;          /* Chalk — primary ground */
+    --paper-raise:#FAF8F2;    /* Warm white — raised surface */
+    --travertine:#E7E0D2;     /* Travertine — quiet fill */
+    --stone:#C9C2B2;          /* Stone — borders, shadow tone */
+    --ink:#1C1B17;            /* Ink — primary text */
+    --ink-soft:#5C594F;       /* Soft ink — secondary text */
+    --line:rgba(28,27,23,.13);
+
+    /* ── ACCENTS · restrained, single chroma ── */
+    --structural:#6E7468;     /* Olive stone — Daylight structural accent */
+    --material:#B98428;       /* Oil gold — RESERVED for product/material moments */
+
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --serif:"Spectral",Georgia,serif;
+    --sans:"Schibsted Grotesk",system-ui,sans-serif;
+
+    /* motion — behaves like daylight */
+    --ease:cubic-bezier(.2,.6,.2,1);
+    --slow:1100ms;
+    --maxw:1500px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--sans);-webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;line-height:1.5;
+  }
+  body.no-motion *{animation:none !important;transition:none !important;}
+
+  /* ── atoms ── */
+  .mono{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);}
+  .rule{height:1px;background:var(--line);border:0;width:100%;}
+  .reveal{opacity:0;transform:translateY(13px);transition:opacity var(--slow) var(--ease),transform var(--slow) var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1 !important;transform:none !important;transition:none;}}
+
+  /* ── layout shell: architectural side index + content ── */
+  .shell{display:grid;grid-template-columns:248px 1fr;gap:0;}
+  @media(max-width:980px){.shell{grid-template-columns:1fr;}}
+
+  /* side index */
+  .index{position:sticky;top:0;height:100svh;border-right:1px solid var(--line);
+    padding:38px 30px;display:flex;flex-direction:column;justify-content:space-between;background:var(--paper);}
+  @media(max-width:980px){.index{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);}}
+  .index .mk{font-weight:600;letter-spacing:.46em;font-size:15px;}
+  .index .sub{margin-top:10px;font-size:12px;color:var(--ink-soft);line-height:1.5;max-width:24ch;}
+  .index nav{display:flex;flex-direction:column;gap:2px;margin-top:40px;}
+  .index nav a{display:flex;gap:14px;align-items:baseline;text-decoration:none;color:var(--ink-soft);
+    font-size:14px;padding:7px 0;transition:color .4s var(--ease);}
+  .index nav a .n{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;width:24px;}
+  .index nav a:hover,.index nav a.active{color:var(--ink);}
+  .index nav a.active .n{color:var(--structural);}
+  .index .foot{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase;line-height:1.8;}
+
+  .content{min-width:0;}
+  .sec{padding:clamp(64px,9vw,140px) clamp(28px,6vw,110px);border-bottom:1px solid var(--line);max-width:1180px;}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:clamp(36px,5vw,64px);}
+  .sec-head .n{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--structural);}
+  .sec-head h2{font-size:clamp(28px,4vw,52px);font-weight:400;letter-spacing:-.02em;line-height:1;}
+
+  .lede{font-size:clamp(20px,2.6vw,34px);font-weight:400;line-height:1.24;letter-spacing:-.01em;max-width:24ch;text-wrap:balance;}
+  .prose{max-width:60ch;}
+  .prose p{font-size:16.5px;color:var(--ink-soft);line-height:1.66;margin-bottom:1.2em;}
+  .prose p strong{color:var(--ink);font-weight:500;}
+  .serif-read{font-family:var(--serif);font-weight:300;font-size:19px;line-height:1.6;color:var(--ink);}
+
+  /* ══ COVER ══ */
+  .cover{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(34px,5vw,68px) clamp(28px,6vw,110px);}
+  .cover-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;}
+  .cover h1{font-size:clamp(46px,9.5vw,150px);line-height:.9;font-weight:400;letter-spacing:-.025em;margin-top:.3em;text-wrap:balance;}
+  .cover h1 em{font-style:normal;color:var(--ink-soft);}
+  .cover .lede2{max-width:50ch;font-size:clamp(16px,1.5vw,20px);color:var(--ink-soft);margin-top:2.2rem;line-height:1.6;}
+  .cover-bottom{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;}
+
+  /* ══ HIERARCHY 70/20/10 ══ */
+  .ratio{display:grid;grid-template-columns:7fr 2fr 1fr;gap:14px;align-items:stretch;}
+  @media(max-width:760px){.ratio{grid-template-columns:1fr;}}
+  .ratio .band{border:1px solid var(--line);padding:26px 24px;min-height:240px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;}
+  .ratio .band .pct{font-size:clamp(34px,4vw,62px);font-weight:400;letter-spacing:-.02em;line-height:1;}
+  .ratio .band .nm{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px;}
+  .ratio .band p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin-top:18px;}
+  .band.daylight{background:var(--paper-raise);}
+  .band.materialb{background:linear-gradient(180deg,#F4ECD8,#EAD9AE);}
+  .band.materialb .pct,.band.materialb .nm{color:#6b5316;}
+  .band.editorialb{background:var(--travertine);}
+
+  /* ══ COLOR ══ */
+  .pal{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid var(--line);}
+  @media(max-width:760px){.pal{grid-template-columns:repeat(3,1fr);}}
+  .chip{aspect-ratio:3/4;position:relative;border-right:1px solid var(--line);padding:14px;display:flex;flex-direction:column;justify-content:flex-end;}
+  .chip:last-child{border-right:0;}
+  .chip .nm{font-size:13px;font-weight:500;}
+  .chip .hx{font-family:var(--mono);font-size:10px;letter-spacing:.04em;margin-top:4px;opacity:.7;}
+  .chip .ok{font-family:var(--mono);font-size:9px;letter-spacing:.02em;margin-top:2px;opacity:.5;}
+  .accent-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  @media(max-width:620px){.accent-pair{grid-template-columns:1fr;}}
+  .accent-card{border:1px solid var(--line);padding:22px 24px;display:flex;gap:20px;align-items:flex-start;}
+  .accent-card .dot{width:46px;height:46px;flex:0 0 auto;border:1px solid var(--line);}
+  .accent-card h4{font-size:15px;font-weight:500;margin-bottom:6px;}
+  .accent-card p{font-size:13px;color:var(--ink-soft);line-height:1.55;}
+  .accent-card .mono{margin-top:10px;font-size:9.5px;letter-spacing:.14em;}
+
+  /* ══ TYPE ══ */
+  .typerow{border-top:1px solid var(--line);padding:34px 0;display:grid;grid-template-columns:160px 1fr;gap:32px;align-items:baseline;}
+  @media(max-width:680px){.typerow{grid-template-columns:1fr;gap:14px;}}
+  .typerow .meta .role{font-size:14px;font-weight:500;}
+  .typerow .meta .fam{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase;margin-top:6px;line-height:1.6;}
+  .typerow .meta .use{font-size:12px;color:var(--ink-soft);margin-top:12px;line-height:1.5;}
+  .spec-sans{font-family:var(--sans);font-weight:400;font-size:clamp(34px,5vw,64px);letter-spacing:-.02em;line-height:1;}
+  .spec-serif{font-family:var(--serif);font-weight:300;font-size:clamp(28px,4vw,48px);line-height:1.18;}
+  .spec-mono{font-family:var(--mono);font-size:clamp(15px,1.6vw,21px);letter-spacing:.06em;line-height:1.6;}
+  .scaletable{margin-top:34px;border:1px solid var(--line);}
+  .scaletable .r{display:grid;grid-template-columns:120px 1fr 200px;gap:20px;padding:16px 22px;border-bottom:1px solid var(--line);align-items:baseline;}
+  .scaletable .r:last-child{border-bottom:0;}
+  .scaletable .r .tok{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--structural);text-transform:uppercase;}
+  .scaletable .r .sample{font-weight:400;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .scaletable .r .px{font-family:var(--mono);font-size:11px;color:var(--ink-soft);text-align:right;}
+  @media(max-width:680px){.scaletable .r{grid-template-columns:1fr;gap:4px;}.scaletable .r .px{text-align:left;}}
+
+  /* ══ SPACE / grid ══ */
+  .grid-demo{position:relative;border:1px solid var(--line);height:300px;background:var(--paper-raise);overflow:hidden;}
+  .grid-demo .cols{position:absolute;inset:0;display:grid;grid-template-columns:repeat(12,1fr);gap:0;}
+  .grid-demo .cols span{border-right:1px dashed var(--line);}
+  .grid-demo .cols span:last-child{border-right:0;}
+  .grid-demo .obj{position:absolute;top:50%;left:62%;transform:translateY(-50%);width:74px;height:178px;background:var(--travertine);border:1px solid var(--ink);}
+  .grid-demo .objcap{position:absolute;left:62%;bottom:26px;transform:translateX(calc(-100% - 22px));font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;max-width:18ch;text-align:right;}
+  .spacescale{display:flex;align-items:flex-end;gap:10px;margin-top:30px;flex-wrap:wrap;}
+  .spacescale-i{display:flex;flex-direction:column;gap:8px;align-items:center;}
+  .spacescale-i .bar{background:var(--structural);width:26px;}
+  .spacescale-i .lbl{font-family:var(--mono);font-size:9.5px;color:var(--ink-soft);}
+
+  /* ══ PHOTOGRAPHY ══ */
+  .plate{position:relative;display:block;width:100%;
+    background:repeating-linear-gradient(135deg,transparent 0 11px,rgba(28,27,23,.03) 11px 12px),linear-gradient(180deg,var(--pl-a,#ECE6D9),var(--pl-b,#E0D8C7));
+    border:1px solid var(--line);overflow:hidden;}
+  .plate::after{content:attr(data-mode);position:absolute;top:13px;left:13px;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-soft);opacity:.6;text-transform:uppercase;}
+  .plate .cap{position:absolute;left:13px;right:13px;bottom:11px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--ink);background:rgba(245,242,236,.8);padding:6px 9px;border:1px solid var(--line);text-transform:uppercase;backdrop-filter:blur(2px);}
+  .photo-two{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;}
+  @media(max-width:760px){.photo-two{grid-template-columns:1fr;}}
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:30px;}
+  @media(max-width:680px){.rules{grid-template-columns:1fr;}}
+  .rules > div{background:var(--paper);padding:22px 24px;}
+  .rules h4{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;margin-bottom:8px;}
+  .rules p{font-size:14.5px;color:var(--ink);line-height:1.55;}
+  .rules .no h4{color:#9a4a3a;}
+
+  /* ══ MOTION ══ */
+  .motion-demo{border:1px solid var(--line);background:var(--paper-raise);padding:48px;display:flex;flex-direction:column;align-items:center;gap:24px;}
+  .motion-obj{width:64px;height:150px;background:var(--travertine);border:1px solid var(--ink);}
+  .replay{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);background:none;padding:9px 16px;cursor:pointer;transition:color .4s,border-color .4s;}
+  .replay:hover{color:var(--ink);border-color:var(--ink);}
+  @keyframes daylight-in{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .play .motion-obj{animation:daylight-in var(--slow) var(--ease);}
+  .tokens-m{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px;}
+  @media(max-width:680px){.tokens-m{grid-template-columns:1fr;}}
+  .tokens-m div{border:1px solid var(--line);padding:18px 20px;}
+  .tokens-m .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--structural);}
+  .tokens-m .v{font-size:15px;margin-top:8px;}
+  .tokens-m .d{font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.5;}
+
+  /* ══ VOICE ══ */
+  .voice-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:680px){.voice-pair{grid-template-columns:1fr;}}
+  .voice-card{border:1px solid var(--line);padding:28px;}
+  .voice-card .tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:14px;}
+  .voice-card.say .tag{color:var(--structural);}
+  .voice-card.dont .tag{color:#9a4a3a;}
+  .voice-card .ex{font-size:17px;line-height:1.5;}
+  .voice-card .ex.muted{color:var(--stone);text-decoration:line-through;text-decoration-color:rgba(154,74,58,.4);}
+
+  /* ══ FILTER (closing) ══ */
+  .filter{padding:clamp(80px,14vh,180px) clamp(28px,6vw,110px);text-align:center;}
+  .filter .mono{display:block;margin-bottom:28px;}
+  .filter h2{font-size:clamp(30px,5.5vw,76px);font-weight:400;line-height:1.04;letter-spacing:-.025em;max-width:16ch;margin:0 auto;text-wrap:balance;}
+  .filter p{margin-top:28px;color:var(--ink-soft);font-size:16.5px;max-width:46ch;margin-inline:auto;line-height:1.6;}
+  .colophon{margin-top:80px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-soft);text-transform:uppercase;display:flex;justify-content:center;gap:36px;flex-wrap:wrap;}
+
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--structural);z-index:60;width:0;}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="shell">
+
+  <!-- ░░░ SIDE INDEX ░░░ -->
+  <aside class="index">
+    <div>
+      <div class="mk">ARYA</div>
+      <div class="sub">The Visual Language — one system to guide every page.</div>
+      <nav id="nav">
+        <a href="#open"><span class="n">00</span><span>Principle</span></a>
+        <a href="#hierarchy"><span class="n">01</span><span>Hierarchy</span></a>
+        <a href="#color"><span class="n">02</span><span>Color</span></a>
+        <a href="#type"><span class="n">03</span><span>Typography</span></a>
+        <a href="#space"><span class="n">04</span><span>Space &amp; Grid</span></a>
+        <a href="#photo"><span class="n">05</span><span>Photography</span></a>
+        <a href="#motion"><span class="n">06</span><span>Motion</span></a>
+        <a href="#voice"><span class="n">07</span><span>Voice</span></a>
+        <a href="#filter"><span class="n">08</span><span>The Filter</span></a>
+      </nav>
+    </div>
+    <div class="foot">Phase 2 · Unified System<br>2026 · v1.0</div>
+  </aside>
+
+  <main class="content">
+
+    <!-- ══ COVER ══ -->
+    <section class="cover" id="open" data-screen-label="Cover">
+      <div class="cover-top">
+        <span class="mono">The Visual Language</span>
+        <span class="mono">One brand · Not three styles</span>
+      </div>
+      <div>
+        <div class="mono" style="margin-bottom:8px;">Nature already solved the problem</div>
+        <h1>Daylight on<br>an <em>honest</em> object.</h1>
+        <p class="lede2">One unified language for ARYA — architectural and bright at its foundation, drawing close to the material only where the product demands it, and reading with editorial calm. Every rule below answers a single question: does this make the product feel more honest?</p>
+      </div>
+      <div class="cover-bottom">
+        <span class="mono">↓ Eight foundations</span>
+        <span class="mono">ARYA — Cold-pressed oils</span>
+      </div>
+    </section>
+
+    <!-- ══ 00 · PRINCIPLE ══ -->
+    <section class="sec" id="principle-sec" data-screen-label="Principle">
+      <div class="sec-head reveal"><span class="n">00</span><h2>The principle</h2></div>
+      <div class="reveal" style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px);align-items:start;">
+        <p class="lede">The product is the only hero. The language exists to disappear behind it.</p>
+        <div class="prose">
+          <p>ARYA preserves what nature already perfected. The visual language does the same — it adds nothing the oil did not earn. <strong>Bright, warm, architectural daylight</strong> is the constant; everything else is restraint.</p>
+          <p>This is not a blend of three styles. It is <strong>one identity</strong> built from a clear hierarchy: Daylight is who ARYA is, Material is how the product is examined, Editorial is how the words are read. The user should feel <strong>clarity</strong> — never styling.</p>
+          <p class="serif-read" style="margin-top:6px;">“If a decision does not make the product more honest, it is removed.”</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 01 · HIERARCHY ══ -->
+    <section class="sec" id="hierarchy" data-screen-label="Hierarchy">
+      <div class="sec-head reveal"><span class="n">01</span><h2>The hierarchy</h2></div>
+      <p class="lede reveal" style="margin-bottom:46px;">Three worlds, one brand. They are not equal — they are weighted.</p>
+      <div class="ratio reveal">
+        <div class="band daylight">
+          <div><div class="pct">70</div><div class="nm">Daylight · Foundation</div></div>
+          <p>The emotional identity. Architectural, bright, warm white, vast negative space. The bottle is always <em>placed</em>, never staged. When in doubt, this wins.</p>
+        </div>
+        <div class="band materialb">
+          <div><div class="pct">20</div><div class="nm">Material</div></div>
+          <p>Only where the physical product becomes the focus — macro, viscosity, refraction, glass. Never decoration. Never dominant.</p>
+        </div>
+        <div class="band editorialb">
+          <div><div class="pct">10</div><div class="nm">Editorial</div></div>
+          <p>Only to improve reading — typography, rhythm, spacing, captions, margins. Borrowed quietly; never a magazine.</p>
+        </div>
+      </div>
+      <div class="prose reveal" style="margin-top:40px;max-width:64ch;">
+        <p>Read the proportions literally. <strong>Most of any ARYA page is Daylight</strong> — calm warm-white space holding a single placed object. Material appears as a focused interruption when the user wants to examine the oil. Editorial is invisible infrastructure: the grid and type that make everything legible. Mixed correctly, the three never read as three.</p>
+      </div>
+    </section>
+
+    <!-- ══ 02 · COLOR ══ -->
+    <section class="sec" id="color" data-screen-label="Color">
+      <div class="sec-head reveal"><span class="n">02</span><h2>Color</h2></div>
+      <p class="lede reveal" style="margin-bottom:44px;">Warm-white neutrals carry the brand. Accents are rare and earned.</p>
+
+      <div class="pal reveal">
+        <div class="chip" style="background:#F5F2EC;"><span class="nm">Chalk</span><span class="hx">#F5F2EC</span><span class="ok">oklch(.95 .012 86)</span></div>
+        <div class="chip" style="background:#FAF8F2;"><span class="nm">Warm white</span><span class="hx">#FAF8F2</span><span class="ok">oklch(.97 .009 90)</span></div>
+        <div class="chip" style="background:#E7E0D2;"><span class="nm">Travertine</span><span class="hx">#E7E0D2</span><span class="ok">oklch(.90 .018 88)</span></div>
+        <div class="chip" style="background:#C9C2B2;"><span class="nm">Stone</span><span class="hx">#C9C2B2</span><span class="ok">oklch(.81 .017 92)</span></div>
+        <div class="chip" style="background:#5C594F;color:#F5F2EC;"><span class="nm">Soft ink</span><span class="hx">#5C594F</span><span class="ok">oklch(.43 .012 92)</span></div>
+        <div class="chip" style="background:#1C1B17;color:#F5F2EC;"><span class="nm">Ink</span><span class="hx">#1C1B17</span><span class="ok">oklch(.21 .008 96)</span></div>
+      </div>
+
+      <div class="accent-pair reveal">
+        <div class="accent-card">
+          <span class="dot" style="background:#6E7468;"></span>
+          <div>
+            <h4>Structural — Olive stone</h4>
+            <p>The single Daylight accent. Section numbers, active states, the thinnest line of emphasis. Used at a whisper, never as a fill.</p>
+            <div class="mono">#6E7468 · oklch(.50 .02 138)</div>
+          </div>
+        </div>
+        <div class="accent-card">
+          <span class="dot" style="background:#B98428;"></span>
+          <div>
+            <h4>Material — Oil gold</h4>
+            <p>Reserved <em>exclusively</em> for product and material moments — the amber of the oil itself. Never for UI, links, or decoration.</p>
+            <div class="mono">#B98428 · oklch(.66 .12 78)</div>
+          </div>
+        </div>
+      </div>
+      <div class="prose reveal" style="margin-top:36px;max-width:64ch;">
+        <p>The palette is almost entirely neutral by design. <strong>Saturation lives in the photograph, not the interface.</strong> Ground is Chalk; raised surfaces lift to Warm white; Travertine and Stone build quiet structure; Ink and Soft ink carry all text. Color enters only when it belongs to the product.</p>
+      </div>
+    </section>
+
+    <!-- ══ 03 · TYPOGRAPHY ══ -->
+    <section class="sec" id="type" data-screen-label="Typography">
+      <div class="sec-head reveal"><span class="n">03</span><h2>Typography</h2></div>
+      <p class="lede reveal" style="margin-bottom:30px;">One voice, two borrowed registers. Type supports — it is never the hero.</p>
+
+      <div class="reveal">
+        <div class="typerow">
+          <div class="meta">
+            <div class="role">Primary voice</div>
+            <div class="fam">Schibsted Grotesk<br>400 · 500 · 600</div>
+            <div class="use">Headings, navigation, body, everything by default. The architectural neo-grotesque that is ARYA.</div>
+          </div>
+          <div class="spec-sans">Placed,<br>not performed.</div>
+        </div>
+        <div class="typerow">
+          <div class="meta">
+            <div class="role">Reading register <span style="color:var(--ink-soft);">· from Editorial</span></div>
+            <div class="fam">Spectral · 300 / italic</div>
+            <div class="use">Long-form passages and pull quotes only — where a serif genuinely aids slow reading. Borrowed to read better, not to look editorial.</div>
+          </div>
+          <div class="spec-serif">A field, pressed once,<br>and left alone.</div>
+        </div>
+        <div class="typerow">
+          <div class="meta">
+            <div class="role">Technical register <span style="color:var(--ink-soft);">· from Material</span></div>
+            <div class="fam">IBM Plex Mono · 400 / 500</div>
+            <div class="use">Specifications, measurements, captions on product macro. The lens-barrel voice — precise, never decorative.</div>
+          </div>
+          <div class="spec-mono">COLD-PRESSED · NEVER ABOVE 27°C · 100MM ƒ/8</div>
+        </div>
+      </div>
+
+      <div class="scaletable reveal">
+        <div class="r"><span class="tok">Display</span><span class="sample" style="font-size:40px;">Daylight</span><span class="px">64 / .9 · −.02em</span></div>
+        <div class="r"><span class="tok">Heading</span><span class="sample" style="font-size:30px;">Section title</span><span class="px">clamp 28–52 · 1.0</span></div>
+        <div class="r"><span class="tok">Lede</span><span class="sample" style="font-size:22px;">A supporting statement.</span><span class="px">22–34 · 1.24</span></div>
+        <div class="r"><span class="tok">Body</span><span class="sample" style="font-size:16px;">Running text, set for calm reading.</span><span class="px">16.5 · 1.66</span></div>
+        <div class="r"><span class="tok">Caption</span><span class="sample mono" style="font-size:11px;letter-spacing:.2em;">TECHNICAL CAPTION</span><span class="px">11 · .26em · caps</span></div>
+      </div>
+    </section>
+
+    <!-- ══ 04 · SPACE & GRID ══ -->
+    <section class="sec" id="space" data-screen-label="Space & Grid">
+      <div class="sec-head reveal"><span class="n">04</span><h2>Space &amp; grid</h2></div>
+      <p class="lede reveal" style="margin-bottom:40px;">Whitespace is not empty. It is the courtyard the object stands in.</p>
+
+      <div class="grid-demo reveal">
+        <div class="cols"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="obj"></div>
+        <div class="objcap">Object placed on the grid — held by space, not centered by default</div>
+      </div>
+
+      <div class="prose reveal" style="margin-top:40px;max-width:64ch;">
+        <p>Layout follows a <strong>12-column architectural grid</strong> with structural margins — the proportions of a building section, not a storefront. Composition is allowed to be asymmetric: an object placed against generous void reads as confidence. Alignment is strict; emptiness is intentional.</p>
+      </div>
+
+      <div class="reveal">
+        <div class="mono" style="margin-top:38px;margin-bottom:4px;">Spacing scale — base 8</div>
+        <div class="spacescale">
+          <div class="spacescale-i"><div class="bar" style="height:8px;"></div><div class="lbl">8</div></div>
+          <div class="spacescale-i"><div class="bar" style="height:16px;"></div><div class="lbl">16</div></div>
+          <div class="spacescale-i"><div class="bar" style="height:24px;"></div><div class="lbl">24</div></div>
+          <div class="spacescale-i"><div class="bar" style="height:40px;"></div><div class="lbl">40</div></div>
+          <div class="spacescale-i"><div class="bar" style="height:64px;"></div><div class="lbl">64</div></div>
+          <div class="spacescale-i"><div class="bar" style="height:104px;"></div><div class="lbl">104</div></div>
+          <div class="spacescale-i"><div class="bar" style="height:168px;"></div><div class="lbl">168</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 05 · PHOTOGRAPHY ══ -->
+    <section class="sec" id="photo" data-screen-label="Photography">
+      <div class="sec-head reveal"><span class="n">05</span><h2>Photography</h2></div>
+      <p class="lede reveal" style="margin-bottom:40px;">Photography carries all the emotion. It is photographed, never rendered.</p>
+
+      <div class="photo-two reveal">
+        <figure class="plate" data-mode="Daylight · default" style="aspect-ratio:4/3;--pl-a:#ECE6D9;--pl-b:#DfD7C6;"><span class="cap">Bottle placed on plaster · raking north light · vast negative space</span></figure>
+        <figure class="plate" data-mode="Material · 20%" style="aspect-ratio:4/3;--pl-a:#F2E8CF;--pl-b:#E7D4A4;"><span class="cap">Macro · backlit oil · refraction · imperfections kept</span></figure>
+      </div>
+      <div class="prose reveal" style="margin-top:30px;max-width:64ch;">
+        <p><strong>Daylight is the default mode:</strong> one subject, real architectural light, enormous warm-white space. <strong>Material mode is the close-up</strong> — used only when the user wants to examine the oil itself: viscosity, the meniscus, light bending through heavy glass. The two share the same warm light, so a page never feels like two shoots.</p>
+      </div>
+
+      <div class="rules reveal">
+        <div><h4>Always</h4><p>Warm-white ground · single soft daylight source · the product physically real · tiny imperfections kept · generous space around the subject.</p></div>
+        <div class="no"><h4>Never</h4><p>Black or dramatic backgrounds · studio spotlights · 3D renders · props, hands, scenes · retouched-to-perfection surfaces · cinematic atmosphere.</p></div>
+      </div>
+    </section>
+
+    <!-- ══ 06 · MOTION ══ -->
+    <section class="sec" id="motion" data-screen-label="Motion">
+      <div class="sec-head reveal"><span class="n">06</span><h2>Motion</h2></div>
+      <p class="lede reveal" style="margin-bottom:40px;">Motion behaves like daylight — it appears, it does not perform.</p>
+
+      <div class="motion-demo reveal" id="motionDemo">
+        <div class="motion-obj"></div>
+        <button class="replay" id="replayBtn">↻ Replay the reveal</button>
+      </div>
+
+      <div class="tokens-m reveal">
+        <div><div class="k">Duration</div><div class="v">1100ms · slow</div><div class="d">Long enough to feel like light shifting, never a transition you notice.</div></div>
+        <div><div class="k">Easing</div><div class="v">cubic-bezier(.2,.6,.2,1)</div><div class="d">A soft settle. No overshoot, no spring, no bounce.</div></div>
+        <div><div class="k">Properties</div><div class="v">opacity · 13px drift</div><div class="d">Fade and a small rise only. Nothing scales, pops, or slides far.</div></div>
+      </div>
+      <div class="prose reveal" style="margin-top:36px;max-width:64ch;">
+        <p>Things <strong>appear naturally</strong>, as if the light reached them. Reveals trigger once on scroll and never repeat. There are no carousels, parallax stunts, or attention-seeking loops. The only living motion belongs to the product itself — a reflection shifting, the oil settling — and even that is almost invisible.</p>
+      </div>
+    </section>
+
+    <!-- ══ 07 · VOICE ══ -->
+    <section class="sec" id="voice" data-screen-label="Voice">
+      <div class="sec-head reveal"><span class="n">07</span><h2>Voice</h2></div>
+      <p class="lede reveal" style="margin-bottom:40px;">State the truth plainly. Restraint is the tone.</p>
+      <div class="voice-pair reveal">
+        <div class="voice-card say">
+          <div class="tag">We say</div>
+          <p class="ex serif-read" style="font-family:var(--serif);">“Cold-pressed linseed. One source. Nothing added.”</p>
+          <p style="font-size:13.5px;color:var(--ink-soft);margin-top:18px;line-height:1.55;">Few words. Concrete. The product does the convincing. Facts over adjectives.</p>
+        </div>
+        <div class="voice-card dont">
+          <div class="tag">We never say</div>
+          <p class="ex muted">“Unlock radiant wellness with nature's golden elixir, ethically crafted for your best self.”</p>
+          <p style="font-size:13.5px;color:var(--ink-soft);margin-top:18px;line-height:1.55;">No wellness language, no superlatives, no Ayurveda or luxury clichés, no selling.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 08 · THE FILTER ══ -->
+    <section class="filter" id="filter" data-screen-label="The Filter">
+      <div class="reveal">
+        <span class="mono">The decision filter</span>
+        <h2>Does this make the product feel more honest?</h2>
+        <p>Run every choice — every element, word, image, and motion — through this one question. If the answer is no, remove it. That is the whole language.</p>
+        <div class="colophon">
+          <span>ARYA · The Visual Language</span>
+          <span>70 Daylight · 20 Material · 10 Editorial</span>
+          <span>Phase 2 · v1.0 · 2026</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ░░░ TWEAKS ░░░ -->
+<div id="tweaks-root"></div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="1200" fill="#F5F2EC"/>
+    <rect x="525" y="370" width="150" height="400" rx="12" fill="#E7E0D2" stroke="#1C1B17" stroke-width="3"/>
+    <rect x="562" y="318" width="76" height="58" fill="#C9C2B2" stroke="#1C1B17" stroke-width="3"/>
+    <circle cx="845" cy="430" r="30" fill="#6E7468"/>
+    <text x="600" y="905" font-family="Georgia,serif" font-size="118" fill="#1C1B17" text-anchor="middle" letter-spacing="18">ARYA</text>
+  </svg>
+</template>
+
+<script>
+  // ── nearly-invisible reveals ──
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -7% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // ── progress ──
+  const prog=document.getElementById('progress');
+  const onScroll=()=>{const h=document.documentElement;const max=h.scrollHeight-h.clientHeight;prog.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';};
+  document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // ── active section in side index ──
+  const links=[...document.querySelectorAll('#nav a')];
+  const map=links.map(a=>({a,el:document.querySelector(a.getAttribute('href'))})).filter(x=>x.el);
+  const navIo=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const m=map.find(x=>x.el===e.target);if(m)m.a.classList.add('active');}});},{rootMargin:'-45% 0px -50% 0px'});
+  map.forEach(x=>navIo.observe(x.el));
+
+  // ── motion demo replay ──
+  const md=document.getElementById('motionDemo'),rb=document.getElementById('replayBtn');
+  const play=()=>{md.classList.remove('play');void md.offsetWidth;md.classList.add('play');};
+  rb.addEventListener('click',play);
+  new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){play();}});},{threshold:.5}).observe(md);
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "paper": "#F5F2EC",
+    "structural": "#6E7468",
+    "material": "#B98428",
+    "motion": true
+  }/*EDITMODE-END*/;
+
+  function aryaContrast(hex){
+    const c=hex.replace('#','');const r=parseInt(c.substr(0,2),16),g=parseInt(c.substr(2,2),16),b=parseInt(c.substr(4,2),16);
+    return (0.299*r+0.587*g+0.114*b)>140?'#1C1B17':'#F5F2EC';
+  }
+
+  function AryaTweaks(){
+    const [t,setTweak]=useTweaks(TWEAK_DEFAULTS);
+    React.useEffect(()=>{
+      const root=document.documentElement;
+      root.style.setProperty('--paper',t.paper);
+      // derive a slightly lifted raised surface from paper
+      root.style.setProperty('--structural',t.structural);
+      root.style.setProperty('--material',t.material);
+      document.body.classList.toggle('no-motion',!t.motion);
+    },[t]);
+    return (
+      <TweaksPanel>
+        <TweakSection label="Daylight ground" />
+        <TweakColor label="Paper" value={t.paper}
+          options={['#F5F2EC','#F3EFE6','#F2F1ED','#F6F1E8']}
+          onChange={(v)=>setTweak('paper',v)} />
+        <TweakSection label="Accents" />
+        <TweakColor label="Structural" value={t.structural}
+          options={['#6E7468','#7C8470','#6A6A5E','#5C594F']}
+          onChange={(v)=>setTweak('structural',v)} />
+        <TweakColor label="Material (product only)" value={t.material}
+          options={['#B98428','#C28A2A','#A8762A','#9C6B22']}
+          onChange={(v)=>setTweak('material',v)} />
+        <TweakSection label="Motion" />
+        <TweakToggle label="Daylight reveals" value={t.motion}
+          onChange={(v)=>setTweak('motion',v)} />
+      </TweaksPanel>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<AryaTweaks/>);
+</script>
+</body>
+</html>

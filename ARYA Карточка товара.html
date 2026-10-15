@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ARYA — Карточка товара</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--paper:#F5F2EC;--raise:#FAF8F2;--trav:#E7E0D2;--ink:#1C1B17;--soft:#5C594F;--line:rgba(28,27,23,.13);--green:#6E7468;--amber:#B98428;--mono:"IBM Plex Mono",monospace;--serif:"Spectral",Georgia,serif;--sans:"Schibsted Grotesk",system-ui,sans-serif;--ease:cubic-bezier(.2,.6,.2,1);--maxw:1280px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased;}
+img{display:block;max-width:100%;}
+a{color:var(--ink);}a:hover{color:var(--green);}
+.mono{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(22px,5vw,72px);}
+.btn{font-size:14.5px;border:1px solid var(--ink);background:none;color:var(--ink);padding:14px 30px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:background .4s var(--ease),color .4s var(--ease);font-family:var(--sans);}
+.btn:hover{background:var(--ink);color:var(--paper);}
+.btn.solid{background:var(--ink);color:var(--paper);}
+.btn.solid:hover{background:var(--green);border-color:var(--green);}
+.btn.added{background:var(--green);border-color:var(--green);color:var(--paper);}
+.ph-empty{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(28,27,23,.03) 10px 11px),var(--trav);}
+.nav{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:18px;padding:14px clamp(20px,5vw,64px);background:rgba(245,242,236,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav .mk{font-weight:600;letter-spacing:.44em;font-size:14px;text-decoration:none;}
+.psel{font-family:var(--sans);font-size:13.5px;padding:8px 12px;border:1px solid var(--line);background:var(--raise);color:var(--ink);max-width:46vw;}
+.back{margin-left:auto;font-size:13px;color:var(--soft);text-decoration:none;}
+.back:hover{color:var(--ink);}
+/* hero карточки */
+.phero{border-bottom:1px solid var(--line);background:var(--raise);padding:clamp(36px,6vh,70px) 0;}
+.phero-grid{display:grid;grid-template-columns:minmax(240px,.42fr) 1fr;gap:clamp(28px,4vw,64px);align-items:center;}
+@media(max-width:760px){.phero-grid{grid-template-columns:1fr;}}
+.phero-ph{height:clamp(300px,44vh,460px);border:1px solid var(--line);background:#F1EDE2;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;}
+.phero-ph img{height:92%;width:auto;mix-blend-mode:multiply;}
+.phero-body{display:flex;flex-direction:column;gap:14px;}
+.phero-body h1{font-family:var(--serif);font-weight:300;font-size:clamp(32px,4.4vw,58px);letter-spacing:-.02em;line-height:1.04;}
+.intro{font-size:15.5px;line-height:1.66;color:var(--soft);max-width:56ch;text-wrap:pretty;}
+.buy{margin-top:8px;display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.vol{display:flex;gap:8px;flex-wrap:wrap;}
+.vopt{display:inline-flex;}
+.vopt input{position:absolute;opacity:0;}
+.vopt span{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;padding:9px 14px;border:1px solid var(--line);cursor:pointer;color:var(--soft);transition:border-color .3s,color .3s;}
+.vopt input:checked+span{border-color:var(--ink);color:var(--ink);}
+.ship{display:block;}
+/* layout */
+.layout{display:grid;grid-template-columns:230px 1fr;gap:clamp(28px,4vw,72px);padding:clamp(40px,6vh,72px) clamp(22px,5vw,72px);}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding-top:28px;}}
+.toc{position:sticky;top:86px;align-self:start;display:flex;flex-direction:column;gap:2px;}
+@media(max-width:900px){.toc{position:static;flex-direction:row;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--line);padding-bottom:16px;}}
+.toc .mono{margin-bottom:10px;}
+@media(max-width:900px){.toc .mono{width:100%;}}
+.toc a{font-size:13.5px;color:var(--soft);text-decoration:none;padding:5px 0;border-left:2px solid transparent;}
+.toc a:hover{color:var(--ink);}
+@media(max-width:900px){.toc a{border:1px solid var(--line);padding:6px 12px;}}
+/* контент */
+.content{max-width:70ch;}
+.content h2{font-family:var(--serif);font-weight:300;font-size:clamp(24px,2.8vw,36px);letter-spacing:-.015em;line-height:1.1;margin:clamp(36px,5vh,56px) 0 18px;padding-top:18px;border-top:1px solid var(--ink);}
+.content h2:first-child{margin-top:0;}
+.content h3{font-size:17px;font-weight:500;letter-spacing:-.01em;margin:26px 0 10px;}
+.content p{font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:14px;text-wrap:pretty;}
+.content p strong{font-weight:500;}
+.content blockquote{margin:22px 0;padding:16px 20px;border-left:2px solid var(--amber);background:var(--raise);font-family:var(--serif);font-style:normal;font-size:15.5px;line-height:1.6;}
+.content blockquote strong{font-weight:500;}
+.content em{font-family:var(--serif);font-style:italic;}
+/* next */
+.next{border-top:1px solid var(--line);background:var(--trav);padding:clamp(46px,8vh,90px) 0;margin-top:clamp(40px,6vh,80px);}
+.next-grid{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.next h2{font-family:var(--serif);font-weight:300;font-size:clamp(24px,3vw,40px);letter-spacing:-.015em;margin-top:10px;}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<template id="__bundler_thumbnail" data-bg-color="#F5F2EC">
+  <svg viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="1200" fill="#F5F2EC"/>
+    <rect x="525" y="360" width="150" height="410" rx="12" fill="#E7E0D2" stroke="#1C1B17" stroke-width="3"/>
+    <rect x="562" y="306" width="76" height="60" fill="#C9C2B2" stroke="#1C1B17" stroke-width="3"/>
+    <ellipse cx="600" cy="565" rx="48" ry="120" fill="#B98428" opacity="0.5"/>
+    <text x="600" y="905" font-family="Georgia,serif" font-size="116" fill="#1C1B17" text-anchor="middle" letter-spacing="18">ARYA</text>
+  </svg>
+</template>
+<script src="arya-products-data.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="arya-card.jsx"></script>
+</body>
+</html>
