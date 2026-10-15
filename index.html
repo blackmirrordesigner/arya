@@ -383,6 +383,53 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 /* dragging: no transition */
 .hero-track.dragging{transition:none;}
 
+/* ── hero headline overlay ───────────────────────────────────── */
+.hero-headline{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:10;
+  pointer-events:none;
+  text-align:center;
+  width:min(1100px,92vw);
+  display:flex;flex-wrap:wrap;
+  justify-content:center;align-items:baseline;
+  /* row-gap bigger so 2 lines breathe, column-gap = word spacing */
+  gap:.55em .42em;
+  filter:drop-shadow(0 2px 40px rgba(10,8,6,.6));
+}
+.hh-word{
+  display:inline-block;
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(48px,8.5vw,120px);
+  line-height:.9;letter-spacing:-.038em;
+  color:var(--dark-fg);
+  opacity:0;
+  transform:translateY(24px);
+  animation:hhWordIn .8s var(--spring) forwards;
+}
+/* italic accent words */
+.hh-word:nth-child(3),   /* омоложения */
+.hh-word:nth-child(5){   /* оздоровления */
+  font-style:italic;
+}
+/* stagger each word */
+.hh-word:nth-child(1){animation-delay:.15s}
+.hh-word:nth-child(2){animation-delay:.28s}
+.hh-word:nth-child(3){animation-delay:.42s}
+.hh-word:nth-child(4){animation-delay:.56s}
+.hh-word:nth-child(5){animation-delay:.70s}
+.hh-word:nth-child(6){animation-delay:.84s}
+
+@keyframes hhWordIn{
+  from{opacity:0;transform:translateY(22px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:600px){
+  .hero-headline{gap:.18em .22em;}
+}
+
 /* ═══════════════════════════════════════════════════════════════
    CART — floating button + right sidebar
    ═══════════════════════════════════════════════════════════════ */
@@ -1502,6 +1549,16 @@ footer{border-top:1px solid var(--rule);padding:clamp(36px,5vh,56px) 0 32px;}
     <!-- side arrows -->
     <button class="hero-prev hidden" id="heroPrev" aria-label="Назад">←</button>
     <button class="hero-next" id="heroNext" aria-label="Вперёд">→</button>
+
+    <!-- headline overlay — pointer-events:none so slider stays clickable -->
+    <div class="hero-headline" aria-label="Масло для омоложения и оздоровления тела">
+      <span class="hh-word">Масло</span>
+      <span class="hh-word">для</span>
+      <span class="hh-word">омоложения</span>
+      <span class="hh-word">и</span>
+      <span class="hh-word">оздоровления</span>
+      <span class="hh-word">тела.</span>
+    </div>
 
     <!-- bottom: counter only -->
     <div class="hero-bottom-bar">
